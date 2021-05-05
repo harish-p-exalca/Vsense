@@ -1,0 +1,57 @@
+// @import "/src/app/theme";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  align-items: center;
+  padding: 0.5rem;
+  padding-bottom: 0;
+
+  .mat-list-item.active {
+    opacity: 1;
+    color: white;
+    background-color: #3131ff;
+    .routeIcon {
+      color: white;
+    }
+    .routeSvgIcon{
+      filter: brightness(3);
+    }
+  }
+  .mat-list-item:hover {
+    opacity: 1;
+  }
+  &:hover,
+  &:focus {
+    > .mat-list-item:not(.expanded) {
+      opacity: 1;
+    }
+  }
+  
+}
+.mat-list-item {  
+  padding: 8px 0;
+  display: flex;
+  width: auto;
+  color: #394256;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Poppins;
+  border-radius: 4px;
+  .routeIcon {
+    color: #3131ff;
+    margin-right: 12px;
+    height: 24px;
+    width: 24px;
+  }
+  .routeSvgIcon{
+    filter: none;
+    width: 20px;
+    margin-right: 12px;
+  }
+}
+::ng-deep .mat-list-base .mat-list-item .mat-list-item-content{
+  padding: 0;
+  width: 100%;
+}

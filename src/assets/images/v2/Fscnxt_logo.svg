@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="166.053" height="46" viewBox="0 0 166.053 46">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#171891"/>
+      <stop offset="1" stop-color="#4fa94e"/>
+    </linearGradient>
+  </defs>
+  <g id="FSCNxt_Logo" transform="translate(-498.828 -884.571)">
+    <g id="Group_7388" data-name="Group 7388" transform="translate(499.828 884.571)">
+      <rect id="Rectangle_6027" data-name="Rectangle 6027" width="7.259" height="7.063" transform="translate(142.284 3.986)" fill="#1f009e"/>
+      <rect id="Rectangle_6029" data-name="Rectangle 6029" width="7.259" height="7.456" transform="translate(149.538 11.135)" fill="#1f009e"/>
+      <rect id="Rectangle_6031" data-name="Rectangle 6031" width="7.259" height="7.259" transform="translate(157.793 14.935)" fill="url(#linear-gradient)"/>
+      <text id="FSCNxt" transform="translate(67 34)" fill="#1f009e" font-size="38" font-family="Rockwell-BoldItalic, Rockwell" font-weight="700" font-style="italic"><tspan x="-66.05" y="0">FSC</tspan><tspan y="0" fill="#4db151" font-family="PTSans-BoldItalic, PT Sans">Nxt</tspan></text>
+      <rect id="Rectangle_6028" data-name="Rectangle 6028" width="7.259" height="7.259" transform="translate(142.284 27.196)" fill="#4db151"/>
+      <rect id="Rectangle_6030" data-name="Rectangle 6030" width="7.259" height="7.652" transform="translate(149.538 19.511)" fill="#4db151"/>
+    </g>
+  </g>
+</svg>

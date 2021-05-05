@@ -1,0 +1,36 @@
+.page{
+  width:100%;
+  height:100%;
+  background-color: #ffffff;
+  }
+.sidenav{
+  width: 12rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px 0 rgba(31, 0, 158, 0.16);
+  }
+.poppins{
+  font-family: Poppins;
+  font-weight: 600;
+}
+.mat-drawer-side {
+  border-right: none;
+}
+.logout{
+@extend .poppins;
+color: #394256;
+font-size: 12px;
+}
+.Admin{
+width: 100%;
+padding: 1.5rem;
+padding-bottom: 0;
+}
+.Logout{
+  width: 100%;
+  cursor: pointer;
+  padding: 1.5rem;
+  padding-top: 1rem;
+}
+.logo-container{
+padding: 1rem 1rem 1rem 1rem;
+}

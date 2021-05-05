@@ -1,0 +1,32 @@
+<mat-drawer-container fullscreen class="page">
+	<mat-drawer #appDrawer mode="side" opened="true" *ngIf="!islogin" class="sidenav" fxHide.xs="true" fxHide.sm="true">
+		<div fxFlex=100 fxLayout="column">
+			<div fxLayout="column">
+
+				<div fxLayoutAlign="center" fxFlex=100 class="logo-container">
+					<img src="assets/images/v2/Vsense_Logo (2).svg" style="width: 70%;">
+				</div>
+
+				<mat-nav-list [disableRipple]="true" class="navlist">
+					<app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
+				</mat-nav-list>
+
+			</div>
+			<div fxFlex></div>
+			<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem" class="Admin">
+				<img src="../assets/images/v2/user.jpg" width="26px">
+				<label class="logout">{{currentUser.UserName}}</label>
+				<div fxFlex></div>
+				<img src="../assets//images/v2/user_status.svg" width="8px">
+			</div>
+			<div fxLayout="row" fxLayoutAlign="start center" class="Logout" (click)="logout()">
+				<img src="../assets/images/v2/logout.svg" style="width: 16px;margin-left: 4px;margin-right: 22px;">
+				<span class="logout">Log out</span>
+			</div>
+		</div>
+	</mat-drawer>
+	<mat-drawer-content>
+		<!-- <app-top-nav fxHide.xs *ngIf="!islogin"></app-top-nav> -->
+		<router-outlet></router-outlet>
+	</mat-drawer-content>
+</mat-drawer-container>

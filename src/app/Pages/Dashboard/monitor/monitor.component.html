@@ -1,0 +1,121 @@
+<div id="monitor" fxFlex fusePerfectScrollbar>
+    <div fxLayout="column" class="container">
+        <div fxLayout="row" style="padding-bottom: 1.5rem;" fxLayoutAlign="start center" fxLayoutGap="1.5rem">
+            <span class="title">Monitor</span>
+            <span class="subtitle">Overview of Vsense Performance Indicators</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between start" class="wrapper">
+            <div fxLayout="column" fxLayoutAlign="space-between" style="height: 100%;" fxFlex=31>    
+                <div fxLayout="column" fxLayoutAlign="space-between start" class="devices">
+                    <span class="titletxt">Devices</span>
+                    <div fxLayout="row" style="width: 100%;" fxLayoutGap="6%">
+                        <div class="countbox total-bg" fxLayout="column" fxLayoutAlign="start center">
+                            <span class="dotnot-container">
+                                <div class="dotnot total-dn"></div>
+                            </span>
+                            <span class="count total-c">{{AllDevices.length}}</span>
+                            <span class="titletxt">Total</span>
+                            <span class="titletxt">Devices</span>
+                        </div>
+                        <div class="countbox active-bg" fxLayout="column" fxLayoutAlign="start center">
+                            <span class="dotnot-container">
+                                <div class="dotnot active-dn"></div>
+                            </span>
+                            <span class="count active-c">{{ActiveDevices.length}}</span>
+                            <span class="titletxt">Active</span>
+                            <span class="titletxt">Devices</span>
+                        </div>
+                        <div class="countbox inactive-bg" fxLayout="column" fxLayoutAlign="start center">
+                            <span class="dotnot-container">
+                                <div class="dotnot inactive-dn"></div>
+                            </span>
+                            <span class="count inactive-c">{{InactiveDevices.length}}</span>
+                            <span class="titletxt">Inactive</span>
+                            <span class="titletxt">Devices</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container" fxLayout="row" fxLayoutAlign="start center" fxFlex=66>
+                <div fxLayout="column" fxFlex=60>
+                    <span class="titletxt" style="margin-top: 12px;">Device Status</span>
+                    <div id="splinechart" class="chart-wrapper">
+                        <apx-chart
+                          [series]="chartOptions.series"
+                          [chart]="chartOptions.chart"
+                          [xaxis]="chartOptions.xaxis"
+                          [stroke]="chartOptions.stroke"
+                          [tooltip]="chartOptions.tooltip"
+                          [dataLabels]="chartOptions.dataLabels"
+                          [fill]="chartOptions.fill"
+                          [grid]="chartOptions.grid"
+                        ></apx-chart>
+                      </div>
+                </div>
+                <img src="assets/images/v2/monitor_support.png" fxFlex=40>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" class="tabel-tools" fxLayoutGap="1.5rem">
+            <span class="titletxt">Device List</span>
+            <div class="search-container" fxLayout="row">
+                <input class="search" placeholder="Search to - do" fxFlex=100 [(ngModel)]="SearchKey" (keyup)="applyFilter()">
+                <div mat-ripple class="searchbtn pointer" fxLayoutAlign="center">
+                    <img src="assets/images/v2/search.svg" width="16px">
+                </div>
+            </div>
+            <div fxLayoutAlign="start center" fxFlex="60px">
+                <img src="assets/images/v2/Filter.svg">
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" (click)="ChangeDevice('Active')" class="pointer">
+                <div *ngIf="selectedDevices=='Active'" class="dotnot" [ngClass]="{'active-dn':selectedDevices=='Active'}"></div>
+                <span class="titletxt" [ngClass]="{'active-c':selectedDevices=='Active'}">Active</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" (click)="ChangeDevice('Inactive')" class="pointer">
+                <div *ngIf="selectedDevices=='Inactive'" class="dotnot" [ngClass]="{'inactive-dn':selectedDevices=='Inactive'}"></div>
+                <span class="titletxt" [ngClass]="{'inactive-c':selectedDevices=='Inactive'}">Inactive</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" (click)="ChangeDevice('All')" class="pointer">
+                <div *ngIf="selectedDevices=='All'" class="dotnot" [ngClass]="{'total-dn':selectedDevices=='All'}"></div>
+                <span class="titletxt" [ngClass]="{'total-c':selectedDevices=='All'}">All</span>
+            </div>
+        </div>
+        <table mat-table [dataSource]="DeviceDataSource" matSort class="py-10">
+            <ng-container matColumnDef="equipmentname">
+                <th mat-header-cell *matHeaderCellDef> Asset </th>
+                <td mat-cell *matCellDef="let element" class="pointer" (click)="ViewDetails(element)"> {{element.equipment.text}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef> Site </th>
+                <td mat-cell *matCellDef="let element"> {{element.location.lcoationText}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="device">
+                <th mat-header-cell *matHeaderCellDef> Sense Edge</th>
+                <td mat-cell *matCellDef="let element"> {{element.device.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element"> {{deviceStatusvalue(element.device.isEnabled)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Action
+                </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="ViewDetails(element)">View details</button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="DevicedisplayedColumns;sticky: true;"></tr>
+            <tr mat-row *matRowDef="let row; columns: DevicedisplayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+    </div>
+</div>
+<app-loader></app-loader>
