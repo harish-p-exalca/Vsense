@@ -1,0 +1,126 @@
+<div id="sense-edge" fxFlex>
+    <div fxLayout="row" fxFlex>
+        <div fxFlex=25 class="left-container" fxLayout="column">
+            <div fxLayout="row" fxLayoutGap="12px" style="padding: 0 20px;">
+                <span class="title">Sense Edge</span>
+                <div class="countbox" fxLayoutAlign="center center">
+                    <span class="edgecount">20</span>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="12px" style="padding: 1rem 20px;">
+                <div class="search-container" fxLayout="row">
+                    <input class="search" placeholder="Search to - do" fxFlex=100>
+                    <div mat-ripple class="searchbtn pointer" fxLayoutAlign="center">
+                        <img src="assets/images/v2/search.svg" width="14px">
+                    </div>
+                </div>
+                <img src="assets/images/v2/Filter.svg" width="18px">
+            </div>
+            <div class="hdevider"></div>
+            <button mat-button class="newbtn">Create New Sense Edge</button>
+            <div fxFlex style="overflow-y: scroll;padding:0 20px">
+                <mat-selection-list [multiple]="false">
+                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devices">
+                        <div fxLayout="column" fxLayoutAlign="space-evenly start" style="height: 72px;padding-left: 1rem;">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+                                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                                    <img class="img" src="assets/images/v2/dotnot.svg" width="6px"> 
+                                    <!-- filter: brightness(0.3); -->
+                                    <span class="titletxt">deviceid</span>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                                    <img class="img" src="assets/images/v2/calendar.svg" width="14px">
+                                    <span class="titletxt">date</span>
+                                </div>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                                <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
+                                <span class="titletxt">deviceid</span>
+                            </div>
+                        </div>
+                    </mat-list-option>
+                </mat-selection-list>
+            </div>
+        </div>
+        <div fxFlex=75 class="right-container">
+            <span class="subtitle">Create Device</span>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2%" style="padding: 1rem 0 0 0;">
+                <div fxLayout="column" fxFlex=42>
+                    <span class="subtitle">Name</span>
+                    <mat-form-field appearance="outline" class="formfield">
+                        <input matInput autocomplete="off" placeholder="Enter Name">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="column" fxFlex=42>
+                    <span class="subtitle">Purpose</span>
+                    <mat-form-field appearance="outline" class="formfield">
+                        <input matInput autocomplete="off" placeholder="Enter Purpose">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2%">
+                <div fxLayout="column" fxFlex=20>
+                    <span class="subtitle">Put to Use</span>
+                    <mat-form-field appearance="outline" class="formfield">
+                        <input matInput [matDatepicker]="picker1" autocomplete="off" placeholder="dd/mm/yyyy">
+                        <mat-datepicker-toggle matSuffix [for]="picker1">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="column" fxFlex=20>
+                    <span class="subtitle">Lifespan ( In years )</span>
+                    <mat-form-field appearance="outline" class="formfield">
+                        <input matInput autocomplete="off" placeholder="Enter Purpose">
+                    </mat-form-field>
+                </div>
+            </div>
+            <table mat-table [dataSource]="ParamDataSource" matSort>
+                <ng-container matColumnDef="ParamID">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Parameter ID </th>
+                    <td mat-cell *matCellDef="let element" class="pointer" (click)="ViewDetails(element)"></td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                    <td mat-cell *matCellDef="let element"></td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Unit">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit</th>
+                    <td mat-cell *matCellDef="let element"></td>
+                </ng-container>
+    
+                <ng-container matColumnDef="LongText">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Long text </th>
+                    <td mat-cell *matCellDef="let element"></td>
+                </ng-container>
+
+                <ng-container matColumnDef="Min">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Min </th>
+                    <td mat-cell *matCellDef="let element"></td>
+                </ng-container>
+
+                <ng-container matColumnDef="Max">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Max </th>
+                    <td mat-cell *matCellDef="let element"></td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 13%;"> Action
+                    </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <div mat-ripple fxLayoutAlign="center center" class="delete-container pointer">
+                            <img src="assets/images/v2/delete.svg" width="32px">
+                            <span class="delete deletetxt">Delete</span>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="ParamdisplayedColumns;sticky: true;"></tr>
+                <tr mat-row *matRowDef="let row; columns: ParamdisplayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
+        </div>
+    </div>
+</div>
+<app-loader></app-loader>

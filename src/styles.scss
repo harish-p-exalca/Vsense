@@ -142,6 +142,25 @@ a {
   .test {
     background: #1abc9c !important;
   }
+
+  .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #3131ff !important;
+  }
+  .mat-form-field.mat-focused .mat-select-arrow {
+    color:#3131ff !important;
+  }
+  .mat-form-field.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 6px 0 12px 0 !important;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: #3131ff !important;
+  }
+  .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+    color: #f44336 !important;
+  }
+  .mat-input-element{
+    height: 14px;
+  }
   
 
  /* width */

@@ -75,6 +75,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ControldetailsComponent } from './Pages/controldetails/controldetails.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { SenseEdgeComponent } from './Pages/Master/sense-edge/sense-edge.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,6 +108,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     EnergyConsumptionComponent,
     MonitorComponent,
     ControldetailsComponent,
+    SenseEdgeComponent,
   ],
   imports: [
     BrowserModule,
