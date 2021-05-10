@@ -73,7 +73,8 @@ import { EnergyConsumptionComponent } from './pages/CarbonFootprint/energy-consu
 import { MonitorComponent } from './Pages/Dashboard/monitor/monitor.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { NgApexchartsModule } from 'ng-apexcharts';
-
+import { ControldetailsComponent } from './Pages/controldetails/controldetails.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -104,6 +105,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     WaterConsumptionComponent,
     EnergyConsumptionComponent,
     MonitorComponent,
+    ControldetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -137,6 +139,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatSortModule,
     NgxSpinnerModule,
     MatMenuModule,
+    MatTooltipModule,
     NgApexchartsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
