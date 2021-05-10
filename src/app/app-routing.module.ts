@@ -20,6 +20,7 @@ import { WaterConsumptionComponent } from './pages/CarbonFootprint/water-consump
 import { EnergyConsumptionComponent } from './pages/CarbonFootprint/energy-consumption/energy-consumption.component';
 import { MonitorComponent } from './Pages/Dashboard/monitor/monitor.component';
 import { ControldetailsComponent } from './Pages/controldetails/controldetails.component';
+import { SenseEdgeComponent } from './Pages/Master/sense-edge/sense-edge.component';
 
 const routes: Routes = [
   {
@@ -48,7 +49,7 @@ const routes: Routes = [
     children:[
       {
         path:'device',
-        component:DeviceComponent,
+        component:SenseEdgeComponent,
 
       },
       {
