@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="69" height="38" viewBox="0 0 69 38">
+    <defs>
+        <style>
+            .cls-1{fill:#3131ff}
+        </style>
+    </defs>
+    <g id="Group_8124" transform="rotate(90 992.507 -490.011)">
+        <circle id="Ellipse_1" cx="4" cy="4" r="4" class="cls-1" transform="translate(1497.518 433.496)"/>
+        <ellipse id="Ellipse_1-2" cx="4" cy="3.5" class="cls-1" rx="4" ry="3.5" transform="translate(1497.518 449.496)"/>
+        <circle id="Ellipse_1-3" cx="4" cy="4" r="4" class="cls-1" transform="translate(1497.518 464.496)"/>
+        <circle id="Ellipse_1-4" cx="4" cy="4" r="4" class="cls-1" transform="translate(1497.518 479.496)"/>
+        <ellipse id="Ellipse_1-5" cx="4" cy="3.5" class="cls-1" rx="4" ry="3.5" transform="translate(1497.518 495.496)"/>
+        <ellipse id="Ellipse_1-6" cx="4" cy="3.5" class="cls-1" rx="4" ry="3.5" transform="translate(1482.518 449.496)"/>
+        <circle id="Ellipse_1-7" cx="4" cy="4" r="4" class="cls-1" transform="translate(1482.518 464.496)"/>
+        <circle id="Ellipse_1-8" cx="4" cy="4" r="4" class="cls-1" transform="translate(1482.518 479.496)"/>
+        <ellipse id="Ellipse_1-9" cx="4" cy="3.5" class="cls-1" rx="4" ry="3.5" transform="translate(1482.518 495.496)"/>
+        <circle id="Ellipse_1-10" cx="3.5" cy="3.5" r="3.5" class="cls-1" transform="translate(1513.518 449.496)"/>
+        <ellipse id="Ellipse_1-11" cx="3.5" cy="4" class="cls-1" rx="3.5" ry="4" transform="translate(1513.518 464.496)"/>
+        <ellipse id="Ellipse_1-12" cx="3.5" cy="4" class="cls-1" rx="3.5" ry="4" transform="translate(1513.518 479.496)"/>
+    </g>
+</svg>

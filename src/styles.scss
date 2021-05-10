@@ -7,6 +7,14 @@ html, body { height: 100%; }
   font-family: Poppins;
   src: url(assets/fonts/Poppins-SemiBold.ttf) format("opentype");
 }
+@font-face{
+  font-family: 'poopins-med';
+  src:url('assets/fonts/Poppins-Medium.ttf') format("opentype");
+}
+@font-face{
+  font-family: 'poopins';
+  src:url('assets/fonts/Poppins-Regular.ttf') format("opentype");  
+}
 body { margin: 0; font-family: "Poppins", "Helvetica Neue", sans-serif; }
 a {
     text-decoration-color: mat-color($app-primary);
@@ -157,3 +165,4 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: #888; 
 }
+

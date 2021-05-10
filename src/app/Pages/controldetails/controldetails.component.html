@@ -1,0 +1,986 @@
+<div class="formmargin">
+    <div class="rectangleboxtop" fxLayout="row">
+        <div fxFlex="30px" >
+            <span>
+                <img src="assets\images\iconfinder_icon-arrow-right-c_211621 (1).svg" class="arrow1">              
+            </span>
+        </div>
+        <div fxFlex="150px" >
+            <span class="controltext">
+                Control Center
+            </span>
+        </div>
+        <span class="spacespan">
+
+        </span>
+        <div fxFlex="25px"  fxLayout="row" >
+            <span>
+                <img src="assets\images\62931.png" class="endimg">
+            </span>
+
+        </div>
+        <div fxFlex="60px" class="endtimediv">
+            <span class="endtime">
+                12:10:09
+            </span>
+        </div>
+        <div fxFlex="60px">
+            <span class="endlast">
+                Last Pull
+            </span>
+        </div>
+    </div>
+
+
+
+    <div>
+
+        <!-- style="flex-grow: 1; flex-shrink: 1;" -->
+        <div fxLayout="column" fxFlex="70">
+
+            <div class="rectanglebox" fxLayout="row" fxLayoutAlign="space-evenly center">
+
+
+                <div fxLayout="row" fxflex="50px">
+                    <span>
+                        <img src="assets\images\Component 37 – 1.svg" class="rectimg1" matTooltip="Edge Device">
+
+                    </span>
+                    <span class="cbeoo2" fxFlexOffset="10px">
+                        CBE002
+                    </span>
+                </div> 
+
+
+
+                <div fxLayout="row" fxflex="50px">
+                    <span>
+                        <img src="assets\images\Component 38 – 1.svg" class="rectimg1" matTooltip="Asset">
+                    </span>
+                    <span class="cbeoo2" fxFlexOffset="10px">
+                        Coimbatore
+                    </span>
+                </div> 
+
+                <div fxLayout="row" fxflex="50px">
+                    <span>
+                        <img src="assets\images\Component 39 – 1.svg" class="rectimg1" matTooltip="Space">
+                    </span>
+                    <span class="cbeoo2" fxFlexOffset="10px">
+                        Server-CBE
+                    </span>
+                </div> 
+                <div fxLayout="row" fxflex="50px">
+                    <span>
+                        <img src="assets\images\Component 40 – 1.svg" class="rectimg1" matTooltip="Site">
+                    </span>
+                    <span class="cbeoo2" fxFlexOffset="10px">
+                        Exalca Server-CBE
+                    </span>
+                </div> 
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-evenly center" class="graphdivtop">
+                <div class="backarrowdiv">
+
+                    <img src="assets\images\Group 7839.svg" class="backarrow" (click)="scrollLeft()">
+
+                </div>
+
+
+                <div fxLayout="row" fxLayoutAlign="space-between center" class="graphdiv" #widgetsContent
+                    fxLayoutGap="40px" fxLayout.xs="column" *ngFor="let item of data;index as i">
+
+
+                    <div style="margin-left: 3.5rem !important;">
+                        <div class="bluerectanglebox" fxLayout="column"  >
+                            <div class="innerbluerectanglebox">
+                                <img src="assets\images\Group 8239.svg" class="blueimg">
+                                <span
+                                    style="position: relative;top: 6px; display: flex; align-items: center; justify-content: center;">
+                                    Current
+                                </span>
+
+                            </div>
+                            <div *ngFor="let item of data;index as i" style="height: 135px;">
+                                <div style="width: 100%;height: 80%;" *ngIf="i%4==0">
+
+                                    <div style="display:flex;justify-content:center">
+                                        <div class="fuelcontainer">
+                                            <div style="display: block" class="fuelchart">
+                                                <mwl-gauge class="temperature" [max]="item.max" [dialStartAngle]="-90"
+                                                    [dialEndAngle]="-90.001" [value]="item.log.value"
+                                                    [showValue]="false" [animated]="true" [animationDuration]="1">
+                                                </mwl-gauge>
+                                            </div>
+                                            <div class="border_circle" fxLayout="column" fxLayoutAlign="center center">
+
+                                                <span
+                                                    style="color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;margin-top: 16px;">
+                                                    {{item.log.value | number:'2.0-1'}}</span>
+                                                <span style="   color: #ee4057;
+                                        letter-spacing: 1.1px;
+                                        font-weight: 500;
+                                        font-size: 10px;">{{item.unit}}</span>
+                                            </div>
+                                            <div class="dash_border"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div style="height: 10px;">
+
+                            </div>
+                            <div fxLayout="column">
+                                <div fxLayout="row" fxLayoutAlign="space-around center">
+                                    <span class="minavgmax">
+                                        Min
+                                    </span>
+                                    <span class="minavgmax">
+                                        Avg
+                                    </span>
+                                    <span class="minavgmax">
+                                        Max
+                                    </span>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="space-around center">
+                                    <span class="min">
+                                        55.6
+                                    </span>
+                                    <span class="avg">
+                                        55.6
+                                    </span>
+                                    <span class="max">
+                                        55.6
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="bluerectanglebox" fxLayout="column">
+                        <div class="innerbluerectanglebox2" *ngFor="let item of data;index as i">
+                            <img src="assets\images\Group 8098.svg" class="blueimg">
+                            <span
+                                style="position: relative;top: 6px; display: flex; align-items: center; justify-content: center;">
+                                Fuel
+                            </span>
+
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="center start" style="height: 135px;margin-top: -0.8rem;">
+                            <div >
+                                <div style="display:flex;justify-content:center;width:270px">
+                                    <mwl-gauge class="rpm1" [max]="item.max" [value]="item.log.value" [animated]="true"
+                                        [showValue]="false" [animationDuration]="1">
+                                    </mwl-gauge>
+                                </div>
+                                <div>
+                                    <div class="border_circle_2" fxLayout="column" fxLayoutAlign="center center">
+                                        <span
+                                            style="margin-top:16px;color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;">
+                                            {{item.log.value | number:'2.0-1'}}</span>
+                                        <span style="    color: #ee4057;
+                                    letter-spacing: 1.1px;
+                                    font-weight: 500;
+                                    font-size: 10px;
+                                    ">{{item.unit}}</span>
+                                    </div>
+                                    <div class="smalltxt" style="margin-left: 101px;
+                                margin-top: -16px;">0</div>
+                                    <div class="smalltxt" style="    margin-top: -80px;
+                                margin-left: 91px;">40</div>
+                                    <div class="smalltxt" style="    margin-left: 172px;
+                                margin-top: -20px;">60</div>
+                                    <div class="smalltxt" style="margin-left: 161px;
+                                margin-top: 40px;">100</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div style="height: 25px;">
+
+                        </div>
+                        <div fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="minavgmax">
+                                    Min
+                                </span>
+                                <span class="minavgmax">
+                                    Avg
+                                </span>
+                                <span class="minavgmax">
+                                    Max
+                                </span>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="min">
+                                    55.6
+                                </span>
+                                <span class="avg">
+                                    55.6
+                                </span>
+                                <span class="max">
+                                    55.6
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="bluerectanglebox" fxLayout="column" *ngFor="let item of data;index as i">
+                        <div class="innerbluerectanglebox2">
+                            <img src="assets\images\Group 8098.svg" class="blueimg">
+                            <span
+                                style="position: relative;top: 6px; display: flex; align-items: center; justify-content: center;">
+                                Humidity
+                            </span>
+
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="center start" style="height: 135px;margin-top: -0.8rem;">
+                            <div>
+                                <div style="display:flex;justify-content:center;width:270px">
+                                    <mwl-gauge class="rpm" [max]="item.max" [value]="item.log.value" [animated]="true"
+                                        [showValue]="false" [animationDuration]="1">
+                                    </mwl-gauge>
+                                </div>
+                                <div>
+                                    <div class="border_circle_2" fxLayout="column" fxLayoutAlign="center center">
+                                        <span
+                                            style="margin-top:16px;color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;">
+                                            {{item.log.value | number:'2.0-1'}}</span>
+                                        <span style="    color: #ee4057;
+                                    letter-spacing: 1.1px;
+                                    font-weight: 500;
+                                    font-size: 10px;
+                                    ">{{item.unit}}</span>
+                                    </div>
+                                    <div class="smalltxt" style="margin-left: 101px;
+                                margin-top: -16px;">0</div>
+                                    <div class="smalltxt" style="    margin-top: -80px;
+                                margin-left: 91px;">40</div>
+                                    <div class="smalltxt" style="    margin-left: 172px;
+                                margin-top: -20px;">60</div>
+                                    <div class="smalltxt" style="margin-left: 161px;
+                                margin-top: 40px;">100</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div style="height: 25px;">
+
+                        </div>
+                        <div fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="minavgmax">
+                                    Min
+                                </span>
+                                <span class="minavgmax">
+                                    Avg
+                                </span>
+                                <span class="minavgmax">
+                                    Max
+                                </span>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="min">
+                                    55.6
+                                </span>
+                                <span class="avg">
+                                    55.6
+                                </span>
+                                <span class="max">
+                                    55.6
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="bluerectanglebox" fxLayout="column" *ngFor="let item of data;index as i">
+                        <div class="innerbluerectanglebox">
+                            <img src="assets\images\Group 8098.svg" class="blueimg">
+                            <span
+                                style="position: relative;top: 6px; display: flex; align-items: center; justify-content: center;">
+                                Temperature
+                            </span>
+
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="center start" style="height: 135px;margin-top: -0.8rem;">
+                            <div  >
+                                <div style="display:flex;justify-content:center;width:270px">
+                                    <mwl-gauge class="rpm1" [max]="item.max" [value]="item.log.value" [animated]="true"
+                                        [showValue]="false" [animationDuration]="1">
+                                    </mwl-gauge>
+                                </div>
+                                <div>
+                                    <div class="border_circle_2" fxLayout="column" fxLayoutAlign="center center">
+                                        <span
+                                            style="margin-top:16px;color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;">
+                                            {{item.log.value | number:'2.0-1'}}</span>
+                                        <span style="    color: #ee4057;
+                                    letter-spacing: 1.1px;
+                                    font-weight: 500;
+                                    font-size: 10px;
+                                    ">{{item.unit}}</span>
+                                    </div>
+                                    <div class="smalltxt" style="margin-left: 101px;
+                                margin-top: -16px;">0</div>
+                                    <div class="smalltxt" style="    margin-top: -80px;
+                                margin-left: 91px;">40</div>
+                                    <div class="smalltxt" style="    margin-left: 172px;
+                                margin-top: -20px;">60</div>
+                                    <div class="smalltxt" style="margin-left: 161px;
+                                margin-top: 40px;">100</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div style="height: 25px;">
+
+                        </div>
+                        <div fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="minavgmax">
+                                    Min
+                                </span>
+                                <span class="minavgmax">
+                                    Avg
+                                </span>
+                                <span class="minavgmax">
+                                    Max
+                                </span>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="min">
+                                    55.6
+                                </span>
+                                <span class="avg">
+                                    55.6
+                                </span>
+                                <span class="max">
+                                    55.6
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="bluerectanglebox" fxLayout="column"  >
+                        <div class="innerbluerectanglebox">
+                            <img src="assets\images\Group 8239.svg" class="blueimg">
+                            <span
+                                style="position: relative;top: 6px; display: flex; align-items: center; justify-content: center;">
+                                Vibration
+                            </span>
+
+                        </div>
+                        <div *ngFor="let item of data;index as i" style="height: 135px;margin-top: -0.8rem;">
+                            <div  *ngIf="i%4==0">
+
+                                <div style="display:flex;justify-content:center">
+                                    <div class="fuelcontainer">
+                                        <div style="display: block" class="fuelchart">
+                                            <mwl-gauge class="temperature" [max]="item.max" [dialStartAngle]="-90"
+                                                [dialEndAngle]="-90.001" [value]="item.log.value"
+                                                [showValue]="false" [animated]="true" [animationDuration]="1">
+                                            </mwl-gauge>
+                                        </div>
+                                        <div class="border_circle" fxLayout="column" fxLayoutAlign="center center">
+
+                                            <span
+                                                style="color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;margin-top: 16px;">
+                                                {{item.log.value | number:'2.0-1'}}</span>
+                                            <span style="   color: #ee4057;
+                                    letter-spacing: 1.1px;
+                                    font-weight: 500;
+                                    font-size: 10px;">{{item.unit}}</span>
+                                        </div>
+                                        <div class="dash_border"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div style="height: 25px;">
+
+                        </div>
+                        <div fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="minavgmax">
+                                    Min
+                                </span>
+                                <span class="minavgmax">
+                                    Avg
+                                </span>
+                                <span class="minavgmax">
+                                    Max
+                                </span>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="min">
+                                    55.6
+                                </span>
+                                <span class="avg">
+                                    55.6
+                                </span>
+                                <span class="max">
+                                    55.6
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--                     
+                    <div class="bluerectanglebox" fxLayout="column"  >
+                        <div class="innerbluerectanglebox">
+                            <img src="assets\images\Group 8098.svg" class="blueimg">
+                            <span
+                                style="position: relative;top: 6px; display: flex; align-items: center; justify-content: center;">
+                                Vibration
+                            </span>
+
+                        </div>
+                        <div *ngFor="let item of data;index as i" style="height: 135px;">
+                            <div style="width: 100%;height: 80%;" *ngIf="i%4==0">
+
+                                <div style="display:flex;justify-content:center">
+                                    <div class="fuelcontainer">
+                                        <div style="display: block" class="fuelchart">
+                                            <mwl-gauge class="temperature" [max]="item.max" [dialStartAngle]="-90"
+                                                [dialEndAngle]="-90.001" [value]="item.log.value" [showValue]="false"
+                                                [animated]="true" [animationDuration]="1">
+                                            </mwl-gauge>
+                                        </div>
+                                        <div class="border_circle" fxLayout="column" fxLayoutAlign="center center">
+
+                                            <span
+                                                style="color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;margin-top: 16px;">
+                                                {{item.log.value | number:'2.0-1'}}</span>
+                                            <span style="   color: #ee4057;
+                                        letter-spacing: 1.1px;
+                                        font-weight: 500;
+                                        font-size: 10px;">{{item.unit}}</span>
+                                        </div>
+                                        <div class="dash_border"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 100%;height: 100%;" *ngIf="i%4==1">
+                                <div fxLayout="row" fxLayoutAlign="start start" style="margin-top: 1rem;">
+
+                                    <div fxLayout="column" fxLayoutAlign="space-between start" class="tit1">
+                                        <span>{{item.activityGraphTitle}}</span>
+                                        <div class="underline2"></div>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="center start">
+                                    <div>
+                                        <div style="display:flex;justify-content:center;width:270px">
+                                            <mwl-gauge class="rpm1" [max]="item.max" [value]="item.log.value"
+                                                [animated]="true" [showValue]="false" [animationDuration]="1">
+                                            </mwl-gauge>
+                                        </div>
+                                        <div>
+                                            <div class="border_circle_2" fxLayout="column"
+                                                fxLayoutAlign="center center">
+                                                <span
+                                                    style="margin-top:16px;color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;">
+                                                    {{item.log.value | number:'2.0-1'}}</span>
+                                                <span style="    color: #ee4057;
+                                        letter-spacing: 1.1px;
+                                        font-weight: 500;
+                                        font-size: 10px;
+                                        ">{{item.unit}}</span>
+                                            </div>
+                                            <div class="smalltxt" style="margin-left: 101px;
+                                    margin-top: -16px;">0</div>
+                                            <div class="smalltxt" style="    margin-top: -80px;
+                                    margin-left: 91px;">40</div>
+                                            <div class="smalltxt" style="    margin-left: 172px;
+                                    margin-top: -20px;">60</div>
+                                            <div class="smalltxt" style="margin-left: 161px;
+                                    margin-top: 40px;">100</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 100%;height: 100%;" *ngIf="i%4==2">
+                                <div fxLayout="row" fxLayoutAlign="start start" style="margin-top: 1rem;">
+                                    <img src="assets/images/speedometer (1).svg"
+                                        style="width: 27px;margin-left: 1.5rem;margin-right: 2rem;">
+                                    <div fxLayout="column" fxLayoutAlign="space-between start" class="tit1">
+                                        <span>{{item.activityGraphTitle}}</span>
+                                        <div class="underline2"></div>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="center start">
+                                    <div>
+                                        <div style="display:flex;justify-content:center;width:270px">
+                                            <mwl-gauge class="rpm" [max]="item.max" [value]="item.log.value"
+                                                [animated]="true" [showValue]="false" [animationDuration]="1">
+                                            </mwl-gauge>
+                                        </div>
+                                        <div>
+                                            <div class="border_circle_2" fxLayout="column"
+                                                fxLayoutAlign="center center">
+                                                <span
+                                                    style="margin-top:16px;color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;">
+                                                    {{item.log.value | number:'2.0-1'}}</span>
+                                                <span style="    color: #ee4057;
+                                        letter-spacing: 1.1px;
+                                        font-weight: 500;
+                                        font-size: 10px;
+                                        ">{{item.unit}}</span>
+                                            </div>
+                                            <div class="smalltxt" style="margin-left: 101px;
+                                    margin-top: -16px;">0</div>
+                                            <div class="smalltxt" style="    margin-top: -80px;
+                                    margin-left: 91px;">40</div>
+                                            <div class="smalltxt" style="    margin-left: 172px;
+                                    margin-top: -20px;">60</div>
+                                            <div class="smalltxt" style="margin-left: 161px;
+                                    margin-top: 40px;">100</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 100%;height: 100%;" *ngIf="i%4==3">
+                                <div fxLayout="row" fxLayoutAlign="start start" style="margin-top: 1rem;">
+                                    <img src="assets/images/speedometer.svg"
+                                        style="width: 27px;margin-left: 1.5rem;margin-right: 2rem;">
+                                    <div fxLayout="column" fxLayoutAlign="space-between start" class="tit1">
+                                        <span>{{item.activityGraphTitle}}</span>
+                                        <div class="underline2"></div>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="center start">
+                                    <div>
+                                        <div style="display:flex;justify-content:center;width:270px">
+                                            <mwl-gauge class="rpm1" [max]="item.max" [value]="item.log.value"
+                                                [animated]="true" [showValue]="false" [animationDuration]="1">
+                                            </mwl-gauge>
+                                        </div>
+                                        <div>
+                                            <div class="border_circle_2" fxLayout="column"
+                                                fxLayoutAlign="center center">
+                                                <span
+                                                    style="margin-top:16px;color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;">
+                                                    {{item.log.value | number:'2.0-1'}}</span>
+                                                <span style="    color: #ee4057;
+                                        letter-spacing: 1.1px;
+                                        font-weight: 500;
+                                        font-size: 10px;
+                                        ">{{item.unit}}</span>
+                                            </div>
+                                            <div class="smalltxt" style="margin-left: 101px;
+                                    margin-top: -16px;">0</div>
+                                            <div class="smalltxt" style="    margin-top: -80px;
+                                    margin-left: 91px;">40</div>
+                                            <div class="smalltxt" style="    margin-left: 172px;
+                                    margin-top: -20px;">60</div>
+                                            <div class="smalltxt" style="margin-left: 161px;
+                                    margin-top: 40px;">100</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="height: 10px;">
+
+                        </div>
+                        <div fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="minavgmax">
+                                    Min
+                                </span>
+                                <span class="minavgmax">
+                                    Avg
+                                </span>
+                                <span class="minavgmax">
+                                    Max
+                                </span>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="min">
+                                    55.6
+                                </span>
+                                <span class="avg">
+                                    55.6
+                                </span>
+                                <span class="max">
+                                    55.6
+                                </span>
+                            </div>
+                        </div>
+
+                    </div> -->
+
+
+
+
+                </div>
+                <div>
+                    <img src="assets\images\Group 7839.svg" class="goback" (click)="scrollRight()">
+
+                </div>
+            </div>
+
+            <div class="livefeed" fxLayout="row">
+                <span>
+                    <img src="assets\images\Component 37 – 1.svg" class="liveimg">
+                </span>
+
+                <span class="live" fxFlexOffset="10px">
+                    Live Feeds
+                </span>
+
+            </div>
+
+            <div class="divisiontable">
+
+
+                <table mat-table [dataSource]="dataSource" matSort class="tabledata">
+
+                    <ng-container matColumnDef="Site">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Site
+                        </th>
+                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                            {{element.Site}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Space">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Space </th>
+                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                            {{element.Space}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Asset">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Asset </th>
+                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                            {{element.Asset}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Title">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Title </th>
+                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                            {{element.Title}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Value">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Value </th>
+                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                            {{element.Value}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Status">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Status </th>
+                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                            {{element.Status}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Lastfeed">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Last feed
+                        </th>
+                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                            {{element.Lastfeed}}
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" class="headertable"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;sticky: true"
+                        class="example-element-row">
+                    </tr>
+
+                </table>
+
+            </div>
+
+
+
+
+        </div>
+
+        <div fxLayout="column" fxFlex="30">
+
+
+            <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" class="hoveringdiv" *ngIf="isDisplayhover"
+                (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+                <div fxLayout="column" fxFlex="30" fxLayoutGap="25px" fxLayoutAlign="space-between center">
+                    <span class="classsignal">
+                        Signals
+                    </span>
+                    <span class="class07">
+                        07
+                    </span>
+
+                    <img src="assets\images\Image 194.jpg" class="signalimage">
+                </div>
+
+                <div fxFlex="70" fxLayout="column">
+                    <!-- class="signalcontent" -->
+
+                    <div fxLayout="column" fxLayoutAlign="space-evenly none">
+                        <!-- style="background-color: #eef0fa;border-radius: 4px;" -->
+                        <div fxLayout="row" fxLayoutAlign="space-between  end">
+                            <span class="deviceid">
+                                Device Id
+                            </span>
+                            <span class="deviceid">
+                                Signal Time
+                            </span>
+
+
+                        </div>
+                        <div fxLayout="column" style="height: 20vh; overflow: auto;" class="flowwss">
+                            <div fxLayout="row" fxLayoutAlign="space-between  end" class="idrow" fxLayoutGap="20px">
+                                <span fxFlexOffset="13">
+                                    0076
+                                </span>
+                                <span>
+                                    Just now
+                                </span>
+
+
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-between  end" class="idrow">
+                                <span fxFlexOffset="13">
+                                    0076
+                                </span>
+                                <span>
+                                    6 min ago
+                                </span>
+
+
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-between  end" class="idrow">
+                                <span fxFlexOffset="13">
+                                    0076
+                                </span>
+                                <span>
+                                    12:30
+                                </span>
+
+
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-between  end" class="idrow">
+                                <span fxFlexOffset="13">
+                                    0076
+                                </span>
+                                <span>
+                                    8.23
+                                </span>
+
+
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-between  end" class="idrow">
+                                <span fxFlexOffset="13">
+                                    0076
+                                </span>
+                                <span>
+                                    Yesterday
+                                </span>
+
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-between  end" class="idrow">
+                                <span fxFlexOffset="13">
+                                    0076
+                                </span>
+                                <span>
+                                    1 day ago
+                                </span>
+
+
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-between  end" class="idrow">
+                                <span fxFlexOffset="13">
+                                    0076
+                                </span>
+                                <span>
+                                    2 day ago
+                                </span>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+            <div *ngIf="isDisplay" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" fxLayout="row"
+                fxLayoutAlign="space-evenly" class="hoveringdiv11">
+
+                <img src="assets\images\Image 194.jpg" class="wifiimage">
+                <div fxLayout="row" fxLayoutAlign="space-evenly">
+
+                    <span class="hoversignaldiv">
+                        Signals
+                    </span>
+                    <span class="span07">
+                        07
+                    </span>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+            <div style="overflow: hidden;width: 100%; margin-left: 1rem;margin-top: 2rem;    height: 59vh;
+            overflow: auto; object-fit: contain;  box-shadow: 0 3px 6px 0 rgba(69, 106, 248, 0.18);position: relative;"
+                class="devstatus">
+                <div class="animationfordevicestatus">
+
+
+                    <div fxLayout="row" fxLayoutAlign="center center " style="margin-top: 1rem;margin-left: 1rem;">
+                        <!-- <img src="assets/images/engine.svg" style="width: 30px;margin-left: 1.5rem;margin-right: 2rem;"> -->
+                        <div fxLayout="column" fxLayoutAlign="space-evenly " class="tit1">
+                            <span>Device Status</span>
+                            <!-- <div class="underline1"></div> -->
+
+                        </div>
+                        <img src="assets\images\Group 8124.png" class="dotimage">
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="space-between start">
+                        <div fxLayout="column" fxLayoutAlign="start start" style="margin-left: 1rem;">
+
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                                <!-- <img src="assets/images/change-car-oil.svg"
+                                style="width:21px;margin-left: 1.5rem;margin-right: 1rem;"> -->
+                                <span class="gsub">Software Version</span>
+                            </div>
+                            <div class="goodclass">
+                                <span class="good">{{device.softwareVersion}}</span>
+                            </div>
+
+
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                                <!-- <img src="assets/images/spark plug.svg"
+                                style="width:7px;margin-left: 30px;margin-right: 24px;"> -->
+                                <span class="gsub">Vcc</span>
+                            </div>
+                            <div class="goodclass">
+                                <span class="good">{{device.vcc}}V</span>
+                            </div>
+
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                                <!-- <img src="assets/images/noun_Battery_1881019.svg"
+                                style="width:14px;margin-left:26px;margin-right: 21px;"> -->
+                                <span class="gsub">Battery Status</span>
+                            </div>
+                            <div class="goodclass" style="background-color: #dffce3;">
+                                <span class="good"
+                                    style="margin-left: 0.5rem;color: #3afd18;">{{batteryCondition}}</span>
+                            </div>
+
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                                <!-- <img src="assets/images/abs warning light.svg"
+                                style="width:14px;margin-left:26px;margin-right: 21px;"> -->
+                                <span class="gsub">Device Health</span>
+                            </div>
+                            <div class="goodclass" style="background-color: #dffce3;">
+                                <span class="good"
+                                    style="margin-left: 0.5rem;color: #3afd18;">{{healthCondition}}</span>
+                            </div>
+
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                                <!-- <img src="assets/images/spark plug.svg"
+                                style="width:7px;margin-left: 30px;margin-right: 24px;"> -->
+                                <span class="gsub">EYL</span>
+                            </div>
+                            <div class="goodclassLorem">
+                                <span class="good">Lorem Ipsum</span>
+                            </div>
+
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                                <!-- <img src="assets/images/spark plug.svg"
+                                style="width:7px;margin-left: 30px;margin-right: 24px;"> -->
+                                <span class="gsub">Remaining Days</span>
+                            </div>
+                            <div>
+                                <span class="good365">365 days</span>
+                            </div>
+
+                        </div>
+                        <div style="width: 70%;margin-right: -30%;margin-top: -2rem;height: 40%;overflow: hidden;"
+                            class="animationsgraph" fxLayout="row" fxLayoutAlign="start start">
+                            <div class="temp_container">
+                                <mwl-gauge class="temp" [max]="120" [value]="90" [animated]="true"
+                                    [animationDuration]="1" [dialStartAngle]="-120" [dialEndAngle]="120">
+                                </mwl-gauge>
+                            </div>
+                            <div class="axis_container">
+                                <mwl-gauge class="axis" [max]="100" [value]="device.battery" [animated]="true"
+                                    [animationDuration]="1" [dialStartAngle]="-120" [dialEndAngle]="120">
+                                </mwl-gauge>
+                            </div>
+                            <div fxLayout="column" fxLayoutAlign="center start" style="width: 94px;margin-top: 11.5rem;
+                        margin-left: 1.5rem;
+                        margin-right: -10rem;">
+                                <div fxLayout="row" fxLayoutAlign="start start">
+                                    <span style="font-size: 24px;
+                            font-weight: bold;
+                            color: #4a4a4a;
+                            letter-spacing: 1.56px;">{{device.battery}}</span>
+                                    <span style="letter-spacing: 0.78px;
+                            color: #a2a2a2;
+                            font-weight: 500;
+                            font-size: 12px;">%</span>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 6px;">
+                                    <img src="assets/images/noun_Battery_1881019.svg" style="width: 9px;">
+                                    <div fxLayout="column" fxLayoutAlign="start start">
+                                        <span style="font-size: 7px;
+                            color: #a2a2a2;
+                            letter-spacing: 0.27px;
+                            margin-left: 8px;">DEVICE</span>
+                                        <span style="font-size: 7px;
+                            color: #a2a2a2;
+                            letter-spacing: 0.27px;
+                            margin-left: 8px;
+                            margin-top: -9px;">BATTERY</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+<app-loader></app-loader>

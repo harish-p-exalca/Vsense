@@ -19,6 +19,7 @@ import { ChangePasswordComponent } from './Auth/change-password/change-password.
 import { WaterConsumptionComponent } from './pages/CarbonFootprint/water-consumption/water-consumption.component';
 import { EnergyConsumptionComponent } from './pages/CarbonFootprint/energy-consumption/energy-consumption.component';
 import { MonitorComponent } from './Pages/Dashboard/monitor/monitor.component';
+import { ControldetailsComponent } from './Pages/controldetails/controldetails.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,11 @@ const routes: Routes = [
   {
     path:'devicedetails',
     component:Dashboard2Component,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'controldetails',
+    component:ControldetailsComponent,
     canActivate: [AuthGuard]
   },
   {
