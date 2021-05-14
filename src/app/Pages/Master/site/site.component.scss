@@ -20,12 +20,10 @@
     table {
         width: 100%;
         border: solid 2px #f4f4f4;
-        height: 420px;
         th {
           color: #ffffff;
           background-color: #3131ff;
           @extend .poppins;
-          padding-left: 30px;
         }
     
         td {
@@ -139,7 +137,7 @@
     }
     .cardsblue{
         background-color: #3131ff;
-        color: #ffffff;
+        color: #ffffff; font-family: 'poopins';
         width: 75%;
         height: 60px;
         // margin-bottom: 1rem;
@@ -158,7 +156,7 @@
     .formfield{
         // @extend .poppins;
         font-size: 12px;
-        width: 70%;
+        width: 30%;
         margin-top: -1.5rem
     }
     .formfieldputtouse{
@@ -195,20 +193,16 @@
       }
 }
 .tabledivision{
-  height: 460px !important;
+  height: 400px !important;
   margin-top: 1rem;
   // overflow: auto;
   // margin-top: 1.5rem;
 }
 .addimage{
   object-fit: contain;
-  margin-top: 0rem;
-  // transform: scale(0.8);
-  width: 30px;
-  height: 30px;
-  margin-left: 48rem
+  margin-top: -1rem;
+  transform: scale(0.8)
 }
-
 .createdevice{
   @extend .poppins;
   font-size: 12px;
@@ -259,17 +253,17 @@ tbody {
  
   overflow:auto;
 }
-.buttonsapn{
-  padding: 0px 0px 5px 0px;
+.bigimage{
+  width: 70%;
+  height: 300px; object-fit: contain;
+  margin-left: 3rem;
 }
-.addparameters{
-  @extend .poppins; 
-  font-size: 12px;
-  color: #394256;
-  margin-top: -0.3rem;
-  bottom: 1;
-  height: 40px; text-align: end;
-}
-.addparameters:hover{
-  color: #3131ff;
-}
+// .bottom-right {
+//   position: relative;
+// margin-left: -21rem;
+// top: 8.5rem;
+//   // background-color: #efefef;
+//   background-color: #efefef;
+//   width: 80px;
+//   height: 30px;
+// }

@@ -90,7 +90,7 @@
 
 
                 <div fxLayout="row" fxLayoutAlign="space-between center" class="graphdiv" #widgetsContent
-                    fxLayoutGap="40px" fxLayout.xs="column" *ngFor="let item of data;index as i">
+                    fxLayoutGap="35px" fxLayout.xs="column" *ngFor="let item of data;index as i">
 
 
                     <div style="margin-left: 3.5rem !important;">
@@ -382,8 +382,8 @@
                         </div>
 
                     </div>
-                    <div class="bluerectanglebox" fxLayout="column"  >
-                        <div class="innerbluerectanglebox">
+                    <!-- <div class="bluerectanglebox" fxLayout="column"  >
+                        <div class="innerbluerectanglebox" style="height: 40px;">
                             <img src="assets\images\Group 8239.svg" class="blueimg">
                             <span
                                 style="position: relative;top: 6px; display: flex; align-items: center; justify-content: center;">
@@ -391,8 +391,8 @@
                             </span>
 
                         </div>
-                        <div *ngFor="let item of data;index as i" style="height: 135px;margin-top: -0.8rem;">
-                            <div  *ngIf="i%4==0">
+                        <div *ngFor="let item of data;index as i" style="height: 135px;">
+                            <div  *ngIf="i%4==0" style="width: 100%;height: 80%;">
 
                                 <div style="display:flex;justify-content:center">
                                     <div class="fuelcontainer">
@@ -420,6 +420,73 @@
 
                         </div>
                         <div style="height: 25px;">
+
+                        </div>
+                        <div fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="minavgmax">
+                                    Min
+                                </span>
+                                <span class="minavgmax">
+                                    Avg
+                                </span>
+                                <span class="minavgmax">
+                                    Max
+                                </span>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-around center">
+                                <span class="min">
+                                    55.6
+                                </span>
+                                <span class="avg">
+                                    55.6
+                                </span>
+                                <span class="max">
+                                    55.6
+                                </span>
+                            </div>
+                        </div>
+
+                    </div> -->
+
+                    <div class="bluerectanglebox" fxLayout="column"  >
+                        <div class="innerbluerectanglebox">
+                            <img src="assets\images\Group 8239.svg" class="blueimg">
+                            <span
+                                style="position: relative;top: 6px; display: flex; align-items: center; justify-content: center;">
+                                Vibration
+                            </span>
+
+                        </div>
+                        <div *ngFor="let item of data;index as i" style="height: 135px;">
+                            <div style="width: 100%;height: 80%;" *ngIf="i%4==0">
+
+                                <div style="display:flex;justify-content:center">
+                                    <div class="fuelcontainer">
+                                        <div style="display: block" class="fuelchart">
+                                            <mwl-gauge class="temperature" [max]="item.max" [dialStartAngle]="-90"
+                                                [dialEndAngle]="-90.001" [value]="item.log.value"
+                                                [showValue]="false" [animated]="true" [animationDuration]="1">
+                                            </mwl-gauge>
+                                        </div>
+                                        <div class="border_circle" fxLayout="column" fxLayoutAlign="center center">
+
+                                            <span
+                                                style="color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;margin-top: 16px;">
+                                                {{item.log.value | number:'2.0-1'}}</span>
+                                            <span style="   color: #ee4057;
+                                    letter-spacing: 1.1px;
+                                    font-weight: 500;
+                                    font-size: 10px;">{{item.unit}}</span>
+                                        </div>
+                                        <div class="dash_border"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div style="height: 10px;">
 
                         </div>
                         <div fxLayout="column">
@@ -645,7 +712,7 @@
 
             <div class="livefeed" fxLayout="row">
                 <span>
-                    <img src="assets\images\Component 37 – 1.svg" class="liveimg">
+                    <img src="assets\images\Group 8327.svg" class="liveimg">
                 </span>
 
                 <span class="live" fxFlexOffset="10px">
@@ -660,50 +727,50 @@
                 <table mat-table [dataSource]="dataSource" matSort class="tabledata">
 
                     <ng-container matColumnDef="Site">
-                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Site
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent"> Site
                         </th>
-                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                        <td mat-cell *matCellDef="let element"  class="tablecontent">
                             {{element.Site}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="Space">
-                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Space </th>
-                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent"> Space </th>
+                        <td mat-cell *matCellDef="let element"  class="tablecontent">
                             {{element.Space}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="Asset">
-                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Asset </th>
-                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" > Asset </th>
+                        <td mat-cell *matCellDef="let element"  class="tablecontent">
                             {{element.Asset}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="Title">
-                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Title </th>
-                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" > Title </th>
+                        <td mat-cell *matCellDef="let element"  class="tablecontent">
                             {{element.Title}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="Value">
-                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Value </th>
-                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent"> Value </th>
+                        <td mat-cell *matCellDef="let element"  class="tablecontent">
                             {{element.Value}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="Status">
-                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Status </th>
-                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" > Status </th>
+                        <td mat-cell *matCellDef="let element"  class="tablecontent">
                             {{element.Status}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="Lastfeed">
-                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" mat-sort-header> Last feed
+                        <th mat-header-cell *matHeaderCellDef class="tableheadercontent" > Last feed
                         </th>
-                        <td mat-cell *matCellDef="let element" (click)="rotate()" class="tablecontent">
+                        <td mat-cell *matCellDef="let element"  class="tablecontent">
                             {{element.Lastfeed}}
                         </td>
                     </ng-container>
@@ -856,7 +923,7 @@
 
 
             <div style="overflow: hidden;width: 100%; margin-left: 1rem;margin-top: 2rem;    height: 59vh;
-            overflow: auto; object-fit: contain;  box-shadow: 0 3px 6px 0 rgba(69, 106, 248, 0.18);position: relative;"
+            overflow: hidden; object-fit: contain;  box-shadow: 0 3px 6px 0 rgba(69, 106, 248, 0.18);position: relative;"
                 class="devstatus">
                 <div class="animationfordevicestatus">
 
@@ -873,7 +940,7 @@
                     <div fxLayout="row" fxLayoutAlign="space-between start">
                         <div fxLayout="column" fxLayoutAlign="start start" style="margin-left: 1rem;">
 
-                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 0.5rem;">
                                 <!-- <img src="assets/images/change-car-oil.svg"
                                 style="width:21px;margin-left: 1.5rem;margin-right: 1rem;"> -->
                                 <span class="gsub">Software Version</span>
@@ -883,7 +950,7 @@
                             </div>
 
 
-                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 0.5rem;">
                                 <!-- <img src="assets/images/spark plug.svg"
                                 style="width:7px;margin-left: 30px;margin-right: 24px;"> -->
                                 <span class="gsub">Vcc</span>
@@ -892,7 +959,7 @@
                                 <span class="good">{{device.vcc}}V</span>
                             </div>
 
-                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 0.5rem;">
                                 <!-- <img src="assets/images/noun_Battery_1881019.svg"
                                 style="width:14px;margin-left:26px;margin-right: 21px;"> -->
                                 <span class="gsub">Battery Status</span>
@@ -902,7 +969,7 @@
                                     style="margin-left: 0.5rem;color: #3afd18;">{{batteryCondition}}</span>
                             </div>
 
-                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 0.5rem;">
                                 <!-- <img src="assets/images/abs warning light.svg"
                                 style="width:14px;margin-left:26px;margin-right: 21px;"> -->
                                 <span class="gsub">Device Health</span>
@@ -912,7 +979,7 @@
                                     style="margin-left: 0.5rem;color: #3afd18;">{{healthCondition}}</span>
                             </div>
 
-                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 0.5rem;">
                                 <!-- <img src="assets/images/spark plug.svg"
                                 style="width:7px;margin-left: 30px;margin-right: 24px;"> -->
                                 <span class="gsub">EYL</span>
@@ -921,7 +988,7 @@
                                 <span class="good">Lorem Ipsum</span>
                             </div>
 
-                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem;">
+                            <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 0.5rem;">
                                 <!-- <img src="assets/images/spark plug.svg"
                                 style="width:7px;margin-left: 30px;margin-right: 24px;"> -->
                                 <span class="gsub">Remaining Days</span>
@@ -943,7 +1010,7 @@
                                     [animationDuration]="1" [dialStartAngle]="-120" [dialEndAngle]="120">
                                 </mwl-gauge>
                             </div>
-                            <div fxLayout="column" fxLayoutAlign="center start" style="width: 94px;margin-top: 11.5rem;
+                            <div fxLayout="column" fxLayoutAlign="center start" style="width: 10px;margin-top: 11.5rem;
                         margin-left: 1.5rem;
                         margin-right: -10rem;">
                                 <div fxLayout="row" fxLayoutAlign="start start">

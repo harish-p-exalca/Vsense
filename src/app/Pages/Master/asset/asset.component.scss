@@ -18,21 +18,22 @@
         cursor: pointer;
     }
     table {
-        width: 100%;
+        width: 900px;
         border: solid 2px #f4f4f4;
-        height: 420px;
+        height: 300px !important; 
         th {
           color: #ffffff;
           background-color: #3131ff;
           @extend .poppins;
-          padding-left: 30px;
+         text-align: center;font-size: 12px;
+          padding-left: 60px;
         }
     
         td {
           @extend .poppins;
-          font-size: 11px;
-          color: #3e485a;
-          min-width: max-content !important;
+          font-size: 12px;width: 40px;
+          color: #3e485a; padding-left: 17px;
+          min-width: max-content !important; 
         }
 
         td.mat-cell{
@@ -96,6 +97,7 @@
         background-color: #ffffff;
         padding: 28px 20px 8px 20px;
         height: 100vh;
+       
     }
     .countbox{
         height: 20px;
@@ -136,6 +138,16 @@
         height: 72px;
         margin-bottom: 1rem;
         border-radius: 4px;
+        border-left-style: solid;
+        border-left-width: 5px;
+        border-left-color: #ff3e3e;
+        // border-left-color: #4db151;
+        // border-left-color: #3131ff;
+    }
+    .cards:hover{
+      background-color: #f9f9ff;
+      border: solid 1px #3131ff;
+      border-radius: 4px;
     }
     .cardsblue{
         background-color: #3131ff;
@@ -156,7 +168,7 @@
         filter: brightness(0.35);
     }
     .formfield{
-        // @extend .poppins;
+        //  @extend .poppins;
         font-size: 12px;
         width: 70%;
         margin-top: -1.5rem
@@ -195,18 +207,32 @@
       }
 }
 .tabledivision{
-  height: 460px !important;
-  margin-top: 1rem;
+  height: 42vh !important;
+  margin-top: -0.5rem;
+  width: 890px;
+  max-width: 100%;
+  overflow: auto;
+  border-radius: 4px;
+  //overflow-y: hidden;
   // overflow: auto;
   // margin-top: 1.5rem;
 }
+.tabledivision::-webkit-scrollbar{
+    // display: none;
+    // overflow-y: hidden;
+    width: 0; 
+    // height: 0;
+    background: transparent;
+}
+
 .addimage{
   object-fit: contain;
   margin-top: 0rem;
   // transform: scale(0.8);
   width: 30px;
   height: 30px;
-  margin-left: 48rem
+  margin-left: 45rem;
+  
 }
 
 .createdevice{
@@ -215,7 +241,7 @@
   color: #394256;
 }
 .scrollcards{
-  height: 55px !important;
+  margin-top: -0.5rem;
 }
 .scrollcards::-webkit-scrollbar{
   display: none;
@@ -223,11 +249,12 @@
 
 .footerdiv{
   background-color: #f4f4fb;
-  width: 65%;
+  width: 63%;
   height: 60px;
   border-radius: 4px;
   position: fixed;
   bottom: 0;
+  z-index: 1 !important;
 }
 .copybutton{
   border-radius: 4px;
@@ -239,7 +266,7 @@
   width: 130px;
 }
 .deleteoption{
-  margin-left: 32rem;
+  margin-left: 42rem;
   font-size: 14px;
   color: #220c0c;
 }
@@ -272,4 +299,126 @@ tbody {
 }
 .addparameters:hover{
   color: #3131ff;
+}
+.workingdiv{
+    // background-color: #f9f8fe;
+    background-color: #f9f8fe;
+    width: 87%;
+    height: 40px;
+    border-radius: 4px;
+    margin-left: 1.3rem;
+}
+.activespan{
+    @extend .poppins; 
+    font-size: 10px;
+    color: #394256;  
+}
+.matautocomplete{
+    @extend .poppins; 
+    font-size: 12px;
+    color: #394256; 
+    height: 30px !important;  text-align: center;
+}
+.matautocomplete:hover{
+  color: #3131ff;
+}
+.edgebtn{
+    @extend .poppins;
+    font-size: 12px;
+    color: #3131ff;
+    background-color: white;
+    border: solid 1px #3131ff;
+    border-radius: 4px;
+  
+    height: 25px;
+    text-align: -webkit-center;
+    align-self: normal;
+    line-height: 2;
+}
+.edgespanclass{
+    @extend .poppins; 
+    font-size: 12px;
+    color: #394256; 
+}
+.Rectangle-7734 {
+    width: 183px;
+    height: 96px;
+    
+    border-radius: 4px;
+     border: solid 2px #3131ff;
+    background-color: #f8f8ff;
+}
+.rectanglespan1{
+    @extend .poppins; 
+    font-size: 14px;
+    color: #3131ff; 
+}
+.backarrow{
+    size: 12px;
+    object-fit: contain;
+    float: right;
+    margin-left: 10px;
+    transform: rotate(180deg);
+    margin-top: 0.5rem;
+}
+.goback{
+  float: right;
+  margin-top: 0.5rem;
+  object-fit: contain;
+}
+.rectanglespan1scroll{
+    @extend .poppins; 
+    font-size: 12px;
+    color: #394256; 
+}
+.edgedelete{
+    @extend .poppins; 
+    font-size: 12px;
+    color: #d6201d; 
+}
+.Rectangle-7734-2 {
+    width: 150px;
+    height: 70px;
+    border-radius: 6px;
+    // margin-top: 2rem;
+    background-color: rgb(246, 246, 246);
+}
+.Rectangle-7734-2:hover{
+  background-color: #f8f8ff;
+}
+
+.edgescrolldivision{
+    scroll-behavior: smooth;
+    overflow: auto;
+    cursor: pointer;
+    width: 700px;
+
+}
+.edgescrolldivision::-webkit-scrollbar{
+    display: none;
+}
+.scroll_div{
+   height: 130px;
+}
+.scroll_div .deletehover{
+  visibility: hidden;
+}
+.scroll_div:hover .deletehover{
+  visibility: visible;
+}
+
+.changestyle{
+ 
+  border: solid 2px #3131ff;
+  color: #3131ff; background-color: #f8f8ff;
+}
+.changestyle1{
+  color: #3131ff;
+  background-color: #f8f8ff;
+}
+
+.iconstyle{
+  margin-top: -23px;
+  line-height: 1.4;
+  float: right;
 }

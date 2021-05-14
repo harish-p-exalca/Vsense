@@ -77,9 +77,13 @@ export class ControldetailsComponent implements OnInit,OnDestroy {
   public innerWidth: any;
   public innerHeight:any;
 
+
   displayedColumns: string[] = ['Site', 'Space', 'Title','Status', 'Asset', 'Value', 'Lastfeed'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
+  // ele = document.getElementById('container');
+ 
+ 
 
   authenticationDetails: AuthenticationDetails;
   currentUserID: Guid;

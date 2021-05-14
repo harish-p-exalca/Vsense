@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MomentDateModule } from '@angular/material-moment-adapter';
+
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatSidenavModule } from "@angular/material/sidenav";
@@ -20,8 +24,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import 'chartjs-plugin-labels';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -29,7 +32,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MenuListItemComponent } from "./Layout/menu-list-item/menu-list-item.component";
 import { NavService } from "./nav.service";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -76,6 +79,11 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { ControldetailsComponent } from './Pages/controldetails/controldetails.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { SenseEdgeComponent } from './Pages/Master/sense-edge/sense-edge.component';
+import { SiteComponent } from './pages/master/site/site.component';
+import { SpaceComponent } from './pages/master/space/space.component';
+import { EdgegroupComponent } from './pages/master/edgegroup/edgegroup.component';
+import { AssetComponent } from './pages/master/asset/asset.component';
+import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +117,11 @@ import { SenseEdgeComponent } from './Pages/Master/sense-edge/sense-edge.compone
     MonitorComponent,
     ControldetailsComponent,
     SenseEdgeComponent,
+    SiteComponent,
+    SpaceComponent,
+    EdgegroupComponent,
+    AssetComponent,
+    ExceptionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,7 +139,7 @@ import { SenseEdgeComponent } from './Pages/Master/sense-edge/sense-edge.compone
     MatGridListModule,
     ChartsModule,
     GaugeModule.forRoot(),
-    MatFormFieldModule,
+    MatFormFieldModule,MomentDateModule,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
@@ -141,7 +154,7 @@ import { SenseEdgeComponent } from './Pages/Master/sense-edge/sense-edge.compone
     MatPaginatorModule,
     MatSortModule,
     NgxSpinnerModule,
-    MatMenuModule,
+    MatMenuModule,MatAutocompleteModule,
     MatTooltipModule,
     NgApexchartsModule
   ],
