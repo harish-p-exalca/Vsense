@@ -21,6 +21,11 @@ import { EnergyConsumptionComponent } from './pages/CarbonFootprint/energy-consu
 import { MonitorComponent } from './Pages/Dashboard/monitor/monitor.component';
 import { ControldetailsComponent } from './Pages/controldetails/controldetails.component';
 import { SenseEdgeComponent } from './Pages/Master/sense-edge/sense-edge.component';
+import { SiteComponent } from './pages/master/site/site.component';
+import { SpaceComponent } from './pages/master/space/space.component';
+import { EdgegroupComponent } from './pages/master/edgegroup/edgegroup.component';
+import { AssetComponent } from './pages/master/asset/asset.component';
+import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
 
 const routes: Routes = [
   {
@@ -40,7 +45,7 @@ const routes: Routes = [
   },
   {
     path:'exceptions',
-    component:ExceptionComponent,
+    component:ExceptionsComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -59,22 +64,27 @@ const routes: Routes = [
       },
       {
         path:'equipment',
-        component:EquipmentComponent,
+        component:AssetComponent,
 
       },
       {
         path:'location',
-        component:LocationComponent,
+        component:SiteComponent,
 
       },
       {
         path:'deviceassign',
-        component:DeviceassignComponent,
+        component:SpaceComponent,
+
+      },
+      {
+        path:'edgegroup',
+        component:EdgegroupComponent,
 
       },
       {
         path:'deviceassignparam',
-        component:DeviceassignparamComponent,
+        component:EdgegroupComponent,
       }
     ]
   },

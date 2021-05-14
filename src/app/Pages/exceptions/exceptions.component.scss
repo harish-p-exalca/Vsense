@@ -1,0 +1,104 @@
+.title{
+    font-family: Poppins;
+ font-size: 18px;
+ color: #394256;
+}
+.container{
+    background-color: #ffffff;
+    padding: 28px 0px 8px 0px;
+    height: 100%;
+}
+.search-container{
+    border-radius: 4px;
+    border: solid 1px #3131ff;
+    // height: 36px;
+    height: 35px;
+    // width: 30%;
+    width: 430px;
+    background-color: #ffffff
+}
+.search{
+    font-family: Poppins;
+    font-size: 12px;
+    color: #3131ff;
+    border: none;
+    margin-left: 1rem;
+}
+.search::-webkit-input-placeholder {
+    color: #3131ff;
+    font-size: 10px;
+}
+.search:focus{
+    outline: none;
+}
+.searchbtn{
+   height: 34px;
+    width: 60px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    background-color: #3131ff;
+}
+.pointer{
+    cursor: pointer;
+}
+
+.tabledivision{
+    height: 75vh !important;
+    margin-top: 1rem;
+    width: 1450px;
+    // width: 100%;
+    max-width: 100%;
+    overflow: auto;
+    border-radius: 4px;
+    //overflow-y: hidden;
+    // overflow: auto;
+    // margin-top: 1.5rem;
+  }
+  .tabledivision::-webkit-scrollbar{
+      // display: none;
+      // overflow-y: hidden;
+      width: 0; 
+      // height: 0;
+      background: transparent;
+  }
+  table {
+    width: 100%;
+    border: solid 2px #f4f4f4;
+    height: 300px !important; 
+    th {
+      color: #ffffff;
+      background-color: #3131ff;
+      font-family: Poppins;
+      z-index: 1;
+      padding-left: 25px;
+    }
+    tr:first-child {
+        position: sticky;
+    }
+    td {
+        font-family: 'poopins';
+      font-size: 11px;
+      width: 40px;
+      color: #3e485a; 
+      padding-left: 30px;
+      min-width: max-content !important; 
+    }
+
+    td.mat-cell{
+        border-bottom-color: transparent;
+    }
+
+    tr {
+      height: 42px;
+    }
+    
+    th.mat-header-cell:first-child {
+      border-top-left-radius: 4px !important;
+      // border-bottom-left-radius: 4px !important;
+    }
+
+    th.mat-header-cell:last-child {
+        border-top-right-radius: 4px !important;
+        // border-bottom-right-radius: 4px !important;
+    }
+}

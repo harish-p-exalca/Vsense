@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {trigger, state, style, animate, transition} from '@angular/animations';
-
 @Component({
-  selector: 'app-sense-edge',
-  templateUrl: './sense-edge.component.html',
-  styleUrls: ['./sense-edge.component.scss'],
+  selector: 'app-edgegroup',
+  templateUrl: './edgegroup.component.html',
+  styleUrls: ['./edgegroup.component.scss'],
   animations: [
     // Each unique animation requires its own trigger. The first argument of the trigger function is the name
     trigger('rotatedState', [
@@ -16,18 +15,16 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
   ])
 ]
 })
-export class SenseEdgeComponent implements OnInit {
+export class EdgegroupComponent implements OnInit {
   devices=[1,2,3,4,5,56,8,7];
-  ParamdisplayedColumns:string[]=["ParamID","Title","Unit","LongText","Min","Max","Action"];
+  ParamdisplayedColumns:string[]=["ParamID","Title","Unit","LongText","Min","Max","Icon","Percentage","Color","Action"];
   ParamDataSource:MatTableDataSource<any>=new MatTableDataSource(this.devices);
-//animation
-  state: string = 'default';
 
+  state: string = 'default';
+  
   //input field color
   isFocused:boolean = true;
   isFocused1:boolean = true;
-  isFocused2:boolean = true;
-  isFocused3:boolean = true;
   constructor() { }
 
   ngOnInit(): void {
@@ -40,4 +37,5 @@ export class SenseEdgeComponent implements OnInit {
     this.rotate();
   }
     //image angular animation
+
 }

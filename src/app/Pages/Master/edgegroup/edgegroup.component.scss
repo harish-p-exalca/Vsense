@@ -18,21 +18,22 @@
         cursor: pointer;
     }
     table {
-        width: 100%;
+        width:900px;
         border: solid 2px #f4f4f4;
-        height: 420px;
+        height: 465px;
         th {
           color: #ffffff;
           background-color: #3131ff;
           @extend .poppins;
-          padding-left: 30px;
+          padding-left: 40px;
+          text-align: center;
         }
     
         td {
           @extend .poppins;
-          font-size: 11px;
+          font-size: 11px;width: 50px;
           color: #3e485a;
-          min-width: max-content !important;
+          min-width: max-content !important; padding-left: 17px;
         }
 
         td.mat-cell{
@@ -133,7 +134,7 @@
     }
     .cards{
         background-color: #ffffff;
-        height: 72px;
+        height: 50px;
         margin-bottom: 1rem;
         border-radius: 4px;
     }
@@ -141,7 +142,7 @@
         background-color: #3131ff;
         color: #ffffff;
         width: 75%;
-        height: 60px;
+        height: 45px;
         // margin-bottom: 1rem;
         border-radius: 4px;
         margin-left: 1.3rem;
@@ -197,8 +198,20 @@
 .tabledivision{
   height: 460px !important;
   margin-top: 1rem;
+  // max-width: 100%;
+  // overflow-x: scroll;
+  width: 890px;
+  max-width: 100%;
+  overflow: auto;
+  border-radius: 4px;
   // overflow: auto;
   // margin-top: 1.5rem;
+}
+.tabledivision::-webkit-scrollbar{
+  // display: none;
+  width: 0; 
+  height: 0;
+  background: transparent;
 }
 .addimage{
   object-fit: contain;
@@ -206,16 +219,15 @@
   // transform: scale(0.8);
   width: 30px;
   height: 30px;
-  margin-left: 48rem
+  margin-left: 45rem
 }
-
 .createdevice{
   @extend .poppins;
   font-size: 12px;
   color: #394256;
 }
 .scrollcards{
-  height: 55px !important;
+    height: 25px !important;
 }
 .scrollcards::-webkit-scrollbar{
   display: none;
@@ -263,13 +275,66 @@ tbody {
   padding: 0px 0px 5px 0px;
 }
 .addparameters{
-  @extend .poppins; 
-  font-size: 12px;
-  color: #394256;
-  margin-top: -0.3rem;
-  bottom: 1;
-  height: 40px; text-align: end;
+    @extend .poppins; 
+    font-size: 12px;
+    color: #394256;
+    margin-top: -0.3rem;
+    bottom: 1;
+    height: 40px;
+    text-align: end;
 }
 .addparameters:hover{
+    color: #3131ff;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: #3131ff;
+  border-radius: 50%;
+  // display: inline-block;
+}
+.color{
   color: #3131ff;
+}
+.colortxt{
+  margin-left: -12px;
+  overflow: hidden;
+  width: 0px;
+}
+.color-container{
+  padding: 4px;
+  border-radius: 4px;
+}
+.color-container:hover{
+  .colortxt{
+      animation: widthshow 0.5s;
+      width: 100%;
+  }
+}
+.pointer{
+  cursor: pointer;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #5ba022;
+  height: 10px;
+}
+.progressbar{
+  margin-top: 1rem;
+  border-radius: 20px;
+  width: 80px;
+}
+
+.percentdiv{
+  background-color: #8cff88;
+  width: 80px;  border-radius: 4px !important;
+  height: 22px; 
+  margin-left: 2rem; margin-top: 0.5rem;
+}
+.percentspan{
+  color: #5ba022;
+  @extend .poppins; 
+  font-size: 12px;
+  line-height: 23px; margin-left: 10px;
 }
