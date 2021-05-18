@@ -234,7 +234,8 @@
 .deleteoption{
   margin-left: 32rem;
   font-size: 14px;
-  color: #220c0c;
+  color: #220c0c; @extend .poppins;
+  cursor: pointer; display: block;
 }
 .deleteoption:hover{
   color: #d6201d;
@@ -242,7 +243,8 @@
 .updateoption{
   margin-right: 3rem;
   font-size: 14px;
-  color: #220c0c;
+  color: #220c0c; @extend .poppins;
+  cursor: pointer; display: block;
 }
 .updateoption:hover{
   color: #26b329;
@@ -256,4 +258,23 @@ tbody {
   width: 60%;
   height: 280px; object-fit: contain;
   margin-left: 3rem;
+}
+.createoption{
+  margin-right: 3rem;
+  font-size: 14px;
+  color: #220c0c; @extend .poppins;
+  cursor: pointer; display: block;
+}
+.createoption:hover{
+  color: #26b329;
+}
+.addimage{
+  object-fit: contain;
+  margin-top: 0rem;
+  // transform: scale(0.8);
+  width: 50px;
+  height: 50px;
+ bottom: 0;
+ margin-left: 53rem;
+ top: 80%;
 }

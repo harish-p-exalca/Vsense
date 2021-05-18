@@ -17,7 +17,8 @@
                 <img src="assets/images/v2/Filter.svg" width="18px">
             </div>
             <div class="hdevider"></div>
-            <button mat-button class="newbtn">
+            <button mat-button class="newbtn" (click) ="handle_clear()"
+            (click)="showandhideer2()">
                 Create New Space
             </button>
 
@@ -33,7 +34,7 @@
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                             <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                            <span class="titletxt">12/06/2021</span>
+                            <span class="titletxt">CreatedOn</span>
                         </div>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
@@ -48,23 +49,23 @@
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false">
-                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devices">
-                        <div fxLayout="column" fxLayoutAlign="space-evenly start"
-                            style="height: 57px;padding-left: 1rem;">
+                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index">
+                        <div  (click) = "sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
+                            style="height: 57px;padding-left: 1rem;" (click)="showandhider1()">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
                                     <!-- filter: brightness(0.3); -->
-                                    <span class="titletxt">Title</span>
+                                    <span class="titletxt">{{item.Title}}</span>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                                    <span class="titletxt">12/06/2021</span>
+                                    <span class="titletxt">{{item.CreatedOn | date:'dd/MM/yyyy'}}</span>
                                 </div>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                 <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                                <span class="titletxt">Work Center</span>
+                                <span class="titletxt">{{item.WorkCenter}}</span>
                             </div>
                         </div>
                     </mat-list-option>
@@ -80,43 +81,63 @@
                 style="margin-left: 2rem;padding: 1rem 0 0 0;">
 
 
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="11.8%">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="11.8%" [formGroup]="registrationFormGroup">
                     <span class="subtitle">Title</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Name" readonly
+                        <input matInput autocomplete="off" placeholder="Enter Name"  [(ngModel)]="Title1"
                         (blur)="isFocused = false" (focus)="isFocused = true" [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused ? 'Poppins':'poopins'" [style.font-size]="isFocused ? '12px':'12px'">
+                        [style.font-family]="isFocused ? 'Poppins':'poopins'" [style.font-size]="isFocused ? '12px':'12px'"
+                        formControlName="Title" ngModel required
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('Title').hasError('required')">
+                        Title is required
+                    </mat-error>
                     </mat-form-field>
                 </div>
 
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="6%">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="6%" [formGroup]="registrationFormGroup">
                     <span class="subtitle">Work Center</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Purpose"
+                        <input matInput autocomplete="off" placeholder="Enter Purpose" [(ngModel)]="WorkCenter1"
                         (blur)="isFocused1 = false" (focus)="isFocused1 = true" [style.color]="isFocused1 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused1 ? 'Poppins':'poopins'" [style.font-size]="isFocused1 ? '12px':'12px'">
+                        [style.font-family]="isFocused1 ? 'Poppins':'poopins'" [style.font-size]="isFocused1 ? '12px':'12px'"
+                        formControlName="WorkCenter" ngModel required
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('WorkCenter').hasError('required')">
+                        WorkCenter is required
+                    </mat-error>
                     </mat-form-field>
                 </div>
 
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="3.7%">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="3.7%" [formGroup]="registrationFormGroup">
                     <span class="subtitle">Parent Space ID</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Plant Name"
+                        <input matInput autocomplete="off" placeholder="Enter Space ID" [(ngModel)]="ParantSpaceID1"
                         (blur)="isFocused2 = false" (focus)="isFocused2 = true" [style.color]="isFocused2 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused2 ? 'Poppins':'poopins'" [style.font-size]="isFocused2 ? '12px':'12px'">
+                        [style.font-family]="isFocused2 ? 'Poppins':'poopins'" [style.font-size]="isFocused2 ? '12px':'12px'"
+                        formControlName="ParantSpaceID" ngModel required type="number"
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('ParantSpaceID').hasError('required')">
+                        ParantSpaceID is required
+                    </mat-error>
                     </mat-form-field>
                 </div>
 
-                <div fxLayout="row" fxFlex=43 fxLayoutAlign="start center " fxLayoutGap="10.5%">
+                <div fxLayout="row" fxFlex=43 fxLayoutAlign="start center " fxLayoutGap="10.5%" [formGroup]="registrationFormGroup">
                     <span class="subtitle">Site ID</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder=""
+                        <input matInput autocomplete="off" placeholder="Enter Site ID"  [(ngModel)]="SiteID1"
                         (blur)="isFocused3 = false" (focus)="isFocused3 = true" [style.color]="isFocused3 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused3 ? 'Poppins':'poopins'" [style.font-size]="isFocused3 ? '12px':'12px'">
+                        [style.font-family]="isFocused3 ? 'Poppins':'poopins'" [style.font-size]="isFocused3 ? '12px':'12px'"
+                        formControlName="SiteID" ngModel required type="number"
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('SiteID').hasError('required')">
+                        SiteID is required
+                    </mat-error>
                     </mat-form-field>
                 </div>
 
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="11.5%">
+                <!-- <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="11.5%">
                     <span class="subtitle">Date</span>
                     <mat-form-field appearance="standard" class="formfield" (click)="picker1.open()">
                         <input matInput [matDatepicker]="picker1" autocomplete="off" placeholder="mm/dd/yyyy" 
@@ -126,23 +147,33 @@
                         </mat-datepicker-toggle>
                         <mat-datepicker   #picker1></mat-datepicker>
                     </mat-form-field>
-                </div>
+                </div> -->
 
             </div>
             <div fxLayout="row" fxLayoutAlign="center end"  >
-                <img  src="assets\images\Group 8331.svg" class="bigimage">
+                <img  src="assets\images\Group 8331.svg" class="bigimage"
+              >
                 <!-- <div class="bottom-right"></div> -->
             </div>
+
+            <!-- <img src="assets\images\Component 121 – 1.svg" class="addimage"    (click) ="handle_clear()"
+            (click)="showandhideer2()"> -->
 
             <div fxLayout="row" fxLayoutAlign="space-between center" class="footerdiv">
                 <button mat-button class="copybutton" fxFlex="15">
                     Copy
                 </button>
-                <div class="deleteoption">
+                <div class="deleteoption"  *ngIf="buttonnvaluee==1 " (click)="DeleteClicked()" (click) ="handle_clear()">
                     Delete
                 </div>
-                <div class="updateoption">
+                <div class="updateoption"  *ngIf="buttonnvaluee==1 ">
                     Update
+                </div>
+                <div class="deleteoption"  *ngIf="buttonnvaluee!=1 " (click) ="handle_clear()" >
+                    Clear entiries
+                </div>
+                <div class="createoption"  *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()" >
+                    Create
                 </div>
             </div>
         </div>

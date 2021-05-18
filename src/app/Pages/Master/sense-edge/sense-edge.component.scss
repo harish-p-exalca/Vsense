@@ -18,13 +18,14 @@
         cursor: pointer;
     }
     table {
-        width: 100%;
+        width: 900px;
         border: solid 2px #f4f4f4;
-        height: 420px;
+        height: 400px !important;
+        // overflow: auto;
         th {
           color: #ffffff;
           background-color: #3131ff;
-          @extend .poppins;
+          @extend .poppins; text-align: center;
           padding-left: 30px;
         }
     
@@ -195,8 +196,8 @@
       }
 }
 .tabledivision{
-  height: 460px !important;
-  margin-top: 1rem;
+  height: 450px !important;
+  margin-top: 1rem;  overflow: auto;
   // overflow: auto;
   // margin-top: 1.5rem;
 }
@@ -240,16 +241,17 @@
 }
 .deleteoption{
   margin-left: 32rem;
-  font-size: 14px;
-  color: #220c0c;
+  font-size: 14px; @extend .poppins; 
+  color: #220c0c;cursor: pointer; display: block;
 }
 .deleteoption:hover{
   color: #d6201d;
 }
 .updateoption{
   margin-right: 3rem;
-  font-size: 14px;
-  color: #220c0c;
+  font-size: 14px; 
+  color: #220c0c; @extend .poppins;
+  cursor: pointer; display: block;
 }
 .updateoption:hover{
   color: #26b329;
@@ -272,4 +274,13 @@ tbody {
 }
 .addparameters:hover{
   color: #3131ff;
+}
+.createoption{
+  margin-right: 3rem;
+  font-size: 14px; @extend .poppins; 
+  color: #220c0c;cursor: pointer;
+  display: block;
+}
+.createoption:hover{
+  color: #26b329;
 }
