@@ -17,7 +17,7 @@
                 <img src="assets/images/v2/Filter.svg" width="18px">
             </div>
             <div class="hdevider"></div>
-            <button mat-button class="newbtn">
+            <button mat-button class="newbtn" (click)="showandhideer2()"  (click) ="handle_clear()">
               
                 Create New Sense Edge
               
@@ -32,16 +32,16 @@
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                             <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
                             <!-- filter: brightness(0.3); -->
-                            <span class="titletxt">BLR009</span>
+                            <span class="titletxt">Title</span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                             <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                            <span class="titletxt">12/06/2021</span>
+                            <span class="titletxt">CreatedOn</span>
                         </div>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                         <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                        <span class="titletxt">Senseedge9</span>
+                        <span class="titletxt">Status</span>
                     </div>
                 </div>
             </div>
@@ -51,23 +51,23 @@
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false">
-                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devices">
-                        <div fxLayout="column" fxLayoutAlign="space-evenly start"
-                            style="height: 60px;padding-left: 1rem;">
+                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index">
+                        <div (click) = "sampleclick(i)"  fxLayout="column" fxLayoutAlign="space-evenly start"
+                            style="height: 60px;padding-left: 1rem;" (click)="showandhider1()">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
                                     <!-- filter: brightness(0.3); -->
-                                    <span class="titletxt">BLR009</span>
+                                    <span class="titletxt">{{item.Title}}</span>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                                    <span class="titletxt">12/06/2021</span>
+                                    <span class="titletxt">{{item.CreatedOn | date:'dd/MM/yyyy'}}</span>
                                 </div>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                 <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                                <span class="titletxt">Senseedge9</span>
+                                <span class="titletxt">{{item.Status}}</span>
                             </div>
                         </div>
                     </mat-list-option>
@@ -75,7 +75,7 @@
             </div>
         </div>
         <div fxFlex=75 class="right-container" fxLayout.xs="column" >
-            <div fxLayout="row" fxLayoutAlign="space-between ">
+            <div fxLayout="row" fxLayoutAlign="space-between " >
                 <span class="createdevice">Create Device</span>
                 <img src="assets\images\Component 121 – 1.svg" class="addimage"
                 (click)="rotate()" [@rotatedState]='state'  [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()">
@@ -87,42 +87,89 @@
                    
                 </mat-menu>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-evenly " fxLayoutGap="4%" style="padding: 1rem 0 0 0;">
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="12%">
+            <div fxLayout="row" fxLayoutAlign="space-evenly " fxLayoutGap="0%" style="padding: 1rem 0 0 0;">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="12%" [formGroup]="registrationFormGroup">
                     <span class="subtitle">Name</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Name"
+                        <input matInput autocomplete="off" placeholder="Enter Name"   [(ngModel)]="Title1"
                         (blur)="isFocused = false" (focus)="isFocused = true" [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused ? 'Poppins':'poopins'" [style.font-size]="isFocused ? '12px':'12px'">
+                        [style.font-family]="isFocused ? 'Poppins':'poopins'" [style.font-size]="isFocused ? '12px':'12px'" formControlName="Title" ngModel required
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('Title').hasError('required')">
+                        Title is required
+                    </mat-error>
                     </mat-form-field>
                 </div>
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="10%">
-                    <span class="subtitle">Purpose</span>
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="20%" [formGroup]="registrationFormGroup">
+                    <span class="subtitle">Status</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Purpose"
+                        <input matInput autocomplete="off" placeholder="Enter Purpose"   [(ngModel)]="Status1"
                         (blur)="isFocused1 = false" (focus)="isFocused1 = true" [style.color]="isFocused1 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused1 ? 'Poppins':'poopins'" [style.font-size]="isFocused1 ? '12px':'12px'">
+                        [style.font-family]="isFocused1 ? 'Poppins':'poopins'" [style.font-size]="isFocused1 ? '12px':'12px'"
+                        formControlName="Status" ngModel required
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('Status').hasError('required')">
+                        Status is required
+                    </mat-error>
                     </mat-form-field>
                 </div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-evenly " fxLayoutGap="4%" style="margin-top: 4px;">
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="6%">
+            <div fxLayout="row" fxLayoutAlign="space-evenly " fxLayoutGap="0%" style="margin-top: 4px;">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="6%" [formGroup]="registrationFormGroup">
                     <span class="subtitle">Put to Use</span>
                     <mat-form-field appearance="standard" class="formfieldputtouse" (click)="picker1.open()">
-                        <input matInput [matDatepicker]="picker1" autocomplete="off" placeholder="dd/mm/yyyy"
+                        <input matInput [matDatepicker]="picker1" autocomplete="off" placeholder="dd/mm/yyyy"  [(ngModel)]="PuttoUse1"
                         (blur)="isFocused2 = false" (focus)="isFocused2 = true" [style.color]="isFocused2 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused2 ? 'Poppins':'poopins'" [style.font-size]="isFocused2 ? '12px':'12px'">
+                        [style.font-family]="isFocused2 ? 'Poppins':'poopins'" [style.font-size]="isFocused2 ? '12px':'12px'"  
+                        formControlName="PuttoUse" ngModel required
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('PuttoUse').hasError('required')">
+                        Date is required
+                    </mat-error>
                         <mat-datepicker-toggle matSuffix [for]="picker1">
                         </mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
                 </div>
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="10%">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="18%" [formGroup]="registrationFormGroup">
                     <span class="subtitle">Lifespan</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="2    (In years)" readonly
+                        <input matInput autocomplete="off" placeholder="2    (In years)"  [(ngModel)]="Lifespan1"
                         (blur)="isFocused3 = false" (focus)="isFocused3 = true" [style.color]="isFocused3 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused3 ? 'Poppins':'poopins'" [style.font-size]="isFocused3 ? '12px':'12px'">
+                        [style.font-family]="isFocused3 ? 'Poppins':'poopins'" [style.font-size]="isFocused3 ? '12px':'12px'"
+                         formControlName="Lifespan" ngModel required type="number"
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('Lifespan').hasError('required')">
+                        Lifespan number  is required
+                    </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-evenly " fxLayoutGap="0%" style="margin-top: 4px;">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="16%" [formGroup]="registrationFormGroup">
+                    <span class="subtitle">Vcc</span>
+                    <mat-form-field appearance="standard" class="formfield">
+                        <input matInput autocomplete="off" placeholder="Enter Vcc Number"   [(ngModel)]="Vcc1"
+                        (blur)="isFocused3 = false" (focus)="isFocused3 = true" [style.color]="isFocused3 ? '#3131ff':'#a6aeaf'"
+                        [style.font-family]="isFocused3 ? 'Poppins':'poopins'" [style.font-size]="isFocused3 ? '12px':'12px'" 
+                         formControlName="Vcc" ngModel required type="number"
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('Vcc').hasError('required')">
+                        Vcc number is required
+                    </mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="5%" [formGroup]="registrationFormGroup">
+                    <span class="subtitle">SoftwareVersion</span>
+                    <mat-form-field appearance="standard" class="formfield">
+                        <input matInput autocomplete="off" placeholder="Enter SoftwareVersion"  [(ngModel)]="SoftwareVersion1"
+                        (blur)="isFocused3 = false" (focus)="isFocused3 = true" [style.color]="isFocused3 ? '#3131ff':'#a6aeaf'"
+                        [style.font-family]="isFocused3 ? 'Poppins':'poopins'" [style.font-size]="isFocused3 ? '12px':'12px'" 
+                        formControlName="SoftwareVersion" ngModel required type="text"
+                        clearInput>
+                    <mat-error *ngIf="registrationFormGroup.get('SoftwareVersion').hasError('required')">
+                        SoftwareVersion number is required
+                    </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -176,17 +223,23 @@
             </div>
 
             <div fxLayout="row" fxLayoutAlign="space-between center" class="footerdiv">
-                <button mat-button class="copybutton" fxFlex="15">
+                <button mat-button class="copybutton" fxFlex="15"  >
                     Copy
 
                 </button>
 
 
-                <div class="deleteoption">
+                <div class="deleteoption"  *ngIf="buttonnvaluee==1 " (click) ="handle_clear()" (click)="DeleteClicked()">
                     Delete
                 </div>
-                <div class="updateoption">
+                <div class="updateoption"  *ngIf="buttonnvaluee==1 ">
                     Update
+                </div>
+                <div class="deleteoption"  *ngIf="buttonnvaluee!=1 " (click) ="handle_clear()" >
+                    Clear entiries
+                </div>
+                <div class="createoption"  *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()"  >
+                    Create
                 </div>
 
 
