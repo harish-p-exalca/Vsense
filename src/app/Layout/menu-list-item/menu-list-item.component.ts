@@ -50,5 +50,16 @@ export class MenuListItemComponent implements OnInit {
       this.expanded = !this.expanded;
     }
   }
+
+  IsActive():boolean{
+    var currentUrl;
+    this.navService.currentUrl.subscribe((url: string) => {
+      currentUrl=url;
+    });
+    if(currentUrl.indexOf(this.item.route)>=0){
+      return true;
+    }
+    return false;
+  }
 }
  
