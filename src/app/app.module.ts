@@ -84,7 +84,7 @@ import { SpaceComponent } from './pages/master/space/space.component';
 import { EdgegroupComponent } from './pages/master/edgegroup/edgegroup.component';
 import { AssetComponent } from './pages/master/asset/asset.component';
 import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
-import { SnackbarComponent } from './Pages/Master/snackbar/snackbar.component';
+// import { SnackbarComponent } from './Pages/Master/snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +123,7 @@ import { SnackbarComponent } from './Pages/Master/snackbar/snackbar.component';
     EdgegroupComponent,
     AssetComponent,
     ExceptionsComponent,
-    SnackbarComponent,
+  
   ],
   imports: [
     BrowserModule,
