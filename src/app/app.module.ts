@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MomentDateModule } from '@angular/material-moment-adapter';
 
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
@@ -141,7 +140,7 @@ import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
     MatGridListModule,
     ChartsModule,
     GaugeModule.forRoot(),
-    MatFormFieldModule,MomentDateModule,
+    MatFormFieldModule,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,

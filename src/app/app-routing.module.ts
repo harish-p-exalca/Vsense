@@ -26,6 +26,8 @@ import { SpaceComponent } from './pages/master/space/space.component';
 import { EdgegroupComponent } from './pages/master/edgegroup/edgegroup.component';
 import { AssetComponent } from './pages/master/asset/asset.component';
 import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
+import { RuleComponent } from './Pages/Master/rule/rule.component';
+import { GatewayComponent } from './Pages/Master/gateway/gateway.component';
 
 const routes: Routes = [
   {
@@ -54,7 +56,7 @@ const routes: Routes = [
     children:[
       {
         path:'device',
-        component:SenseEdgeComponent,
+        component:DeviceComponent,
 
       },
       {
@@ -64,16 +66,30 @@ const routes: Routes = [
       },
       {
         path:'equipment',
-        component:AssetComponent,
+        component:EquipmentComponent,
 
       },
       {
         path:'location',
-        component:SiteComponent,
+        component:LocationComponent,
 
       },
       {
         path:'deviceassign',
+        component:DeviceassignComponent,
+
+      },
+      {
+        path:'deviceassignparam',
+        component:DeviceassignparamComponent,
+      },
+      {
+        path:'site',
+        component:SiteComponent,
+
+      },
+      {
+        path:'space',
         component:SpaceComponent,
 
       },
@@ -83,8 +99,22 @@ const routes: Routes = [
 
       },
       {
-        path:'deviceassignparam',
-        component:EdgegroupComponent,
+        path:'gateway',
+        component:GatewayComponent,
+
+      },
+      {
+        path:'senseedge',
+        component:SenseEdgeComponent,
+
+      },
+      {
+        path:'asset',
+        component:AssetComponent,
+      },
+      {
+        path:'rule',
+        component:RuleComponent,
       }
     ]
   },

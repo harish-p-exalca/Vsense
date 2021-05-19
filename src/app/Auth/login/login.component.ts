@@ -307,13 +307,62 @@ export class LoginComponent implements OnInit {
                 route: "masters/deviceassignparam"
             });
         }
+        if (this.menuItems.indexOf("Site") >= 0) {
+            subChildren.push({
+                displayName: "Site",
+                route: "masters/site"
+            });
+        }
+        if (this.menuItems.indexOf("Space") >= 0) {
+            subChildren.push({
+                displayName: "Space",
+                route: "masters/space"
+            });
+        }
+        if (this.menuItems.indexOf("EdgeGroup") >= 0) {
+            subChildren.push({
+                displayName: "Edge Group",
+                route: "masters/edgegroup"
+            });
+        }
+        if (this.menuItems.indexOf("Gateway") >= 0) {
+            subChildren.push({
+                displayName: "Gateway",
+                route: "masters/gateway"
+            });
+        }
+        if (this.menuItems.indexOf("SenseEdge") >= 0) {
+            subChildren.push({
+                displayName: "Sense Edge",
+                route: "masters/senseedge"
+            });
+        }
+        if (this.menuItems.indexOf("Asset") >= 0) {
+            subChildren.push({
+                displayName: "Asset",
+                route: "masters/asset"
+            });
+        }
+        if (this.menuItems.indexOf("Rule") >= 0) {
+            subChildren.push({
+                displayName: "Rule",
+                route: "masters/rule"
+            });
+        }
         if (
             this.menuItems.indexOf("Device") >= 0 ||
             this.menuItems.indexOf("DParam") >= 0 ||
             this.menuItems.indexOf("Equipment") >= 0 ||
             this.menuItems.indexOf("Location") >= 0 ||
             this.menuItems.indexOf("DAssign") >= 0 ||
-            this.menuItems.indexOf("DPAssign") >= 0
+            this.menuItems.indexOf("DPAssign") >= 0 ||
+            this.menuItems.indexOf("Site") >= 0 ||
+            this.menuItems.indexOf("Space") >= 0 ||
+            this.menuItems.indexOf("EdgeGroup") >= 0 ||
+            this.menuItems.indexOf("Gateway") >= 0 ||
+            this.menuItems.indexOf("SenseEdge") >= 0 ||
+            this.menuItems.indexOf("Asset") >= 0  ||
+            this.menuItems.indexOf("Rule") >= 0 
         ) {
             this.children.push({
                 displayName: "Masters",
