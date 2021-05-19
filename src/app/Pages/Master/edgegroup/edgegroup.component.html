@@ -17,7 +17,7 @@
                 <img src="assets/images/v2/Filter.svg" width="18px">
             </div>
             <div class="hdevider"></div>
-            <button mat-button class="newbtn">
+            <button mat-button class="newbtn" (click)="showandhideer2()" (click)="handle_clear()">
 
                 Create New Edge Group
 
@@ -36,7 +36,7 @@
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                             <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                            <span class="titletxt">12/06/2021</span>
+                            <span class="titletxt">CreatedOn</span>
                         </div>
                     </div>
 
@@ -49,18 +49,18 @@
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false">
-                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devices">
-                        <div fxLayout="column" fxLayoutAlign="space-evenly start"
-                            style="height: 25px;padding-left: 1rem;">
+                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index">
+                        <div (click)="sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
+                            style="height: 25px;padding-left: 1rem;" (click)="showandhider1()">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;height: 30px;">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
                                     <!-- filter: brightness(0.3); -->
-                                    <span class="titletxt">Title</span>
+                                    <span class="titletxt">{{item.Title}}</span>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                                    <span class="titletxt">12/06/2021</span>
+                                    <span class="titletxt">{{item.CreatedOn | date:'dd/MM/yyyy'}}</span>
                                 </div>
                             </div>
 
@@ -72,35 +72,68 @@
         <div fxFlex=75 class="right-container" fxLayout.xs="column">
             <div fxLayout="row" fxLayoutAlign="space-between ">
                 <span class="createdevice">Create Edge Group</span>
-                <img src="assets\images\Component 121 – 1.svg" class="addimage"
-                (click)="rotate()" [@rotatedState]='state' [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()">
+                <img src="assets\images\Component 121 – 1.svg" class="addimage" (click)="rotate()"
+                    [@rotatedState]='state' [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()">
 
                 <mat-menu #menu="matMenu">
-                    
-                    <span mat-menu-item class="addparameters" >Add Parameters</span>
-                   
-                    <span mat-menu-item class="addparameters" >Manual Entry</span>
+
+                    <span mat-menu-item class="addparameters">Add Parameters</span>
+
+                    <span mat-menu-item class="addparameters" (click)="manualentry()">Manual Entry</span>
                 </mat-menu>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-evenly " fxLayoutGap="2%" style="padding: 1rem 0 0 0;">
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="10%">
+            <div fxLayout="row" fxLayoutAlign="start center " fxLayoutGap="2%"
+                style="padding: 1rem 0 0 0;margin-left: 2.7rem;">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="10%"
+                    [formGroup]="registrationFormGroup">
                     <span class="subtitle">Title</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Name"
-                        (blur)="isFocused = false" (focus)="isFocused = true" [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused ? 'Poppins':'poopins'" [style.font-size]="isFocused ? '12px':'12px'">
+                        <input matInput autocomplete="off" placeholder="Enter Name" (blur)="isFocused = false"
+                            [(ngModel)]="Title1" (focus)="isFocused = true"
+                            [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
+                            [style.font-family]="isFocused ? 'Poppins':'poopins'"
+                            [style.font-size]="isFocused ? '12px':'12px'" formControlName="Title" ngModel required
+                            type="text" clearInput>
+                        <mat-error *ngIf="registrationFormGroup.get('Title').hasError('required')">
+                            Title number is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="6%">
+                <!-- <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="6%">
                     <span class="subtitle">Date</span>
                     <mat-form-field appearance="standard" class="formfieldputtouse" (click)="picker1.open()">
                         <input matInput [matDatepicker]="picker1" autocomplete="off" placeholder="dd/mm/yyyy" readonly
-                        (blur)="isFocused1 = false" (focus)="isFocused1 = true" [style.color]="isFocused1 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused1 ? 'Poppins':'poopins'" [style.font-size]="isFocused1 ? '12px':'12px'">
+                            (blur)="isFocused1 = false" (focus)="isFocused1 = true"
+                            [style.color]="isFocused1 ? '#3131ff':'#a6aeaf'"
+                            [style.font-family]="isFocused1 ? 'Poppins':'poopins'"
+                            [style.font-size]="isFocused1 ? '12px':'12px'">
                         <mat-datepicker-toggle matSuffix [for]="picker1">
                         </mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
+                </div> -->
+            </div>
+
+
+            <div *ngFor="let control of newtextlib.controls; index as i" fxLayout="row" fxLayoutAlign="start center"
+                style="padding: 1rem 0 0 0;margin-left: 2.7rem;">
+                <div fxLayout="row" fxLayoutAlign="start center " fxLayoutGap="10%" fxFlex=42>
+                    <span class="subtitle">Title</span>
+
+                    <mat-form-field appearance="standard" floatLabel="never" class="formfield">
+                        <input matInput [formControl]="newtextlib.controls[i]" (blur)="isFocused = false"
+                            (focus)="isFocused = true" [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
+                            [style.font-family]="isFocused ? 'Poppins':'poopins'"
+                            [style.font-size]="isFocused ? '12px':'12px'" type="text">
+                        <mat-error *ngIf="newtextlib.controls[i].hasError('required')">
+                            Type Something..!
+                        </mat-error>
+                    </mat-form-field>
+
+                    <button mat-mini-fab class="add_button1" (click)="remove(i)">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+
                 </div>
             </div>
 
@@ -108,32 +141,32 @@
 
                 <table mat-table [dataSource]="ParamDataSource" matSort>
                     <ng-container matColumnDef="ParamID">
-                        <th mat-header-cell *matHeaderCellDef > ParamID </th>
+                        <th mat-header-cell *matHeaderCellDef> ParamID </th>
                         <td mat-cell *matCellDef="let element" class="pointer" (click)="ViewDetails(element)"></td>
                     </ng-container>
 
                     <ng-container matColumnDef="Title">
-                        <th mat-header-cell *matHeaderCellDef > Title </th>
+                        <th mat-header-cell *matHeaderCellDef> Title </th>
                         <td mat-cell *matCellDef="let element"></td>
                     </ng-container>
 
                     <ng-container matColumnDef="Unit">
-                        <th mat-header-cell *matHeaderCellDef > Unit</th>
+                        <th mat-header-cell *matHeaderCellDef> Unit</th>
                         <td mat-cell *matCellDef="let element"></td>
                     </ng-container>
 
                     <ng-container matColumnDef="LongText">
-                        <th mat-header-cell *matHeaderCellDef > Text </th>
+                        <th mat-header-cell *matHeaderCellDef> Text </th>
                         <td mat-cell *matCellDef="let element"></td>
                     </ng-container>
 
                     <ng-container matColumnDef="Min">
-                        <th mat-header-cell *matHeaderCellDef > Min </th>
+                        <th mat-header-cell *matHeaderCellDef> Min </th>
                         <td mat-cell *matCellDef="let element"></td>
                     </ng-container>
 
                     <ng-container matColumnDef="Max">
-                        <th mat-header-cell *matHeaderCellDef > Max </th>
+                        <th mat-header-cell *matHeaderCellDef> Max </th>
                         <td mat-cell *matCellDef="let element"></td>
                     </ng-container>
 
@@ -143,7 +176,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="Percentage">
-                        <th mat-header-cell *matHeaderCellDef > Percentage </th>
+                        <th mat-header-cell *matHeaderCellDef> Percentage </th>
                         <td mat-cell *matCellDef="let element">
                             <div fxLayout="row" fxFlex=60 fxLayoutAlign="space-evenly">
                                 <!-- <mat-progress-bar mode="determinate" value="70" class="progressbar">
@@ -152,13 +185,13 @@
                                     <span class="percentspan">82%</span>
                                 </div> -->
                             </div>
-                            
+
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="Color">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-                        <td mat-cell *matCellDef="let element"style="text-align: center;">
+                        <td mat-cell *matCellDef="let element" style="text-align: center;">
                             <div mat-ripple fxLayoutAlign="center center" class="color-container pointer">
                                 <!-- <img src="assets/images/v2/delete.svg" width="32px"> -->
                                 <span class="dot"></span>
@@ -184,17 +217,23 @@
             </div>
 
             <div fxLayout="row" fxLayoutAlign="space-between center" class="footerdiv">
-                <button mat-button class="copybutton" fxFlex="15">
+                <!-- <button mat-button class="copybutton" fxFlex="15">
                     Copy
 
-                </button>
+                </button> -->
 
 
-                <div class="deleteoption">
+                <div class="deleteoption" *ngIf="buttonnvaluee==1 " (click)="handle_clear()">
                     Delete
                 </div>
-                <div class="updateoption">
+                <div class="updateoption" *ngIf="buttonnvaluee==1 ">
                     Update
+                </div>
+                <div class="deleteoption" *ngIf="buttonnvaluee!=1 " (click)="handle_clear()">
+                    Clear entiries
+                </div>
+                <div class="createoption" *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()">
+                    Create
                 </div>
 
 

@@ -238,7 +238,7 @@
   width: 65%;
   height: 60px;
   border-radius: 4px;
-  position: fixed;
+  position: fixed; 
   bottom: 0;
 }
 .copybutton{
@@ -251,17 +251,19 @@
   width: 130px;
 }
 .deleteoption{
-  margin-left: 32rem;
-  font-size: 14px;
-  color: #220c0c;
+  margin-left: 42rem; 
+  font-size: 14px; @extend .poppins;
+  color: #220c0c;cursor: pointer; float: right;
+  display: block;
 }
 .deleteoption:hover{
   color: #d6201d;
 }
 .updateoption{
-  margin-right: 3rem;
-  font-size: 14px;
-  color: #220c0c;
+  margin-right: 4rem;
+  font-size: 14px; @extend .poppins;
+  color: #220c0c;cursor: pointer;
+  display: block;
 }
 .updateoption:hover{
   color: #26b329;
@@ -337,4 +339,18 @@ tbody {
   @extend .poppins; 
   font-size: 12px;
   line-height: 23px; margin-left: 10px;
+}
+.add_button1{
+  background-color: #8686ff;
+  color: #f80a06;
+ transform: scale(0.7);
+}
+.createoption{
+  margin-right: 3rem;
+  font-size: 14px; @extend .poppins; 
+  color: #220c0c;cursor: pointer;
+  display: block;
+}
+.createoption:hover{
+  color: #26b329;
 }
