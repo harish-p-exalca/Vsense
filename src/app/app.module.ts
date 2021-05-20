@@ -42,6 +42,7 @@ import { DeviceComponent } from './Pages/Master/device/device.component';
 import { DeviceparamComponent } from './Pages/Master/deviceparam/deviceparam.component';
 import { EquipmentComponent } from './Pages/Master/equipment/equipment.component';
 import { LocationComponent } from './Pages/Master/location/location.component';
+import {RuleComponent} from './Pages/Master/rule/rule.component';
 import { DeviceassignComponent } from './Pages/Master/deviceassign/deviceassign.component';
 import { DeviceassignparamComponent } from './Pages/Master/deviceassignparam/deviceassignparam.component';
 import { ExceptionComponent } from './Pages/Exception/exception/exception.component';
@@ -83,6 +84,7 @@ import { SpaceComponent } from './pages/master/space/space.component';
 import { EdgegroupComponent } from './pages/master/edgegroup/edgegroup.component';
 import { AssetComponent } from './pages/master/asset/asset.component';
 import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
+import { from } from 'rxjs';
 // import { SnackbarComponent } from './Pages/Master/snackbar/snackbar.component';
 
 @NgModule({
@@ -102,7 +104,7 @@ import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
     EquipmentComponent,
     LocationComponent,
     DeviceassignComponent,
-    DeviceassignparamComponent,
+    DeviceassignparamComponent,RuleComponent,
     ExceptionComponent,
     LoginComponent,
     InformationDialogComponent,

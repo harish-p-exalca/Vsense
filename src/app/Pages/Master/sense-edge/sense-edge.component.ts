@@ -26,7 +26,7 @@ export class SenseEdgeComponent implements OnInit {
   ParamDataSource: MatTableDataSource<any> = new MatTableDataSource(this.devices);
   //animation
   state: string = 'default';
-
+  variable:any = undefined;
   //input field color
   isFocused: boolean = true;
   isFocused1: boolean = true;
@@ -122,7 +122,7 @@ export class SenseEdgeComponent implements OnInit {
           });
         }
         console.log(data);
-
+        this.GetTitle();
       })
 
     }
@@ -138,7 +138,7 @@ export class SenseEdgeComponent implements OnInit {
    
     this.siteserv.DeleteMEdge(this.EdgeID1).subscribe(
       (data)=>{
-        if(data!=undefined){
+        if(data ==null){
          
           this._snackBar.open("Device deleted successfully","close" ,{
             duration: this.durationInSeconds * 1000,
@@ -147,6 +147,7 @@ export class SenseEdgeComponent implements OnInit {
         }
         console.log(data);
         this.devicess = data;
+        this.GetTitle();
       },
       (err)=>{
         console.log(err);
@@ -154,7 +155,34 @@ export class SenseEdgeComponent implements OnInit {
     ) 
     
   }
+ 
 
+  UpdateClicked() {
+    const val = new MEdge()
+    val.EdgeID = this.EdgeID1
+    val.Title = this.Title1
+    val.Lifespan = this.Lifespan1
+    val.Status = this.Status1
+    val.PuttoUse = this.PuttoUse1
+    val.CreatedOn = this.CreatedOn1
+    val.SoftwareVersion = this.SoftwareVersion1
+    val.Vcc = this. Vcc1
+    this.variable = val
+    console.log(this.variable)
+    this.siteserv.UpdateMEdges(this.variable).subscribe((data: MEdge[]) => {
+      if (data != undefined) {
+
+        this._snackBar.open("Site updated successfully", "close", {
+          duration: this.durationInSeconds * 1000,
+
+        });
+      }
+      console.log(data);
+      
+      this.GetTitle();
+    })
+
+  }
 
 
   reset_form() {

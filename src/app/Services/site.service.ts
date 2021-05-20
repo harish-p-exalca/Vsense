@@ -22,6 +22,15 @@ export class SiteService {
       catchError(this.errorHandler)
     );
   }
+  UpdateMSite(emp: MSite): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseAddress}/api/VSense/CreateMSite`,emp, {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json'
+      })
+    }).pipe(
+      catchError(this.errorHandler)
+    );
+  }
   GetMSites(): Observable<MSite | string> {
     return this.httpClient.get<MSite>(`${this.baseAddress}/api/VSense/GetMSites`)
       .pipe(catchError(this.errorHandler));

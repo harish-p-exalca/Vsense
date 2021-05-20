@@ -18,7 +18,7 @@ export class SpaceComponent implements OnInit {
   devices=[1,2,3,4,5,56,8,7];
   ParamdisplayedColumns:string[]=["ParamID","Title","Unit","LongText","Min","Max","Action"];
   ParamDataSource:MatTableDataSource<any>=new MatTableDataSource(this.devices);
-
+  variable:any = undefined;
   registrationFormGroup: FormGroup;
   //input field color
   isFocused:boolean = true;
@@ -98,7 +98,7 @@ export class SpaceComponent implements OnInit {
           });
         }
         console.log(data);
-
+        this.GetTitle();
       })
 
     }
@@ -115,7 +115,7 @@ export class SpaceComponent implements OnInit {
    
     this.siteserv.DeleteMSpace(this.SpaceID1).subscribe(
       (data)=>{
-        if(data!=undefined){
+        if(data ==null){
          
           this._snackBar.open("Space deleted successfully","close" ,{
             duration: this.durationInSeconds * 1000,
@@ -123,6 +123,7 @@ export class SpaceComponent implements OnInit {
           });
         }
         console.log(data);
+        this.GetTitle();
         // this.devicess = data;
       },
       (err)=>{
@@ -132,6 +133,30 @@ export class SpaceComponent implements OnInit {
     
   }
 
+  UpdateClicked() {
+    const val = new MSpace()
+    val.SpaceID = this.SpaceID1
+    val.Title = this.Title1
+    val.WorkCenter = this.WorkCenter1
+    val.ParantSpaceID = this.ParantSpaceID1
+    val.SiteID = this.SiteID1
+    val.CreatedOn = this.CreatedOn1
+    this.variable = val
+    console.log(this.variable)
+    this.siteserv.UpdateMSpace(this.variable).subscribe((data: MSpace[]) => {
+      if (data != undefined) {
+
+        this._snackBar.open("Site updated successfully", "close", {
+          duration: this.durationInSeconds * 1000,
+
+        });
+      }
+      console.log(data);
+      
+      this.GetTitle();
+    })
+
+  }
  
   reset_form(){
     this.registrationFormGroup.setValue({
