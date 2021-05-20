@@ -25,14 +25,14 @@
 
             </button>
 
-            <div class="cardsblue" style="padding:0 20px">
+            <!-- <div class="cardsblue" style="padding:0 20px">
 
 
                 <div fxLayout="column" fxLayoutAlign="space-evenly start" style="height: 60px;">
                     <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                             <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                            <!-- filter: brightness(0.3); -->
+                           
                             <span class="titletxt">Title</span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
@@ -45,16 +45,21 @@
                         <span class="titletxt">Geo Location</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div style="height: 5px;">
 
             </div>
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
-                <mat-selection-list [multiple]="false">
-                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index">
+                <mat-selection-list  [multiple]="false"   
+              >
+                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index"
+                          >
+                     <!-- (click)="toggele()" [class.changestyle]="toggle"  
+                    [style.background-color]= "isFocused ? '#3131ff':'#ffffff'"  -->
                         <div (click) = "sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
-                            style="height: 60px;padding-left: 1rem;" (click)="showandhider1()">
+                            style="height: 60px;padding-left: 1rem;" (click)="showandhider1()" 
+                           >
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
@@ -103,7 +108,7 @@
                 </div>
 
 
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="6%" [formGroup]="registrationFormGroup">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="5%" [formGroup]="registrationFormGroup">
                     <span class="subtitle">Geo Location</span>
 
                     <mat-form-field appearance="standard" class="formfield">
@@ -187,7 +192,7 @@
                 <div class="deleteoption"  *ngIf="buttonnvaluee==1 " (click)="DeleteClicked()" (click) ="handle_clear()">
                     Delete
                 </div>
-                <div class="updateoption" *ngIf="buttonnvaluee==1" >
+                <div class="updateoption" *ngIf="buttonnvaluee==1" (click)="UpdateClicked()">
                     Update
                 </div>
                 <div class="deleteoption"  *ngIf="buttonnvaluee!=1 " (click) ="handle_clear()" >

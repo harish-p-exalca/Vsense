@@ -60,8 +60,8 @@
       border-radius: 4px;
       border: solid 1px #3131ff;
       // height: 36px;
-      height: 30px;
-      width: 100%;
+      height: 25px;
+      width: 90%;
       background-color: #ffffff
     }
     .search{
@@ -79,7 +79,7 @@
       outline: none;
     }
     .searchbtn{
-      height: 28px;
+      height: 24px;
       width: 60px;
       border-bottom-left-radius: 4px;
       border-top-left-radius: 4px;
@@ -121,10 +121,10 @@
         border: solid 1px #3131ff;
         border-radius: 4px;
         margin: 1rem 20px;
-        height: 30px;
+        height: 25px;
         text-align: -webkit-center;
         align-self: normal;
-        line-height: 2.4;
+        line-height: 2;
     }
     .newbtn:hover{
       background-color: #f9f9ff;
@@ -233,7 +233,7 @@
   width: 130px;
 }
 .deleteoption{
-  margin-left: 32rem; @extend .poppins; 
+  margin-left: 28rem; @extend .poppins; 
   font-size: 14px;
   color: #220c0c;cursor: pointer;
 }
@@ -287,4 +287,35 @@ tbody {
  bottom: 0;
  margin-left: 53rem;
  top: 80%;
+}
+.changestyle{
+
+  background-color: #3131ff;
+  color: #ffffff; font-family: 'poopins';
+  // height: 72px;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+// mat-option.mat-selected:not(.mat-option-multiple) [aria-selected="true"] {
+//   background-color: #3131ff;
+//   color: #ffffff; font-family: 'poopins';
+// }
+// mat-list-option[aria-selected="true"] {
+//   background-color: #3131ff;
+//     color: #ffffff; font-family: 'poopins';
+// }
+
+::ng-deep .mat-list-option:focus{
+  background-color: #3131ff !important;
+ color: #ffffff !important; 
+ font-family: 'poopins';
+ border-radius: 4px;
+//  margin-left: 1.3rem;
+ .img{
+  filter: brightness(0.3);
+  color: white;
+ }
+ .titletxt{
+     color: white;
+ }
 }

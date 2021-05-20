@@ -25,7 +25,15 @@ export class SenseedgeService {
     return this.httpClient.get<MEdge>(`${this.baseAddress}/api/VSense/GetMEdges`)
       .pipe(catchError(this.errorHandler));
   }
-
+  UpdateMEdges(emp: MEdge): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseAddress}/api/VSense/CreateMEdge`,emp, {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json'
+      })
+    }).pipe(
+      catchError(this.errorHandler)
+    );
+  }
   DeleteMEdge(ID:number):Observable<any>{
     return this.httpClient.delete<any>(`${this.baseAddress}/api/VSense/DeleteMEdge?ID=${ID}`)
         .pipe(catchError(this.errorHandler));

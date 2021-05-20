@@ -22,14 +22,14 @@
                 Create New Space
             </button>
 
-            <div class="cardsblue" style="padding:0 20px">
+            <!-- <div class="cardsblue" style="padding:0 20px">
 
 
                 <div fxLayout="column" fxLayoutAlign="space-evenly start" style="height: 60px;">
                     <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                             <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                            <!-- filter: brightness(0.3); -->
+                           
                             <span class="titletxt">Title</span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
@@ -42,7 +42,7 @@
                         <span class="titletxt">Work Center</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div style="height: 5px;">
 
             </div>
@@ -166,7 +166,7 @@
                 <div class="deleteoption"  *ngIf="buttonnvaluee==1 " (click)="DeleteClicked()" (click) ="handle_clear()">
                     Delete
                 </div>
-                <div class="updateoption"  *ngIf="buttonnvaluee==1 ">
+                <div class="updateoption"  *ngIf="buttonnvaluee==1 " (click)="UpdateClicked()">
                     Update
                 </div>
                 <div class="deleteoption"  *ngIf="buttonnvaluee!=1 " (click) ="handle_clear()" >

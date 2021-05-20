@@ -10,8 +10,10 @@ export class MSite extends Common{
     Geo:string;
     Plant:string;
     EquipmentID:string;
+    SiteID:number
 }
 export class MSpace extends Common{
+    SpaceID:string;
     Title:string;
     WorkCenter:string;
     SiteID:number;
@@ -19,12 +21,16 @@ export class MSpace extends Common{
    
 }
 export class MEdge extends Common{
+    EdgeID:number;
     Title:string;
     Lifespan:number;
     Vcc:number;
     SoftwareVersion:string;
     PuttoUse:Date;
     Status:string;
+    Battery:number
+    EdgeGroup:number;
+    ParantEdgeID:number;
 }
 export class MEdgeGroup extends Common{
     Title:string;

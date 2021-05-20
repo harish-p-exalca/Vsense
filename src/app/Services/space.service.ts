@@ -31,6 +31,16 @@ export class SpaceService {
         .pipe(catchError(this.errorHandler));
 }
 
+UpdateMSpace(emp: MSpace): Observable<any> {
+  return this.httpClient.post<any>(`${this.baseAddress}/api/VSense/CreateMSpace`,emp, {
+    headers: new HttpHeaders({
+      'Content-type': 'application/json'
+    })
+  }).pipe(
+    catchError(this.errorHandler)
+  );
+}
+
 errorHandler(httpErrorResponse: HttpErrorResponse): Observable<string> {
   return throwError(httpErrorResponse.error || httpErrorResponse.message || 'Something went wrong');
 }

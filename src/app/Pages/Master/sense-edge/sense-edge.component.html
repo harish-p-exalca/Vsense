@@ -24,14 +24,14 @@
             
             </button>
 
-            <div class="cardsblue" style="padding:0 20px">
+            <!-- <div class="cardsblue" style="padding:0 20px">
 
 
                 <div fxLayout="column" fxLayoutAlign="space-evenly start" style="height: 63px;">
                     <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                             <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                            <!-- filter: brightness(0.3); -->
+                          
                             <span class="titletxt">Title</span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
@@ -44,7 +44,7 @@
                         <span class="titletxt">Status</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div style="height: 5px;">
 
             </div>
@@ -206,7 +206,7 @@
                         <td mat-cell *matCellDef="let element"></td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Action">
+                    <ng-container matColumnDef="Action" stickyEnd>
                         <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 13%;"> Action
                         </th>
                         <td mat-cell *matCellDef="let element" style="text-align: center;">
@@ -232,13 +232,13 @@
                 <div class="deleteoption"  *ngIf="buttonnvaluee==1 " (click) ="handle_clear()" (click)="DeleteClicked()">
                     Delete
                 </div>
-                <div class="updateoption"  *ngIf="buttonnvaluee==1 ">
+                <div class="updateoption"  *ngIf="buttonnvaluee==1 " (click)="UpdateClicked()">
                     Update
                 </div>
                 <div class="deleteoption"  *ngIf="buttonnvaluee!=1 " (click) ="handle_clear()" >
                     Clear entiries
                 </div>
-                <div class="createoption"  *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()"  >
+                <div class="updateoption"  *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()"  >
                     Create
                 </div>
 
