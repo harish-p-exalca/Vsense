@@ -172,7 +172,7 @@ export class SenseEdgeComponent implements OnInit {
     this.siteserv.UpdateMEdges(this.variable).subscribe((data: MEdge[]) => {
       if (data != undefined) {
 
-        this._snackBar.open("Site updated successfully", "close", {
+        this._snackBar.open("Device updated successfully", "close", {
           duration: this.durationInSeconds * 1000,
 
         });

@@ -24,14 +24,14 @@
 
             </button>
 
-            <div class="cardsblue" style="padding:0 20px">
+            <!-- <div class="cardsblue" style="padding:0 20px">
 
 
                 <div fxLayout="column" fxLayoutAlign="space-evenly start" style="height: 60px;">
                     <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                             <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                            <!-- filter: brightness(0.3); -->
+                           
                             <span class="titletxt">Asset Title</span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
@@ -44,7 +44,7 @@
                         <span class="titletxt">Asset009</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <div style="padding:0 20px; " class="workingdiv" fxLayout="row" fxLayoutAlign="space-between center">
@@ -90,18 +90,17 @@
             </div>
         </div>
 
-        <div fxFlex=75 fxLayout="column" class="right-container"  fxLayout.xs="column" >
+        <div fxFlex=75 fxLayout="column" class="right-container" fxLayout.xs="column">
 
             <div fxLayout="row" fxLayoutAlign="space-between ">
                 <span class="createdevice">Create Asset Details</span>
-                <img src="assets\images\Component 121 – 1.svg" class="addimage" (click)="rotate()" 
-                    [@rotatedState]='state' [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()" 
-                   >
-                <mat-menu #menu="matMenu" >
+                <img src="assets\images\Component 121 – 1.svg" class="addimage" (click)="rotate()"
+                    [@rotatedState]='state' [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()">
+                <mat-menu #menu="matMenu">
                     <!-- (click)="rotated()" -->
-                    <span mat-menu-item class="addparameters" >Add Parameters</span>
+                    <span mat-menu-item class="addparameters" (click)="addparam('1')">Add Parameters</span>
 
-                    <span mat-menu-item class="addparameters" >Manual Entry</span>
+                    <span mat-menu-item class="addparameters">Manual Entry</span>
 
                 </mat-menu>
             </div>
@@ -113,17 +112,20 @@
                 <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="20%">
                     <span class="subtitle">Site</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Site >> Space Name" 
-                        (blur)="isFocused = false" (focus)="isFocused = true" [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused ? 'Poppins':'poopins'" >
+                        <input matInput autocomplete="off" placeholder="Enter Site >> Space Name"
+                            (blur)="isFocused = false" (focus)="isFocused = true"
+                            [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
+                            [style.font-family]="isFocused ? 'Poppins':'poopins'">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="10%">
                     <span class="subtitle">Gateway</span>
                     <mat-form-field appearance="standard" class="formfield">
                         <input matInput autocomplete="off" placeholder="Enter Gateway  (Parent in Edge)"
-                        (blur)="isFocused1 = false" (focus)="isFocused1 = true" [style.color]="isFocused1 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused1 ? 'Poppins':'poopins'" [style.font-size]="isFocused1 ? '12px':'12px'">
+                            (blur)="isFocused1 = false" (focus)="isFocused1 = true"
+                            [style.color]="isFocused1 ? '#3131ff':'#a6aeaf'"
+                            [style.font-family]="isFocused1 ? 'Poppins':'poopins'"
+                            [style.font-size]="isFocused1 ? '12px':'12px'">
                     </mat-form-field>
                 </div>
             </div>
@@ -132,17 +134,19 @@
                 <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="9.7%">
                     <span class="subtitle">Asset Title</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Asset Title"
-                        (blur)="isFocused2 = false" (focus)="isFocused2 = true" [style.color]="isFocused2 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused2 ? 'Poppins':'poopins'" [style.font-size]="isFocused2 ? '12px':'12px'">
+                        <input matInput autocomplete="off" placeholder="Enter Asset Title" (blur)="isFocused2 = false"
+                            (focus)="isFocused2 = true" [style.color]="isFocused2 ? '#3131ff':'#a6aeaf'"
+                            [style.font-family]="isFocused2 ? 'Poppins':'poopins'"
+                            [style.font-size]="isFocused2 ? '12px':'12px'">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="10%">
                     <span class="subtitle">Asset I’D</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Asset I’D"
-                        (blur)="isFocused3 = false" (focus)="isFocused3 = true" [style.color]="isFocused3 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused3 ? 'Poppins':'poopins'" [style.font-size]="isFocused3 ? '12px':'12px'">
+                        <input matInput autocomplete="off" placeholder="Enter Asset I’D" (blur)="isFocused3 = false"
+                            (focus)="isFocused3 = true" [style.color]="isFocused3 ? '#3131ff':'#a6aeaf'"
+                            [style.font-family]="isFocused3 ? 'Poppins':'poopins'"
+                            [style.font-size]="isFocused3 ? '12px':'12px'">
                     </mat-form-field>
                 </div>
             </div>
@@ -152,10 +156,12 @@
                 <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="16%">
                     <span class="subtitle">Status</span>
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Select Status" [matAutocomplete]="auto" 
-                        (blur)="isFocused4 = false" (focus)="isFocused4 = true" [style.color]="isFocused4 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused4 ? 'Poppins':'poopins'" [style.font-size]="isFocused4 ? '12px':'12px'">
-                        
+                        <input matInput autocomplete="off" placeholder="Select Status" [matAutocomplete]="auto"
+                            (blur)="isFocused4 = false" (focus)="isFocused4 = true"
+                            [style.color]="isFocused4 ? '#3131ff':'#a6aeaf'"
+                            [style.font-family]="isFocused4 ? 'Poppins':'poopins'"
+                            [style.font-size]="isFocused4 ? '12px':'12px'">
+
                         <mat-autocomplete #auto="matAutocomplete" style="justify-content: center;font-size: 12px;">
                             <mat-option *ngFor="let option of options" [value]="option" class="matautocomplete">
                                 {{option}}
@@ -168,8 +174,10 @@
                     <span class="subtitle">Start Date</span>
                     <mat-form-field appearance="standard" class="formfieldputtouse" (click)="picker1.open()">
                         <input matInput [matDatepicker]="picker1" autocomplete="off" placeholder="dd/mm/yyyy" readonly
-                        (blur)="isFocused5 = false" (focus)="isFocused5 = true" [style.color]="isFocused5 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused5 ? 'Poppins':'poopins'" [style.font-size]="isFocused5 ? '12px':'12px'">
+                            (blur)="isFocused5 = false" (focus)="isFocused5 = true"
+                            [style.color]="isFocused5 ? '#3131ff':'#a6aeaf'"
+                            [style.font-family]="isFocused5 ? 'Poppins':'poopins'"
+                            [style.font-size]="isFocused5 ? '12px':'12px'">
                         <mat-datepicker-toggle matSuffix [for]="picker1">
                         </mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
@@ -480,7 +488,7 @@
 
 
 
-            <div class="tabledivision" >
+            <!-- <div class="tabledivision" >
 
                 <table mat-table [dataSource]="ParamDataSource" matSort>
                     <ng-container matColumnDef="ParamID">
@@ -556,7 +564,170 @@
                     <tr mat-header-row *matHeaderRowDef="ParamdisplayedColumns;sticky: true;"></tr>
                     <tr mat-row *matRowDef="let row; columns: ParamdisplayedColumns;sticky:true;"></tr>
                 </table>
-                <!-- <mat-paginator [pageSizeOptions]="[10, 20, 50]"></mat-paginator> -->
+               
+            </div> -->
+
+            <div [formGroup]="pform" class="tabledivision">
+                <!-- <div fxLayout="row" fxLayoutAlign="end center" style="width: 56%;">
+                    <button mat-raised-button color="primary" (click)="addparam('1')" style="
+              left: 72%;;background-color: #4660CE;">Add Param</button>
+              <button mat-raised-button color="primary" (click)="addparam('2')" style="left: 73%;
+              background-color: #4660CE;">Manual Entry</button>
+                </div> -->
+
+                <table mat-table [dataSource]="dataSource" formArrayName="parameters">
+
+                    <ng-container matColumnDef="paramID" *ngIf="isNewParam">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor alignhead"> ParamID</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i" style="margin-right: 1%;">
+                            <div fxLayout="row" fxLayoutAlign="start center">
+                                <div class="divbox" [ngStyle]="{'background-color':i%2==0 ? '#d87e39' : '#6f52ed'}">
+                                </div>
+
+                                <div class="cellselect">
+                                    <mat-select style="width:4rem;" placeholder="Select" formControlName="paramID"
+                                        (selectionChange)="paramselect($event.value,i)">
+                                        <mat-option *ngFor="let param of deviceparams" [value]="param.paramID">
+                                            {{param.paramID}}</mat-option>
+                                    </mat-select>
+                                </div>
+
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="paramID" *ngIf="!isNewParam">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor alignhead"> ParamID</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i" style="margin-right: 1%;">
+                            <div fxLayout="row" fxLayoutAlign="start center">
+                                <div class="divbox" [ngStyle]="{'background-color':i%2==0 ? '#d87e39' : '#6f52ed'}">
+                                </div>
+                                <mat-form-field class="tformfield">
+                                    <input matInput autocomplete="off" formControlName="paramID">
+                                </mat-form-field>
+
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor"> Title</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input matInput autocomplete="off" formControlName="title">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="unit">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor"> Unit</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input matInput autocomplete="off" formControlName="unit">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="longText">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor"> Text</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i" class="boldtext">
+                            <mat-form-field class="tformfield">
+                                <input matInput autocomplete="off" formControlName="longText">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="min">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor"> Min</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input type="number" matInput autocomplete="off" formControlName="min">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="max">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Max</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input type="number" matInput autocomplete="off" formControlName="max">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="icon">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Icon</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input type="number" matInput autocomplete="off" formControlName="icon">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Soft-1-Ex.Threshold">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Soft-1-Ex.Threshold</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input type="number" matInput autocomplete="off" formControlName="Soft-1-Ex.Threshold">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Soft-2-Ex.Threshold">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Soft-2-Ex.Threshold</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input type="number" matInput autocomplete="off" formControlName="Soft-2-Ex.Threshold">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Hard-1-Ex.Threshold">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor ">Hard-1-Ex.Threshold</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input type="number" matInput autocomplete="off" formControlName="Hard-1-Ex.Threshold">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Hard-2-Ex.Threshold">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Hard-2-Ex.Threshold</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input type="number" matInput autocomplete="off" formControlName="Hard-2-Ex.Threshold">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Activity Graph Title">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Activity Graph</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                            <mat-form-field class="tformfield">
+                                <input type="number" matInput autocomplete="off" formControlName="Activity Graph Title">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="action" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef class="headercolor aligncenter">
+                            Action</th>
+                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i" class="aligncenter"
+                            style="text-align: center;">
+                            <!-- <mat-icon (click)="removeparam(i)" style="color: red;cursor:pointer">Action</mat-icon> -->
+
+                            <div mat-ripple fxLayoutAlign="center center" class="delete-container pointer"
+                                (click)="removeparam(i)">
+                                <img src="assets/images/v2/delete.svg" width="32px">
+                                <span class="delete deletetxt">Delete</span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="colheader">
+                    </tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
             </div>
 
             <div fxLayout="row" fxLayoutAlign="space-between center" class="footerdiv">

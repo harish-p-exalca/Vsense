@@ -146,7 +146,7 @@ export class SpaceComponent implements OnInit {
     this.siteserv.UpdateMSpace(this.variable).subscribe((data: MSpace[]) => {
       if (data != undefined) {
 
-        this._snackBar.open("Site updated successfully", "close", {
+        this._snackBar.open("Space updated successfully", "close", {
           duration: this.durationInSeconds * 1000,
 
         });
