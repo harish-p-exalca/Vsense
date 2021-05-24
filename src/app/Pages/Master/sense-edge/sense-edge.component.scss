@@ -306,18 +306,17 @@ tbody {
   color: #26b329;
 }
 
-
 ::ng-deep .mat-list-option:focus{
   background-color: #3131ff !important;
  color: #ffffff !important; 
  font-family: 'poopins';
  border-radius: 4px;
-//  margin-left: 1.3rem;
- .img{
-     filter: brightness(0.3);
-     color: white;
- }
- .titletxt{
-     color: white;
- }
+}
+
+::ng-deep .mat-list-option:focus .titletxt{
+color:White !important;
+}
+::ng-deep .mat-list-option:focus .img{
+  filter: brightness(1.35) !important;
+  // filter: invert(100%) sepia(0%) saturate(7448%) hue-rotate(136deg) brightness(112%) contrast(112%) !important;
 }

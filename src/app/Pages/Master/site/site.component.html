@@ -17,11 +17,10 @@
                 <img src="assets/images/v2/Filter.svg" width="18px">
             </div>
             <div class="hdevider"></div>
-            <button mat-button class="newbtn" (click) ="handle_clear()"
-            (click)="showandhideer2()">
-                <span style="margin-left: -0.2rem;margin-top: -0.5rem;">
-                    Create New Site
-                </span>
+            <button mat-button class="newbtn" (click)="handle_clear()" (click)="showandhideer2()">
+
+                Create New Site
+
 
             </button>
 
@@ -51,15 +50,13 @@
             </div>
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
-                <mat-selection-list  [multiple]="false"   
-              >
+                <mat-selection-list [multiple]="false">
                     <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index"
-                          >
-                     <!-- (click)="toggele()" [class.changestyle]="toggle"  
+                    [value]="i">
+                        <!-- (click)="toggele()" [class.changestyle]="toggle"  
                     [style.background-color]= "isFocused ? '#3131ff':'#ffffff'"  -->
-                        <div (click) = "sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
-                            style="height: 60px;padding-left: 1rem;" (click)="showandhider1()" 
-                           >
+                        <div (click)="sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
+                            style="height: 60px;padding-left: 1rem;" (click)="showandhider1()">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
@@ -87,16 +84,17 @@
             </div>
 
             <div fxLayout="column" fxLayoutAlign="space-evenly " fxLayoutGap="0.8%"
-                style="margin-left: 2rem;padding: 1rem 0 0 0;" >
+                style="margin-left: 2rem;padding: 1rem 0 0 0;">
 
 
 
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="12%" [formGroup]="registrationFormGroup">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="12%"
+                    [formGroup]="registrationFormGroup">
                     <span class="subtitle">Title</span>
 
                     <mat-form-field appearance="standard" class="formfield">
-                        <input matInput placeholder="Enter Name" [(ngModel)]="Title1" (blur)="isFocused = false" (focus)="isFocused = true"
-                            [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
+                        <input matInput placeholder="Enter Name" [(ngModel)]="Title1" (blur)="isFocused = false"
+                            (focus)="isFocused = true" [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
                             [style.font-family]="isFocused ? 'Poppins':'poopins'"
                             [style.font-size]="isFocused ? '12px':'12px'" formControlName="Title" ngModel required
                             clearInput>
@@ -108,7 +106,8 @@
                 </div>
 
 
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="5%" [formGroup]="registrationFormGroup">
+                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="5%"
+                    [formGroup]="registrationFormGroup">
                     <span class="subtitle">Geo Location</span>
 
                     <mat-form-field appearance="standard" class="formfield">
@@ -127,7 +126,8 @@
 
 
 
-                <div fxLayout="row" fxFlex=43 fxLayoutAlign="start center " fxLayoutGap="11.5%" [formGroup]="registrationFormGroup">
+                <div fxLayout="row" fxFlex=43 fxLayoutAlign="start center " fxLayoutGap="11.5%"
+                    [formGroup]="registrationFormGroup">
                     <span class="subtitle">Plant</span>
 
                     <mat-form-field appearance="standard" class="formfield">
@@ -176,11 +176,11 @@
 
 
             <div fxLayout="row" fxLayoutAlign="center end">
-                <img src="assets\images\Group 8332.svg" class="bigimage" >
+                <img src="assets\images\Group 8332.svg" class="bigimage">
                 <!-- <div class="bottom-right"></div> -->
             </div>
             <!-- </div> -->
-            
+
             <!-- <img src="assets\images\Component 121 – 1.svg" class="addimage"  (click) ="handle_clear()"
             (click)="showandhideer2()"> -->
 
@@ -189,16 +189,16 @@
                     Copy
                 </button>
 
-                <div class="deleteoption"  *ngIf="buttonnvaluee==1 " (click)="DeleteClicked()" (click) ="handle_clear()">
+                <div class="deleteoption" *ngIf="buttonnvaluee==1 " (click)="DeleteClicked()" (click)="handle_clear()">
                     Delete
                 </div>
                 <div class="updateoption" *ngIf="buttonnvaluee==1" (click)="UpdateClicked()">
                     Update
                 </div>
-                <div class="deleteoption"  *ngIf="buttonnvaluee!=1 " (click) ="handle_clear()" >
+                <div class="deleteoption" *ngIf="buttonnvaluee!=1 " (click)="handle_clear()">
                     Clear entiries
                 </div>
-                <div class="createoption"  *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()" >
+                <div class="createoption" *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()">
                     Create
                 </div>
 

@@ -48,7 +48,41 @@ export class MEdgeGroupParam extends Common{
     IsPercentage:string;
     Color:string;
 }
-export class MEdgeGroupView extends MEdgeGroup{
+export class MEdgeGroupView extends  MEdgeGroupParam{
     EdgeParams:MEdgeGroupParam[];
 }
 
+export class MAsset extends Common{
+    AssetID:number;
+    Title:string;
+    Class:string;
+    SpaceID:number;
+    
+}
+export class MEdgeAssign extends MAsset{
+    AssignmentID:number;
+    EdgeID:number;
+    AssetID:number;
+    SpaceID:number;
+    SiteID:number;
+    StartDateTime:Date;
+    EndDateTime:Date;
+    Frequency:number;
+
+}
+export class MEdgeAssignParam extends MAsset{
+    AssignmentID: number;
+    PramID:string;
+    Title:string;
+    Unit:string;
+    LongText:string;
+    Max:number;
+    Min:number;
+    Icon:string;
+    Soft1ExceptionThreshold:number;
+    Soft2ExceptionThreshold:number;
+    Hard1ExceptionThreshold:number;
+    Hard2ExceptionThreshold:number;
+    ActivityGraphTitle:string;
+
+}

@@ -30,7 +30,7 @@ export class SiteComponent implements OnInit {
   Plant1: any;
   CreatedOn1: any;
   buttonnvalueecreate = 0;
-  buttonnvaluee = 0;
+  buttonnvaluee = 0; isactive:boolean= true;
   ngOnInit(): void {
     this.GetTitle();
     this.registrationFormGroup = this.fb.group({
@@ -48,6 +48,7 @@ export class SiteComponent implements OnInit {
       (data) => {
         console.log(data);
         this.devicess = data;
+        // this.sampleclick(1)
       },
       (err) => {
         console.log(err);
