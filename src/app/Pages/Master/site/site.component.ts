@@ -3,8 +3,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { from } from 'rxjs';
 import { MSite } from 'src/app/Models/site';
-import { SiteService } from 'src/app/Services/site.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 // import { SnackbarComponent } from '../snackbar/snackbar.component';
 @Component({
   selector: 'app-site',
@@ -22,7 +22,7 @@ export class SiteComponent implements OnInit {
   isFocused1: boolean = true;
   isFocused2: boolean = true; selectedOptions: string[] 
   isFocused3: boolean = true;
-  constructor(private fb: FormBuilder, private siteserv: SiteService, private _snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private service: VsenseapiService, private _snackBar: MatSnackBar) { }
   Title: string[];
   devicess: any = []; row1: any = []; row2: any;
   Title1: any; SiteID1: any;
@@ -36,19 +36,15 @@ export class SiteComponent implements OnInit {
     this.registrationFormGroup = this.fb.group({
       Title: ['', Validators.required],
       Plant: ['', Validators.required],
-      Geo: ['', Validators.required],
-      // IsActive:['',Validators.required ],
-      // ModifiedOn:['',Validators.required ],
-      // ModifiedBy:['',Validators.required ],
+      Geo: ['', Validators.required]
     });
 
   }
   GetTitle(): void {
-    this.siteserv.GetMSites().subscribe(
+    this.service.GetMSites().subscribe(
       (data) => {
         console.log(data);
         this.devicess = data;
-        // this.sampleclick(1)
       },
       (err) => {
         console.log(err);
@@ -64,13 +60,6 @@ export class SiteComponent implements OnInit {
     this.Plant1 = row.Plant;
     this.CreatedOn1 = row.CreatedOn
     console.log(this.Title1);
-    // const val = new MSite()
-    // val.SiteID = row.SiteID
-    // val.Title = this.Title1
-    // val.Geo = this.Geo1
-    // val.Plant = this.Plant1
-    // this.variable = val
-    // console.log(this.variable)
   }
   RegisterClicked() {
     if (this.registrationFormGroup.valid) {
@@ -94,7 +83,7 @@ export class SiteComponent implements OnInit {
       // emp.ModifiedOn = this.registrationFormGroup.get('ModifiedOn').value;
       // emp.ModifiedBy = this.registrationFormGroup.get('ModifiedBy').value;
 
-      this.siteserv.CreateMSite(emp).subscribe((data: MSite[]) => {
+      this.service.SaveMSite(emp).subscribe((data: MSite[]) => {
         if (data != undefined) {
 
           this._snackBar.open("Site created successfully", "close", {
@@ -118,7 +107,7 @@ export class SiteComponent implements OnInit {
 
   DeleteClicked() {
 
-    this.siteserv.DeleteMSite(this.SiteID1).subscribe(
+    this.service.DeleteMSite(this.SiteID1).subscribe(
       (data) => {
         if (data == null) {
 
@@ -146,7 +135,7 @@ export class SiteComponent implements OnInit {
     val.Plant = this.Plant1
     this.variable = val
     console.log(this.variable)
-    this.siteserv.UpdateMSite(this.variable).subscribe((data: MSite[]) => {
+    this.service.SaveMSite(this.variable).subscribe((data: MSite[]) => {
       if (data != undefined) {
 
         this._snackBar.open("Site updated successfully", "close", {

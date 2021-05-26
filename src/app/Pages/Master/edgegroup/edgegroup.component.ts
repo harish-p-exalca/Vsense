@@ -3,14 +3,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MEdgeGroup, MEdgeGroupParam, MEdgeGroupView } from 'src/app/Models/site';
-import { SiteService } from 'src/app/Services/site.service';
-import { EdgegroupService } from 'src/app/Services/edgegroup.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppUsage, AuthenticationDetails } from 'src/app/Models/master';
 import { Guid } from 'guid-typescript';
 import { BehaviorSubject } from 'rxjs';
 import { NotificationService } from 'src/app/Services/notification.service';
 import { MasterService } from 'src/app/Services/master.service';
+import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 
 
 
@@ -45,7 +44,7 @@ export class EdgegroupComponent implements OnInit {
   registrationFormGrouptitle: FormGroup;
   names:MEdgeGroupParam[]=[];
   selectedHero?: 0;
-  constructor(private fb: FormBuilder, private siteserv: EdgegroupService,
+  constructor(private fb: FormBuilder, private service: VsenseapiService,
     private _snackBar: MatSnackBar, private cdRef: ChangeDetectorRef, public notification: NotificationService,
     private _masterService: MasterService,) { }
 
@@ -89,7 +88,7 @@ this.registrationFormGrouptitle = this.fb.group({
   }
 
   GetTitle(): void {
-    this.siteserv.GetMEdgeGroups().subscribe(
+    this.service.GetMEdgeGroups().subscribe(
       (data) => {
         console.log(data);
         this.devicess = data;
@@ -148,7 +147,7 @@ this.registrationFormGrouptitle = this.fb.group({
       const emp = new MEdgeGroupView();
       emp.Title = this.registrationFormGrouptitle.get('Title').value;
       emp.EdgeParams = [];
-      this.siteserv.CreateMEdgeGroup(emp).subscribe((data: MEdgeGroupView[]) => {
+      this.service.SaveMEdgeGroup(emp).subscribe((data: MEdgeGroupView) => {
         if (data != undefined) {
           this._snackBar.open("Group created successfully", "close", {
             duration: this.durationInSeconds * 1000,
@@ -212,7 +211,7 @@ this.registrationFormGrouptitle = this.fb.group({
 
   DeleteClicked() {
 
-    this.siteserv.DeleteMEdgeGroup(this.EdgeGroup1).subscribe(
+    this.service.DeleteMEdgeGroup(this.EdgeGroup1).subscribe(
       (data) => {
         if (data == null) {
 
@@ -250,7 +249,7 @@ this.registrationFormGrouptitle = this.fb.group({
 
     this.variable = val
     console.log(this.variable)
-    this.siteserv.UpdateMEdgeGroup(this.variable).subscribe((data: MEdgeGroupView[]) => {
+    this.service.SaveMEdgeGroup(this.variable).subscribe((data: MEdgeGroupView) => {
       this.variable.EdgeParams = [];
       if (data != undefined) {
 
@@ -402,7 +401,7 @@ this.registrationFormGrouptitle = this.fb.group({
       //emp.EdgeParams = new 
    
    
-      this.siteserv.CreateMEdgeGroupParams(edge).subscribe((data) => {
+      this.service.SaveMEdgeGroup(edge).subscribe((data) => {
         if (data != undefined) {
           this._snackBar.open("Group created successfully", "close", {
             duration: this.durationInSeconds * 1000,

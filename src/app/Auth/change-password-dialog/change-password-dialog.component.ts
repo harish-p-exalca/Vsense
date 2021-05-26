@@ -6,7 +6,7 @@ import { fuseAnimations } from 'src/app/animations';
 import { ChangePassword } from 'src/app/Models/master';
 import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
 import { SnackBarStatus } from 'src/app/Notifications/notification-snack-bar/notification-snackbar-status-enum';
-import { CustomValidator } from 'src/app/Services/custom-validator';
+import { CustomValidator } from 'src/app/Validators/custom-validator';
 
 @Component({
   selector: 'app-change-password-dialog',

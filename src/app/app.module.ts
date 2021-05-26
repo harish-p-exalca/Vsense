@@ -70,7 +70,6 @@ import {ChangePasswordDialogComponent} from './Auth/change-password-dialog/chang
 import {ChangePasswordComponent} from './Auth/change-password/change-password.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoaderComponent } from './Notifications/loader/loader.component';
-import { LoggingService } from './Services/logging.service';
 import { WaterConsumptionComponent } from './pages/CarbonFootprint/water-consumption/water-consumption.component';
 import { EnergyConsumptionComponent } from './pages/CarbonFootprint/energy-consumption/energy-consumption.component';
 import { MonitorComponent } from './Pages/Dashboard/monitor/monitor.component';
@@ -84,8 +83,7 @@ import { SpaceComponent } from './pages/master/space/space.component';
 import { EdgegroupComponent } from './pages/master/edgegroup/edgegroup.component';
 import { AssetComponent } from './pages/master/asset/asset.component';
 import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
-import { from } from 'rxjs';
-// import { SnackbarComponent } from './Pages/Master/snackbar/snackbar.component';
+import { DeviceDialogComponent } from './pages/master/asset/device-dialog/device-dialog.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +122,7 @@ import { from } from 'rxjs';
     EdgegroupComponent,
     AssetComponent,
     ExceptionsComponent,
+    DeviceDialogComponent
   
   ],
   imports: [
@@ -164,11 +163,10 @@ import { from } from 'rxjs';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [NavService,VsenseapiService,NotificationService,BnNgIdleService,
     ExcelService,DatePipe,MasterService,AuthService,AuthInterceptorService,MenuUpdataionService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },WINDOW_PROVIDERS,
-    LoggingService
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },WINDOW_PROVIDERS
   ],
   bootstrap: [AppComponent],
   entryComponents:[InformationDialogComponent,NotificationDialogComponent,
-    ForgetPasswordLinkDialogComponent,ChangePasswordDialogComponent]
+    ForgetPasswordLinkDialogComponent,ChangePasswordDialogComponent,DeviceDialogComponent]
 })
 export class AppModule { }

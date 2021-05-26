@@ -6,8 +6,8 @@ import { ChangePassword, AuthenticationDetails } from 'src/app/Models/master';
 import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
 import { SnackBarStatus } from 'src/app/Notifications/notification-snack-bar/notification-snackbar-status-enum';
 import { AuthService } from 'src/app/Services/auth.service';
-import { CustomValidator } from 'src/app/Services/custom-validator';
 import {fuseAnimations} from 'src/app/animations';
+import {CustomValidator} from 'src/app/Validators/custom-validator';
 
 @Component({
   selector: 'change-password',

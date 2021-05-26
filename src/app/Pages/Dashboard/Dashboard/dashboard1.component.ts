@@ -14,7 +14,6 @@ import { Guid } from 'guid-typescript';
 import { MasterService } from 'src/app/Services/master.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
-import { LoggingService } from 'src/app/Services/logging.service';
 
 @Component({
   selector: 'app-dashboard1',
@@ -112,8 +111,7 @@ export class Dashboard1Component implements OnInit, OnDestroy {
     private excelservice: ExcelService,
     private datepipe: DatePipe,
     private _masterService: MasterService,
-    private spinner: NgxSpinnerService,
-    private logger:LoggingService
+    private spinner: NgxSpinnerService
   ) { }
 
   getdevicestatus() {

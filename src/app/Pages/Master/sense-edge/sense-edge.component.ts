@@ -3,9 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MEdge } from 'src/app/Models/site';
-import { SiteService } from 'src/app/Services/site.service';
-import { SenseedgeService } from 'src/app/Services/senseedge.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 @Component({
   selector: 'app-sense-edge',
   templateUrl: './sense-edge.component.html',
@@ -34,7 +33,7 @@ export class SenseEdgeComponent implements OnInit {
   isFocused3: boolean = true;
   devicess: any = [];
   registrationFormGroup: FormGroup;    durationInSeconds = 5;
-  constructor(private fb: FormBuilder, private siteserv: SenseedgeService, private _snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private service: VsenseapiService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.GetTitle();
@@ -53,7 +52,7 @@ export class SenseEdgeComponent implements OnInit {
 
 
   GetTitle(): void {
-    this.siteserv.GetMEdges().subscribe(
+    this.service.GetMEdges().subscribe(
       (data) => {
         console.log(data);
         this.devicess = data;
@@ -113,7 +112,7 @@ export class SenseEdgeComponent implements OnInit {
       emp.Status = this.registrationFormGroup.get('Status').value;
 
 
-      this.siteserv.CreateMEdge(emp).subscribe((data: MEdge[]) => {
+      this.service.SaveMEdge(emp).subscribe((data: MEdge) => {
         if(data!=undefined){
          
           this._snackBar.open("Device created successfully","close" ,{
@@ -136,7 +135,7 @@ export class SenseEdgeComponent implements OnInit {
 
   DeleteClicked() {
    
-    this.siteserv.DeleteMEdge(this.EdgeID1).subscribe(
+    this.service.DeleteMEdge(this.EdgeID1).subscribe(
       (data)=>{
         if(data ==null){
          
@@ -169,7 +168,7 @@ export class SenseEdgeComponent implements OnInit {
     val.Vcc = this. Vcc1
     this.variable = val
     console.log(this.variable)
-    this.siteserv.UpdateMEdges(this.variable).subscribe((data: MEdge[]) => {
+    this.service.SaveMEdge(this.variable).subscribe((data: MEdge[]) => {
       if (data != undefined) {
 
         this._snackBar.open("Device updated successfully", "close", {

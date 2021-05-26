@@ -1,0 +1,34 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="title">Add Edge</span>
+        <mat-icon (click)="dialogRef.close()" style="cursor: pointer;color: #3131ff;">cancel</mat-icon>
+    </mat-toolbar>
+
+    <mat-dialog-content style="padding:24px; margin:0" fusePerfectScrollbar>
+        <form autocomplete="off" [formGroup]="DialogueFormGroup">
+            <div fxFlex fxLayout="column">
+                <mat-form-field fxFlex=100 style="font-size: 12px;">
+                    <mat-label>Edge</mat-label>
+                    <mat-select formControlName="EdgeID" fxFlex>
+                        <mat-option *ngFor="let edge of OpenEdges" [value]="edge.EdgeID">{{edge.EdgeID}} - {{edge.Title}}</mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="DialogueFormGroup.get('EdgeID').touched && DialogueFormGroup.get('EdgeID').hasError('required')">
+                        Edge is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex=100 style="font-size: 12px;">
+                    <mat-label>Frequency</mat-label>
+                    <input matInput formControlName="Frequency" type="number" fxFlex>
+                    <mat-error
+                        *ngIf="DialogueFormGroup.get('Frequency').touched && DialogueFormGroup.get('Frequency').hasError('required')">
+                        Frequency is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions style="margin:0; padding:16px;" class="footer" fxLayoutAlign="center center">
+        <button mat-button type="button" class="savebtn" (click)="Save()">Add</button>
+    </mat-dialog-actions>
+</div>
