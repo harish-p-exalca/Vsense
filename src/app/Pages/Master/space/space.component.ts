@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-// import * as moment from 'moment';
-import { Moment } from 'moment';
-import {MatCalendarCellClassFunction} from '@angular/material/datepicker';
 import {MSpace} from 'src/app/Models/site';
-import{SiteService} from 'src/app/Services/site.service';
-import{SpaceService} from 'src/app/Services/space.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 @Component({
   selector: 'app-space',
   templateUrl: './space.component.html',
@@ -27,7 +23,7 @@ export class SpaceComponent implements OnInit {
   isFocused3:boolean = true;
   isFocused4:boolean = true;
   buttonnvaluee=0;
-  constructor(private fb: FormBuilder,private siteserv: SpaceService, private _snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder,private service: VsenseapiService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.GetTitle();
@@ -47,7 +43,7 @@ export class SpaceComponent implements OnInit {
   devicess: any = [];
 
   GetTitle():void{
-    this.siteserv.GetMSpaces().subscribe(
+    this.service.GetMSpaces().subscribe(
       (data)=>{
         console.log(data);
         this.devicess = data;
@@ -89,7 +85,7 @@ export class SpaceComponent implements OnInit {
       emp.SiteID = this.registrationFormGroup.get('SiteID').value;
      
   
-      this.siteserv.CreateMSpace(emp).subscribe((data: MSpace[]) => {
+      this.service.SaveMSpace(emp).subscribe((data: MSpace[]) => {
         if(data!=undefined){
          
           this._snackBar.open("Space created successfully","close" ,{
@@ -113,7 +109,7 @@ export class SpaceComponent implements OnInit {
   durationInSeconds = 5;
   DeleteClicked() {
    
-    this.siteserv.DeleteMSpace(this.SpaceID1).subscribe(
+    this.service.DeleteMSpace(this.SpaceID1).subscribe(
       (data)=>{
         if(data ==null){
          
@@ -143,7 +139,7 @@ export class SpaceComponent implements OnInit {
     val.CreatedOn = this.CreatedOn1
     this.variable = val
     console.log(this.variable)
-    this.siteserv.UpdateMSpace(this.variable).subscribe((data: MSpace[]) => {
+    this.service.SaveMSpace(this.variable).subscribe((data: MSpace[]) => {
       if (data != undefined) {
 
         this._snackBar.open("Space updated successfully", "close", {

@@ -16,7 +16,6 @@ import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { ForgetPasswordLinkDialogComponent } from '../forget-password-link-dialog/forget-password-link-dialog.component';
-import { LoggingService } from 'src/app/Services/logging.service';
 
 @Component({
   selector: 'app-login',
@@ -44,8 +43,7 @@ export class LoginComponent implements OnInit {
         private _authService:AuthService,
         private _menuUpdationService:MenuUpdataionService,
         public dialog: MatDialog,
-        private _compiler:Compiler,
-        private logger:LoggingService
+        private _compiler:Compiler
     ) { 
         this._authService.islogin(true);
         this._compiler.clearCache();

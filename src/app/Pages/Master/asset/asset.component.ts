@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, HostBinding, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
@@ -9,8 +9,11 @@ import { Guid } from 'guid-typescript';
 import { BehaviorSubject } from 'rxjs';
 import { NotificationService } from 'src/app/Services/notification.service';
 import { MasterService } from 'src/app/Services/master.service';
-import { EdgegroupService } from 'src/app/Services/edgegroup.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DeviceDialogComponent } from './device-dialog/device-dialog.component';
+import { MEdge } from 'src/app/Models/site';
+import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'DD/MM/YYYY',
@@ -40,20 +43,20 @@ export const MY_DATE_FORMATS = {
     ])
   ]
 })
-export class AssetComponent implements OnInit {
+export class AssetComponent implements OnInit,AfterViewInit {
   // scroll button part
   @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent: ElementRef<any>;
-
+  ScrollWidth=0;
+  ScrollLeft=0;
   public scrollRight(): void {
-    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 210), behavior: 'smooth' });
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 680), behavior: 'smooth' });
   }
 
   public scrollLeft(): void {
-    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 210), behavior: 'smooth' });
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 680), behavior: 'smooth' });
   }
   // scroll button part
-
-  devices = [1, 2, 3, 4, 5, 56, 8, 7];
+  devices = [1, 2, 3, 4, 5, 56, 8, 7,8,23,1, 2, 3, 4, 5, 56, 8, 7,8,23];
   ParamdisplayedColumns: string[] = ["ParamID", "Title", "Unit", "LongText", "Min", "Max", "Icon", "Soft-1-Ex.Threshold",
     "Soft-2-Ex.Threshold", "Hard-1-Ex.Threshold", "Hard-2-Ex.Threshold", "Activity Graph Title", "Action"];
   ParamDataSource: MatTableDataSource<any> = new MatTableDataSource(this.devices);
@@ -83,9 +86,11 @@ export class AssetComponent implements OnInit {
   isActive: boolean = false;
 
   constructor(private doms: DomSanitizer,
-    private fb: FormBuilder, private siteserv: EdgegroupService,
+    private fb: FormBuilder,
     private _snackBar: MatSnackBar, private cdRef: ChangeDetectorRef, public notification: NotificationService,
-    private _masterService: MasterService,) { }
+    private _masterService: MasterService,
+    private service:VsenseapiService,
+    private dialog:MatDialog) { }
 
   ngOnInit(): void {
     const retrievedObject = localStorage.getItem('authorizationData');
@@ -93,6 +98,11 @@ export class AssetComponent implements OnInit {
     this.currentUserID = this.authenticationDetails.UserID;
     this.currentUserName = this.authenticationDetails.UserName;
     this.currentUserRole = this.authenticationDetails.UserRole;
+  }
+  
+  ngAfterViewInit(){
+    this.ScrollWidth=this.widgetsContent.nativeElement.scrollWidth-this.widgetsContent.nativeElement.clientWidth;
+    console.log(this.ScrollWidth);
   }
   //image angular animation
   rotate() {
@@ -103,60 +113,13 @@ export class AssetComponent implements OnInit {
   }
   //image angular animation
 
-  //highlighting
-  toggele() {
-    this.toggle = !this.toggle; this.toggle1 = false
-    this.toggle2 = false; this.toggle3 = false; this.toggle4 = false; this.toggle5 = false; this.toggle6 = false; this.toggle7 = false; this.toggle8 = false;
+  onScroll(event: Event) {
+    this.ScrollLeft=(event.target as HTMLElement).scrollLeft;
+    console.log(this.ScrollLeft);
   }
-  toggele1() {
-    this.toggle1 = !this.toggle1; this.toggle = false; this.toggle2 = false; this.toggle3 = false; this.toggle4 = false; this.toggle5 = false; this.toggle6 = false; this.toggle7 = false; this.toggle8 = false;
+  DeleteDeviceClicked(){
+    console.log("delete");
   }
-  toggele2() {
-    this.toggle2 = !this.toggle2; this.toggle1 = false;
-    this.toggle = false; this.toggle3 = false; this.toggle4 = false; this.toggle5 = false; this.toggle6 = false; this.toggle7 = false; this.toggle8 = false;
-  }
-  toggele3() {
-    this.toggle3 = !this.toggle3; this.toggle1 = false;
-    this.toggle2 = false; this.toggle = false; this.toggle4 = false; this.toggle5 = false; this.toggle6 = false; this.toggle7 = false; this.toggle8 = false;
-  }
-  toggele4() {
-    this.toggle4 = !this.toggle4; this.toggle1 = false; this.toggle2 = false; this.toggle3 = false;
-    this.toggle = false; this.toggle5 = false; this.toggle6 = false; this.toggle7 = false; this.toggle8 = false;
-  }
-  toggele5() {
-    this.toggle5 = !this.toggle5; this.toggle1 = false; this.toggle2 = false; this.toggle3 = false;
-    this.toggle4 = false; this.toggle = false; this.toggle6 = false; this.toggle7 = false; this.toggle8 = false;
-  }
-  toggele6() {
-    this.toggle6 = !this.toggle6; this.toggle1 = false; this.toggle2 = false; this.toggle3 = false; this.toggle4 = false;
-    this.toggle5 = false; this.toggle = false; this.toggle7 = false; this.toggle8 = false;
-  }
-  toggele7() {
-    this.toggle7 = !this.toggle7; this.toggle1 = false; this.toggle2 = false; this.toggle3 = false; this.toggle4 = false;
-    this.toggle5 = false; this.toggle6 = false; this.toggle = false; this.toggle8 = false;
-  }
-  toggele8() {
-    this.toggle8 = !this.toggle8; this.toggle1 = false; this.toggle2 = false; this.toggle3 = false; this.toggle4 = false;
-    this.toggle5 = false; this.toggle6 = false; this.toggle7 = false; this.toggle = false;
-  }
-  //hovering
-
-  openCurrentOrder() {
-    this.isActive = true;
-    console.log("opened");
-  }
-
-  closeCurrentOrder() {
-    this.isActive = false;
-    console.log("opened");
-  }
-  toggleCurrentOrder() {
-    this.isActive = !this.isActive;
-
-  }
-
-
-
 
   // devices = [];
   isCreate = false;
@@ -300,7 +263,15 @@ export class AssetComponent implements OnInit {
     }
   }
 
+  OpenDeviceDialog() {
+    const dialogConfig: MatDialogConfig = {
+      panelClass: "device-dialog"
+    };
+    const dialogRef = this.dialog.open(DeviceDialogComponent,dialogConfig);
+    dialogRef.afterClosed().subscribe(res => {
 
+    });
+  }
 
 
 

@@ -57,7 +57,7 @@ export class MAsset extends Common{
     Title:string;
     Class:string;
     SpaceID:number;
-    
+    Status:string;
 }
 export class MEdgeAssign extends MAsset{
     AssignmentID:number;
@@ -84,5 +84,12 @@ export class MEdgeAssignParam extends MAsset{
     Hard1ExceptionThreshold:number;
     Hard2ExceptionThreshold:number;
     ActivityGraphTitle:string;
+}
 
+export class AssetView extends MAsset{
+    Assignments:Assignment[];
+}
+
+export class Assignment extends MEdgeAssign{
+    AssignParams:MEdgeAssignParam[];
 }

@@ -66,7 +66,7 @@
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false">
-                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devices">
+                    <mat-list-option class="cards" *ngFor="let item of devices">
                         <div fxLayout="column" fxLayoutAlign="space-evenly start"
                             style="height: 55px !important;padding-left: 1rem;">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
@@ -185,388 +185,42 @@
                 </div>
             </div>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2%" style="margin-top: 0.3rem;">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2rem" style="padding: 1rem 0 0 0;">
                 <span class="edgespanclass">
                     Edge
                 </span>
-                <button mat-button class="edgebtn">
+                <button mat-button class="edgebtn" (click)="OpenDeviceDialog()">
                     Add
                 </button>
 
             </div>
 
-            <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: -1.5rem;">
-
-                <!-- <div fxLayout="column" fxLayoutGap="10%" fxFlex="20">
-                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10%">
-                        <span class="edgespanclass">
-                            Edge
-                        </span>
-                        <button mat-button class="edgebtn">
-                            Add
-                        </button>
-
-                    </div>
-                    <div class="Rectangle-7734" fxLayout="column" fxLayoutAlign="space-evenly ">
-                        <div fxLayout="row" fxLayoutAlign="space-around center">
-                            <span class="rectanglespan1">
-                                Edge I’D
-                            </span>
-                            <img class="workingimg" src="assets\images\Ellipse 837.svg" width="10px">
-                        </div>
-
-                        <span class="rectanglespan1" style="margin-left: 1.7rem;">
-                            Edge Title
-                        </span>
-
-                    </div>
-
-                </div> -->
-
-                <img fxFlex="5" src="assets\images\Group 7839.svg" class="backarrow" (click)="scrollLeft()">
-
-
-                <div fxLayout="row" fxLayoutGap="35px" fxLayoutAlign="space-betweencenter" #widgetsContent
-                    class="edgescrolldivision">
-
-
-                    <div fxLayout="column" class="scroll_div" fxLayoutGap="6%">
-
-                        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
-                            <span class="edgedelete">
-                                Delete
-                            </span>
-                            <img src="assets\images\Line 309.svg">
-                        </div>
-                        <div class="Rectangle-7734-2" fxLayout="column" fxLayoutAlign="space-evenly "
-                            (click)="toggele()" [class.changestyle]="toggle">
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <span class="rectanglespan1scroll" [class.changestyle1]="toggle">
+            <div class="device-list-wrapper" fxLayout="row" fxLayoutAlign="start center">
+                <img *ngIf="ScrollLeft!=0" fxFlex="5" src="assets\images\Group 7839.svg" style="margin-top: 18px;cursor: pointer;" class="backarrow" (click)="scrollLeft()">
+                <mat-selection-list [multiple]="false" class="device-list" #widgetsContent (scroll)="onScroll($event)">
+                    <mat-list-option class="Rectangle-7734-2" *ngFor="let item of devices">
+                        <div fxLayout="column" fxLayoutAlign="space-evenly start" class="m-device">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+                                <span class="rectanglespan1scroll">
                                     Edge I’D
                                 </span>
                                 <img class="workingimg" src="assets\images\Ellipse 837.svg" width="8px">
                             </div>
 
-                            <span class="rectanglespan1scroll" style="margin-left: 1.4rem;"
-                                [class.changestyle1]="toggle">
+                            <span class="rectanglespan1scroll">
                                 Edge Title
                             </span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div fxLayout="column" class="scroll_div" fxLayoutGap="6%">
-                        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
-                            <span class="edgedelete">
-                                Delete
-                            </span>
-                            <img src="assets\images\Line 309.svg">
-                        </div>
-                        <div class="Rectangle-7734-2" fxLayout="column" fxLayoutAlign="space-evenly "
-                            (click)="toggele1()" [class.changestyle]="toggle1">
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <span class="rectanglespan1scroll" [class.changestyle1]="toggle1">
-                                    Edge I’D
+                            <div (click)="DeleteDeviceClicked()" fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
+                                <span class="edgedelete">
+                                    Delete
                                 </span>
-                                <img class="workingimg" src="assets\images\Ellipse 837.svg" width="8px">
+                                <img src="assets\images\Line 309.svg">
                             </div>
-
-                            <span class="rectanglespan1scroll" style="margin-left: 1.4rem;"
-                                [class.changestyle1]="toggle1">
-                                Edge Title
-                            </span>
-
                         </div>
-
-                    </div>
-
-
-
-                    <div fxLayout="column" class="scroll_div" fxLayoutGap="6%">
-                        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
-                            <span class="edgedelete">
-                                Delete
-                            </span>
-                            <img src="assets\images\Line 309.svg">
-                        </div>
-                        <div class="Rectangle-7734-2" fxLayout="column" fxLayoutAlign="space-evenly "
-                            (click)="toggele2()" [class.changestyle]="toggle2">
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <span class="rectanglespan1scroll" [class.changestyle1]="toggle2">
-                                    Edge I’D
-                                </span>
-                                <img class="workingimg" src="assets\images\Ellipse 837.svg" width="8px">
-                            </div>
-
-                            <span class="rectanglespan1scroll" style="margin-left: 1.4rem;"
-                                [class.changestyle1]="toggle2">
-                                Edge Title
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div fxLayout="column" class="scroll_div" fxLayoutGap="6%">
-                        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
-                            <span class="edgedelete">
-                                Delete
-                            </span>
-                            <img src="assets\images\Line 309.svg">
-                        </div>
-                        <div class="Rectangle-7734-2" fxLayout="column" fxLayoutAlign="space-evenly "
-                            (click)="toggele3()" [class.changestyle]="toggle3">
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <span class="rectanglespan1scroll" [class.changestyle1]="toggle3">
-                                    Edge I’D
-                                </span>
-                                <img class="workingimg" src="assets\images\Ellipse 837.svg" width="8px">
-                            </div>
-
-                            <span class="rectanglespan1scroll" style="margin-left: 1.4rem;"
-                                [class.changestyle1]="toggle3">
-                                Edge Title
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div fxLayout="column" class="scroll_div" fxLayoutGap="6%">
-                        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
-                            <span class="edgedelete">
-                                Delete
-                            </span>
-                            <img src="assets\images\Line 309.svg">
-                        </div>
-                        <div class="Rectangle-7734-2" fxLayout="column" fxLayoutAlign="space-evenly "
-                            (click)="toggele4()" [class.changestyle]="toggle4">
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <span class="rectanglespan1scroll" [class.changestyle1]="toggle4">
-                                    Edge I’D
-                                </span>
-                                <img class="workingimg" src="assets\images\Ellipse 837.svg" width="8px">
-                            </div>
-
-                            <span class="rectanglespan1scroll" style="margin-left: 1.4rem;"
-                                [class.changestyle1]="toggle4">
-                                Edge Title
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div fxLayout="column" class="scroll_div" fxLayoutGap="6%">
-                        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
-                            <span class="edgedelete">
-                                Delete
-                            </span>
-                            <img src="assets\images\Line 309.svg">
-                        </div>
-                        <div class="Rectangle-7734-2" fxLayout="column" fxLayoutAlign="space-evenly "
-                            (click)="toggele5()" [class.changestyle]="toggle5">
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <span class="rectanglespan1scroll" [class.changestyle1]="toggle5">
-                                    Edge I’D
-                                </span>
-                                <img class="workingimg" src="assets\images\Ellipse 837.svg" width="8px">
-                            </div>
-
-                            <span class="rectanglespan1scroll" style="margin-left: 1.4rem;"
-                                [class.changestyle1]="toggle5">
-                                Edge Title
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-
-
-                    <div fxLayout="column" class="scroll_div" fxLayoutGap="6%">
-                        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
-                            <span class="edgedelete">
-                                Delete
-                            </span>
-                            <img src="assets\images\Line 309.svg">
-                        </div>
-                        <div class="Rectangle-7734-2" fxLayout="column" fxLayoutAlign="space-evenly "
-                            (click)="toggele6()" [class.changestyle]="toggle6">
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <span class="rectanglespan1scroll" [class.changestyle1]="toggle6">
-                                    Edge I’D
-                                </span>
-                                <img class="workingimg" src="assets\images\Ellipse 837.svg" width="8px">
-                            </div>
-
-                            <span class="rectanglespan1scroll" style="margin-left: 1.4rem;"
-                                [class.changestyle1]="toggle6">
-                                Edge Title
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div fxLayout="column" class="scroll_div" fxLayoutGap="6%">
-                        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
-                            <span class="edgedelete">
-                                Delete
-                            </span>
-                            <img src="assets\images\Line 309.svg">
-                        </div>
-                        <div class="Rectangle-7734-2" fxLayout="column" fxLayoutAlign="space-evenly "
-                            (click)="toggele7()" [class.changestyle]="toggle7">
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <span class="rectanglespan1scroll" [class.changestyle1]="toggle7">
-                                    Edge I’D
-                                </span>
-                                <img class="workingimg" src="assets\images\Ellipse 837.svg" width="8px">
-                            </div>
-
-                            <span class="rectanglespan1scroll" style="margin-left: 1.4rem;"
-                                [class.changestyle1]="toggle7">
-                                Edge Title
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-
-
-                    <div fxLayout="column" class="scroll_div" fxLayoutGap="6%">
-                        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="2%" class="deletehover">
-                            <span class="edgedelete">
-                                Delete
-                            </span>
-                            <img src="assets\images\Line 309.svg">
-                        </div>
-                        <div class="Rectangle-7734-2" fxLayout="column" fxLayoutAlign="space-evenly "
-                            (click)="toggele8()" [class.changestyle]="toggle8">
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <span class="rectanglespan1scroll" [class.changestyle1]="toggle8">
-                                    Edge I’D
-                                </span>
-                                <img class="workingimg" src="assets\images\Ellipse 837.svg" width="8px">
-                            </div>
-
-                            <span class="rectanglespan1scroll" style="margin-left: 1.4rem;"
-                                [class.changestyle1]="toggle8">
-                                Edge Title
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-
-                <div fxFlex="5">
-                    <img src="assets\images\Group 7839.svg" class="goback" (click)="scrollRight()">
-
-                </div>
-
+                    </mat-list-option>
+                </mat-selection-list>
+                <img *ngIf="ScrollLeft<=ScrollWidth && ScrollWidth>830px" fxFlex="5" src="assets\images\Group 7839.svg" style="margin-top: 18px;cursor: pointer;" (click)="scrollRight()">
             </div>
-
-
-
-            <!-- <div class="tabledivision" >
-
-                <table mat-table [dataSource]="ParamDataSource" matSort>
-                    <ng-container matColumnDef="ParamID">
-                        <th mat-header-cell *matHeaderCellDef> ParamID </th>
-                        <td mat-cell *matCellDef="let element" class="pointer" (click)="ViewDetails(element)"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Title">
-                        <th mat-header-cell *matHeaderCellDef> Title </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Unit">
-                        <th mat-header-cell *matHeaderCellDef> Unit</th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="LongText">
-                        <th mat-header-cell *matHeaderCellDef> Text </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Min">
-                        <th mat-header-cell *matHeaderCellDef> Min </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Max">
-                        <th mat-header-cell *matHeaderCellDef> Max </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Icon">
-                        <th mat-header-cell *matHeaderCellDef> Icon </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Soft-1-Ex.Threshold">
-                        <th mat-header-cell *matHeaderCellDef> Soft-1-Ex.Threshold </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Soft-2-Ex.Threshold">
-                        <th mat-header-cell *matHeaderCellDef> Soft-2-Ex.Threshold </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Hard-1-Ex.Threshold">
-                        <th mat-header-cell *matHeaderCellDef> Hard-1-Ex.Threshold </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Hard-2-Ex.Threshold">
-                        <th mat-header-cell *matHeaderCellDef> Hard-2-Ex.Threshold </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Activity Graph Title">
-                        <th mat-header-cell *matHeaderCellDef> Activity Graph </th>
-                        <td mat-cell *matCellDef="let element"></td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Action" stickyEnd>
-                        <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 13%;"> Action
-                        </th>
-                        <td mat-cell *matCellDef="let element" style="text-align: center;">
-                            <div mat-ripple fxLayoutAlign="center center" class="delete-container pointer">
-                                <img src="assets/images/v2/delete.svg" width="32px">
-                                <span class="delete deletetxt">Delete</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="ParamdisplayedColumns;sticky: true;"></tr>
-                    <tr mat-row *matRowDef="let row; columns: ParamdisplayedColumns;sticky:true;"></tr>
-                </table>
-               
-            </div> -->
-
             <div [formGroup]="pform" class="tabledivision">
                 <!-- <div fxLayout="row" fxLayoutAlign="end center" style="width: 56%;">
                     <button mat-raised-button color="primary" (click)="addparam('1')" style="

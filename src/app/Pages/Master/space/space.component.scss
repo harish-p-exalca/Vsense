@@ -280,17 +280,13 @@ tbody {
 }
 
 
-::ng-deep .mat-list-option:focus{
+.cards.mat-list-item.mat-list-single-selected-option{
   background-color: #3131ff !important;
- color: #ffffff !important; 
- font-family: 'poopins';
- border-radius: 4px;
-}
-
-::ng-deep .mat-list-option:focus .titletxt{
-color:White !important;
-}
-::ng-deep .mat-list-option:focus .img{
-  filter: brightness(1.35) !important;
-  // filter: invert(100%) sepia(0%) saturate(7448%) hue-rotate(136deg) brightness(112%) contrast(112%) !important;
+  border: none !important;
+  .img{
+    filter: brightness(1.35) !important;
+  }
+  .titletxt{
+    color:White !important;
+    }
 }
