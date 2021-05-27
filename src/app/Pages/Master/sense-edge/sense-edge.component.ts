@@ -56,6 +56,8 @@ export class SenseEdgeComponent implements OnInit {
       (data) => {
         console.log(data);
         this.devicess = data;
+        console.log(this.devicess)
+        this.sampleclick(this.devicess[0])
       },
       (err) => {
         console.log(err);
