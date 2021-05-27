@@ -49,7 +49,8 @@
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false">
-                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index">
+                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index"
+                    [selected]="this.Title1==item.Title">
                         <div  (click) = "sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
                             style="height: 57px;padding-left: 1rem;" (click)="showandhider1()">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">

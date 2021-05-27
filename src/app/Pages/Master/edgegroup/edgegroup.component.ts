@@ -42,7 +42,7 @@ export class EdgegroupComponent implements OnInit {
   isFocused1: boolean = true;
   registrationFormGroup: FormGroup;
   registrationFormGrouptitle: FormGroup;
-  names:MEdgeGroupParam[]=[];
+  names: MEdgeGroupParam[] = [];
   selectedHero?: 0;
   constructor(private fb: FormBuilder, private service: VsenseapiService,
     private _snackBar: MatSnackBar, private cdRef: ChangeDetectorRef, public notification: NotificationService,
@@ -50,9 +50,9 @@ export class EdgegroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetTitle();
-this.registrationFormGrouptitle = this.fb.group({
-  Title: ['', Validators.required],
-})
+    this.registrationFormGrouptitle = this.fb.group({
+      Title: ['', Validators.required],
+    })
     this.registrationFormGroup = this.fb.group({
       Title: ['', Validators.required],
       ParamID: ['', Validators.required],
@@ -94,14 +94,14 @@ this.registrationFormGrouptitle = this.fb.group({
         this.devicess = data;
         console.log(this.devicess)
         this.sampleclick(this.devicess[0])
-        
+
       },
       (err) => {
         console.log(err);
       }
     )
   }
-  isSelected:true;
+  isSelected: true;
 
   Title1: any;
   EdgeGroup1: any;
@@ -109,53 +109,92 @@ this.registrationFormGrouptitle = this.fb.group({
   // EdgeID1:any
   ParamID1: any;
   Unit1: any;
-  LongText1: any; EdgeParamas1: any = [];
+  LongText1: any; EdgeParamas1: MEdgeGroupParam[] = [];
   Min1: any; Color1: any; Max1: any;
   Icon1: any; IsPercentage1: any;
 
+  Title2: any; EdgeGroup2: any; ParamID2: any; Unit2: any; LongText2: any; Min2: any; IsPercentage2: any;
+  Max2: any; Color2: any; Icon2: any;
+
   sampleclick(row: any) {
+    this.addparametersclose();
     console.log(row);
     this.Title1 = row.Title
     this.EdgeGroup1 = row.EdgeGroup;
     this.CreatedOn1 = row.CreatedOn;
     this.EdgeParamas1 = row.EdgeParams
-    // this.ParamID1 = row.ParamID
-    // this.Unit1 = row.Unit
-    // this.LongText1 = row.LongText
-    // this.Min1 = row.Min
-    // this.IsPercentage1 = row.IsPercentage
-    // this.Max1 = row.Max
-    // this.Color1 = row.Color
-    // this.Icon1 = row.Icon
-    console.log(this.Title1);
-    let list = (document.getElementById('listview') as any).ej2_instances[0];
-    list.selectItem(row.data[0]);
+    // for table
+    this.addparameters(this.EdgeParamas1);
    
+
+    // let len = this.EdgeParamas1.length
+    // for (let i = 0; i < len; i++) {
+    //   const fg = this.paramForms.controls[i] as FormGroup
+
+    //  fg.get('Title').setValue(this.EdgeParamas1[i].Title);
+    //  fg.get('ParamID').setValue(this.EdgeParamas1[i].ParamID);
+    //  fg.get('Min').setValue(this.EdgeParamas1[i].Min);
+    //  fg.get('Unit').setValue(this.EdgeParamas1[i].Unit);
+    //  fg.get('LongText').setValue(this.EdgeParamas1[i].LongText);
+    //  fg.get('Max').setValue(this.EdgeParamas1[i].Max)
+    //  fg.get('Icon').setValue(this.EdgeParamas1[i].Icon);
+    //  fg.get('Color').setValue(this.EdgeParamas1[i].Color);
+    //  fg.get('IsPercentage').setValue(this.EdgeParamas1[i].IsPercentage)
+    //  fg.get('EdgeGroup').setValue(this.EdgeParamas1[i].EdgeGroup)
+    //  fg.get('IsActive').setValue(this.EdgeParamas1[i].IsActive)
+    // }
+    console.log(this.Title1, this.EdgeParamas1);
+
+
   }
-  // actionComplete(event){
-  //   let list = (document.getElementById('listview') as any).ej2_instances[0];
-  //   list.selectItem(event.data[0]);
-  // }
+
   durationInSeconds = 5;
 
   RegisterClicked() {
     //if (this.registrationFormGrouptitle.valid) {
-      //console.log(this.registrationFormGrouptitle.get('Title').value);
-      const Title = this.registrationFormGrouptitle.get('Title').value;
-      console.log(Title)
+    //console.log(this.registrationFormGrouptitle.get('Title').value);
+    // const Title = this.registrationFormGrouptitle.get('Title').value;
+    // console.log(Title)
 
-      const emp = new MEdgeGroupView();
-      emp.Title = this.registrationFormGrouptitle.get('Title').value;
-      emp.EdgeParams = [];
-      this.service.SaveMEdgeGroup(emp).subscribe((data: MEdgeGroupView) => {
-        if (data != undefined) {
-          this._snackBar.open("Group created successfully", "close", {
-            duration: this.durationInSeconds * 1000,
-          });
-        }
-        console.log(data);
-        this.GetTitle();
-      })
+    // const emp = new MEdgeGroupView();
+    // emp.Title = this.registrationFormGrouptitle.get('Title').value;
+    // emp.EdgeParams = [];
+
+    let len = this.dataSource.value.length
+    for (let i = 0; i < len; i++) {
+      const fg = this.paramForms.controls[i] as FormGroup
+
+      //fg.get('jhvbs').setValue()
+      const emp = new MEdgeGroupParam();
+      emp.Title = fg.get('Title').value
+      emp.ParamID = fg.get('ParamID').value
+      emp.Min = fg.get('Min').value
+      emp.Unit = fg.get('Unit').value
+      emp.LongText = fg.get('LongText').value
+      emp.Max = fg.get('Max').value
+      emp.Icon = fg.get('Icon').value
+      emp.Color = fg.get('Color').value
+      emp.IsPercentage = fg.get('IsPercentage').value
+      this.names.push(emp)
+      console.log(this.names)
+    }
+    const edge = new MEdgeGroupView();
+    edge.Title = this.registrationFormGrouptitle.get('Title').value;
+    edge.EdgeParams = this.names
+    //emp.EdgeParams = new 
+
+    console.log(edge)
+    this.service.SaveMEdgeGroup(edge).subscribe((data: MEdgeGroupView) => {
+      if (data != undefined) {
+        this._snackBar.open("Group created successfully", "close", {
+          duration: this.durationInSeconds * 1000,
+        });
+      }
+      console.log(data);
+      //this.registerparam();
+      this.GetTitle();
+
+    })
     // }
     // else {
     //   Object.keys(this.registrationFormGrouptitle.controls).forEach(key => {
@@ -173,6 +212,7 @@ this.registrationFormGrouptitle = this.fb.group({
   handle_clear() {
     this.registrationFormGrouptitle.reset();
     this.reset_form();
+    this.addparametersclose();
 
   }
   // this.ShowValidationErrors();
@@ -333,6 +373,42 @@ this.registrationFormGrouptitle = this.fb.group({
       }
     );
   }
+  addparametersclose() {
+    this.paramForms.clear()
+
+    // this.dataSource.next(this.paramForms.controls);
+  }
+
+  // getting the values for forms in table
+  addparameters(value: MEdgeGroupParam[]) {
+    console.log(value)
+    for (let indexx = 0; indexx < value.length; indexx++) {
+      console.log(value[indexx].ParamID)
+      const row = this.fb.group({
+
+        ParamID: [value[indexx].ParamID],
+        Title: [value[indexx].Title],
+        Unit: [value[indexx].Unit],
+        LongText: [value[indexx].LongText],
+        Max: [value[indexx].Max],
+        Min: [value[indexx].Min],
+        Icon: [value[indexx].Icon],
+        Color: [value[indexx].Color],
+        IsPercentage: [value[indexx].IsPercentage],
+        IsActive: [value[indexx].IsActive],
+        CreatedOn: [value[indexx].CreatedOn],
+        CreatedBy: [this.currentUserName],
+        ModifiedOn: [null],
+        ModifiedBy: [null]
+
+      });
+      console.log(row)
+      this.paramForms.push(row)
+      this.dataSource.next(this.paramForms.controls);
+
+    }
+  }
+
 
   addparam(value: string) {
     if (value == "2") {
@@ -368,51 +444,41 @@ this.registrationFormGrouptitle = this.fb.group({
 
   registerparam() {
 
-    let len =  this.dataSource.value.length
-    for(let i=0;i<len;i++){
+    let len = this.dataSource.value.length
+    for (let i = 0; i < len; i++) {
       const fg = this.paramForms.controls[i] as FormGroup
-      // console.log(fg.get('Title').value)
-      // const Title = fg.get('Title').value
-      // const ParamID = fg.get('ParamID').value
-      // const Unit =  fg.get('Unit').value
-      // const LongText = fg.get('LongText').value
-      // const Max =  fg.get('Max').value
-      // const Min =  fg.get('Min').value
-      // const Icon =  fg.get('Icon').value
-      // const Color =  fg.get('Color').value
-      // const IsPercentage =  fg.get('IsPercentage').value
-      // console.log(Title, ParamID, Unit, LongText, Max, Min, Icon, Color, IsPercentage)
+
 
       const emp = new MEdgeGroupParam();
       emp.Title = fg.get('Title').value
       emp.ParamID = fg.get('ParamID').value
-      emp.Min =  fg.get('Min').value
+      emp.Min = fg.get('Min').value
       emp.Unit = fg.get('Unit').value
-      emp.LongText =  fg.get('LongText').value
+      emp.LongText = fg.get('LongText').value
       emp.Max = fg.get('Max').value
-      emp.Icon =  fg.get('Icon').value
+      emp.Icon = fg.get('Icon').value
       emp.Color = fg.get('Color').value
       emp.IsPercentage = fg.get('IsPercentage').value
       this.names.push(emp)
       console.log(this.names)
     }
-      const edge = new MEdgeGroupView();
-      edge.EdgeParams = this.names
-      //emp.EdgeParams = new 
-   
-   
-      this.service.SaveMEdgeGroup(edge).subscribe((data) => {
-        if (data != undefined) {
-          this._snackBar.open("Group created successfully", "close", {
-            duration: this.durationInSeconds * 1000,
-          });
-        }
-        console.log(data);
-        // this.RegisterClicked();
-        this.GetTitle();
-      })
-   
-  
+    const edge = new MEdgeGroupView();
+    edge.EdgeParams = this.names
+    //emp.EdgeParams = new 
+
+
+    this.service.SaveMEdgeGroup(edge).subscribe((data) => {
+      if (data != undefined) {
+        this._snackBar.open("Group created successfully", "close", {
+          duration: this.durationInSeconds * 1000,
+        });
+      }
+      console.log(data);
+      //  this.RegisterClicked();
+      this.GetTitle();
+    })
+
+
     // console.log(this.registrationFormGroup.get('Title').value);
     // const Title = fg.get('Title').value
     // const ParamID = this.registrationFormGroup.get('ParamID').value;
@@ -425,12 +491,12 @@ this.registrationFormGrouptitle = this.fb.group({
     // const IsPercentage = this.registrationFormGroup.get('Icon').value;
     // console.log(Title, ParamID, Unit, LongText, Max, Min, Icon, Color, IsPercentage)
 
-   
+
     // emp.Title = this.pform.get('Title').value;
     // emp.EdgeParams = [];
-  
+
     // emp.EdgeParams[0] = [];
-   
+
 
   }
   reset_pform() {

@@ -49,10 +49,11 @@
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false" class="matlist">
-                    <mat-list-option [selected]="item==1" class="cards metric-list-item" *ngFor="let item of devicess;let i as index"  >
+                    <mat-list-option [selected]="item==1" class="cards metric-list-item"
+                        *ngFor="let item of devicess;let i as index" [selected]="this.Title1==item.Title">
                         <!-- id='listview' (actionComplete)="actionComplete($event)" -->
                         <div (click)="sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
-                            style="height: 25px;padding-left: 1rem;" (click)="showandhider1()" >
+                            style="height: 25px;padding-left: 1rem;" (click)="showandhider1()">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;height: 30px;">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
@@ -286,7 +287,7 @@
                   background-color: #4660CE;">Manual Entry</button>
                     </div> -->
 
-                <table   mat-table [dataSource]="dataSource" formArrayName="parameters">
+                <table mat-table [dataSource]="dataSource" formArrayName="parameters">
 
                     <ng-container matColumnDef="paramID" *ngIf="isNewParam">
                         <th mat-header-cell *matHeaderCellDef class="headercolor alignhead"> ParamID</th>
@@ -352,7 +353,7 @@
                         <th mat-header-cell *matHeaderCellDef class="headercolor"> Text</th>
                         <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i" class="boldtext">
                             <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" placeholder="kjh" formControlName="LongText" ngModel required
+                                <input matInput autocomplete="off" formControlName="LongText" ngModel required
                                     type="text" clearInput>
 
                             </mat-form-field>
@@ -384,8 +385,8 @@
                         <th mat-header-cell *matHeaderCellDef class="headercolor "> Icon</th>
                         <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
                             <mat-form-field class="tformfield">
-                                <input  matInput autocomplete="off" formControlName="Icon" ngModel required
-                                    type="text" clearInput>
+                                <input matInput autocomplete="off" formControlName="Icon" ngModel required type="text"
+                                    clearInput>
 
                             </mat-form-field>
                         </td>
@@ -394,8 +395,8 @@
                         <th mat-header-cell *matHeaderCellDef class="headercolor "> Percentage</th>
                         <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
                             <mat-form-field class="tformfield">
-                                <input  matInput autocomplete="off" formControlName="IsPercentage" ngModel
-                                    required type="text" clearInput>
+                                <input matInput autocomplete="off" formControlName="IsPercentage" ngModel required
+                                    type="text" clearInput>
 
                             </mat-form-field>
                         </td>
@@ -404,8 +405,8 @@
                         <th mat-header-cell *matHeaderCellDef class="headercolor "> Color</th>
                         <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
                             <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="Color" ngModel
-                                    required type="text" clearInput>
+                                <input matInput autocomplete="off" formControlName="Color" ngModel required type="text"
+                                    clearInput>
 
                             </mat-form-field>
                         </td>
@@ -451,8 +452,7 @@
                     Clear entiries
                 </div>
                 <!-- (click)="RegisterClicked()" (click)="registerparam()"-->
-                <div class="updateoption" *ngIf="buttonnvaluee!=1"  (click)="RegisterClicked()"
-                (click)="registerparam()">
+                <div class="updateoption" *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()">
                     Create
                 </div>
 
