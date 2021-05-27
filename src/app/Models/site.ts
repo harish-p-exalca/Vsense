@@ -13,12 +13,11 @@ export class MSite extends Common{
     SiteID:number
 }
 export class MSpace extends Common{
-    SpaceID:string;
+    SpaceID:number;
     Title:string;
     WorkCenter:string;
     SiteID:number;
     ParantSpaceID:number;
-   
 }
 export class MEdge extends Common{
     EdgeID:number;
@@ -49,7 +48,7 @@ export class MEdgeGroupParam extends Common{
     Color:string;
 }
 export class MEdgeGroupView extends  MEdgeGroupParam{
-    EdgeParams:MEdgeGroupParam[];
+    EdgeParams:MEdgeGroupParam[]=[];
 }
 
 export class MAsset extends Common{
@@ -59,7 +58,7 @@ export class MAsset extends Common{
     SpaceID:number;
     Status:string;
 }
-export class MEdgeAssign extends MAsset{
+export class MEdgeAssign extends Common{
     AssignmentID:number;
     EdgeID:number;
     AssetID:number;
@@ -68,9 +67,8 @@ export class MEdgeAssign extends MAsset{
     StartDateTime:Date;
     EndDateTime:Date;
     Frequency:number;
-
 }
-export class MEdgeAssignParam extends MAsset{
+export class MEdgeAssignParam extends Common{
     AssignmentID: number;
     PramID:string;
     Title:string;
@@ -87,9 +85,9 @@ export class MEdgeAssignParam extends MAsset{
 }
 
 export class AssetView extends MAsset{
-    Assignments:Assignment[];
+    Assignments:Assignment[]=[];
 }
 
 export class Assignment extends MEdgeAssign{
-    AssignParams:MEdgeAssignParam[];
+    AssignParams:MEdgeAssignParam[]=[];
 }
