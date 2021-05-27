@@ -2,37 +2,22 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, H
 import { MatTableDataSource } from '@angular/material/table';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
-import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppUsage, AuthenticationDetails } from 'src/app/Models/master';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
-import { BehaviorSubject } from 'rxjs';
 import { NotificationService } from 'src/app/Services/notification.service';
 import { MasterService } from 'src/app/Services/master.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeviceDialogComponent } from './device-dialog/device-dialog.component';
-import { MEdge } from 'src/app/Models/site';
+import { AssetView, Assignment, MEdge, MEdgeAssign, MEdgeAssignParam, MEdgeGroupParam, MEdgeGroupView, MSpace } from 'src/app/Models/site';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
-export const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
-  },
-};
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-asset',
   templateUrl: './asset.component.html',
   styleUrls: ['./asset.component.scss'],
-  providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ],
   animations: [
     // Each unique animation requires its own trigger. The first argument of the trigger function is the name
     trigger('rotatedState', [
@@ -43,54 +28,41 @@ export const MY_DATE_FORMATS = {
     ])
   ]
 })
-export class AssetComponent implements OnInit,AfterViewInit {
-  // scroll button part
+export class AssetComponent implements OnInit, AfterViewInit {
+
   @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent: ElementRef<any>;
-  ScrollWidth=0;
-  ScrollLeft=0;
-  public scrollRight(): void {
-    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 680), behavior: 'smooth' });
-  }
-
-  public scrollLeft(): void {
-    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 680), behavior: 'smooth' });
-  }
-  // scroll button part
-  devices = [1, 2, 3, 4, 5, 56, 8, 7,8,23,1, 2, 3, 4, 5, 56, 8, 7,8,23];
-  ParamdisplayedColumns: string[] = ["ParamID", "Title", "Unit", "LongText", "Min", "Max", "Icon", "Soft-1-Ex.Threshold",
-    "Soft-2-Ex.Threshold", "Hard-1-Ex.Threshold", "Hard-2-Ex.Threshold", "Activity Graph Title", "Action"];
-  ParamDataSource: MatTableDataSource<any> = new MatTableDataSource(this.devices);
-  any: string = "we";
-  //animation
+  ScrollWidth: number = 0;
+  ScrollLeft: number = 0;
+  ParamdisplayedColumns: string[] = ["PramID", "Title", "Unit", "LongText", "Min", "Max", "Icon", "Soft1ExceptionThreshold",
+    "Soft2ExceptionThreshold", "Hard1ExceptionThreshold", "Hard2ExceptionThreshold", "ActivityGraphTitle", "Action"];
   state: string = 'default';
-  //autocomplete
   options: string[] = ['Working', 'Not Working', 'Others'];
-  //input field color
-  isFocused: boolean = true;
-  isFocused1: boolean = true;
-  isFocused2: boolean = true;
-  isFocused3: boolean = true;
-  isFocused4: boolean = true; isFocused5: boolean = true;
-  // highlighting
-  toggle: boolean = false;
-  toggle1: boolean = false;
-  toggle2: boolean = false;
-  toggle3: boolean = false;
-  toggle4: boolean = false;
-  toggle5: boolean = false;
-  toggle6: boolean = false;
-  toggle7: boolean = false;
-  toggle8: boolean = false;
+  searchText = "";
+  authenticationDetails: AuthenticationDetails;
+  currentUserID: Guid;
+  currentUserName: string;
+  currentUserRole: string;
 
-  // hovering
-  isActive: boolean = false;
+  paramExist: number;
+  AssetClasses = [{ display: "Critical", value: "10" }, { display: "High Impact", value: "20" }, { display: "Medium", value: "30" }, { display: "Info", value: "40" }]
+  AssetViews: AssetView[] = [];
+  MSpaces: MSpace[] = [];
+  AssetFormGroup: FormGroup;
+  SelectedAsset: AssetView = new AssetView();
+  SelectedEdge: Assignment = new Assignment();
+  ParamDataSource: MatTableDataSource<MEdgeAssignParam>;
+  OpenEdges: MEdge[] = [];
+  AllEdges: MEdge[] = [];
+  EdgeGroups: MEdgeGroupView[] = [];
+  GroupParams: MEdgeGroupParam[] = [];
 
   constructor(private doms: DomSanitizer,
     private fb: FormBuilder,
     private _snackBar: MatSnackBar, private cdRef: ChangeDetectorRef, public notification: NotificationService,
     private _masterService: MasterService,
-    private service:VsenseapiService,
-    private dialog:MatDialog) { }
+    private service: VsenseapiService,
+    private dialog: MatDialog,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     const retrievedObject = localStorage.getItem('authorizationData');
@@ -98,189 +70,259 @@ export class AssetComponent implements OnInit,AfterViewInit {
     this.currentUserID = this.authenticationDetails.UserID;
     this.currentUserName = this.authenticationDetails.UserName;
     this.currentUserRole = this.authenticationDetails.UserRole;
+
+    this.GetAllMSpaces();
+    this.GetOpenMEdges();
+    this.InitializeFormGroup();
+    this.GetAllAssets();
   }
-  
-  ngAfterViewInit(){
-    this.ScrollWidth=this.widgetsContent.nativeElement.scrollWidth-this.widgetsContent.nativeElement.clientWidth;
-    console.log(this.ScrollWidth);
+  InitializeFormGroup() {
+    this.AssetFormGroup = this.fb.group({
+      Space: ['', Validators.required],
+      Gateway: [''],
+      Title: ['', Validators.required],
+      Class: ['', Validators.required],
+      Status: ['', Validators.required]
+    });
   }
-  //image angular animation
+  GetAllAssets() {
+    this.spinner.show();
+    this.service.GetMAssets().subscribe(res => {
+      this.AssetViews = <AssetView[]>res;
+      this.service.GetMEdgeGroups().subscribe(x => {
+        this.EdgeGroups = <MEdgeGroupView[]>x;
+        this.service.GetMEdges().subscribe(res => {
+          this.AllEdges = <MEdge[]>res;
+          this.spinner.hide();
+          if(this.AssetViews.length>0){
+            this.LoadSelectedAsset(this.AssetViews[0]);
+          }
+          this.spinner.hide();
+        },
+          err => {
+            this.spinner.hide();
+            console.log(err);
+          });
+        this.spinner.hide();
+      },
+        err => {
+          this.spinner.hide();
+          console.log(err);
+        });
+      this.spinner.hide();
+    },
+    err => {
+      this.spinner.hide();
+      console.log(err);
+    });
+  }
+  GetAllMSpaces() {
+    this.service.GetMSpaces().subscribe(res => {
+      this.MSpaces = <MSpace[]>res;
+    },
+      err => {
+        console.log(err);
+      });
+  }
+  GetOpenMEdges() {
+    this.service.GetOpenMEdges().subscribe(x => {
+      this.OpenEdges = <MEdge[]>x;
+    },
+      err => {
+        console.log(err);
+      });
+  }
+  LoadSelectedAsset(selected: AssetView) {
+    this.SelectedAsset = selected;
+    this.SetAssetValues();
+    if (this.SelectedAsset.Assignments.length > 0) {
+      this.LoadSelectedEdge(this.SelectedAsset.Assignments[0]);
+    }
+    else {
+      this.SelectedEdge = new Assignment();
+      this.ParamDataSource = new MatTableDataSource(this.SelectedEdge.AssignParams);
+    }
+  }
+  LoadSelectedEdge(selected: Assignment) {
+    this.SelectedEdge = selected;
+    var edge = this.AllEdges.find(x => x.EdgeID == this.SelectedEdge.EdgeID);
+    var group = this.EdgeGroups.find(x => x.EdgeGroup == edge.EdgeGroup);
+    if (group != undefined) {
+      this.GroupParams = group.EdgeParams;
+    }
+    else {
+      this.GroupParams = [];
+    }
+    this.ParamDataSource = new MatTableDataSource(this.SelectedEdge.AssignParams);
+  }
+  SetAssetValues(): void {
+    this.AssetFormGroup.get('Space').patchValue(this.SelectedAsset.SpaceID);
+    this.AssetFormGroup.get('Title').patchValue(this.SelectedAsset.Title);
+    this.AssetFormGroup.get('Class').patchValue(this.SelectedAsset.Class);
+    this.AssetFormGroup.get('Status').patchValue(this.SelectedAsset.Status);
+  }
+  ngAfterViewInit() {
+    this.ScrollWidth = this.widgetsContent.nativeElement.scrollWidth - this.widgetsContent.nativeElement.clientWidth;
+  }
   rotate() {
     this.state = (this.state === 'default' ? 'rotated' : 'default');
   }
   menuClosed() {
     this.rotate();
   }
-  //image angular animation
+  public scrollRight(): void {
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 680), behavior: 'smooth' });
+  }
 
+  public scrollLeft(): void {
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 680), behavior: 'smooth' });
+  }
   onScroll(event: Event) {
-    this.ScrollLeft=(event.target as HTMLElement).scrollLeft;
+    this.ScrollLeft = (event.target as HTMLElement).scrollLeft;
     console.log(this.ScrollLeft);
   }
-  DeleteDeviceClicked(){
-    console.log("delete");
-  }
-
-  // devices = [];
-  isCreate = false;
-  searchText = "";
-  selectID;
-  authenticationDetails: AuthenticationDetails;
-  currentUserID: Guid;
-  currentUserName: string;
-  currentUserRole: string;
-  // dataSource = new BehaviorSubject<AbstractControl[]>([]);
-  paramForms: FormArray = this.fb.array([]);
-  row: FormGroup;
-  paramGroup = [];
-  displayedColumns: string[] = ['paramID', 'title', 'unit', 'longText', 'min', 'max', 'icon',  "Soft-1-Ex.Threshold",
-  "Soft-2-Ex.Threshold", "Hard-1-Ex.Threshold", "Hard-2-Ex.Threshold", "Activity Graph Title",  'action'];
-  isNewParam: boolean = false;
-  paramExist: number;
-  deviceparams = [{
-    paramID: "VIBR",
-    title: "VIBRATION",
-    unit: "Hz",
-  },
-  {
-    paramID: "TEMP",
-    title: "TEMPERATURE",
-    unit: "°C",
-  },
-  {
-    paramID: "CRNT",
-    title: "CURRENT",
-    unit: "mA",
-  },
-  {
-    paramID: "HUMD",
-    title: "HUMIDITY",
-    unit: "kgm^-1",
-  }];
-
-
-
-
-  pform = this.fb.group({
-    parameters: this.paramForms
-  })
-
-
-
-  CreateAppUsage(): void {
-    const appUsage: AppUsage = new AppUsage();
-    appUsage.UserID = this.currentUserID;
-    appUsage.AppName = 'Device';
-    appUsage.UsageCount = 1;
-    appUsage.CreatedBy = this.currentUserName;
-    appUsage.ModifiedBy = this.currentUserName;
-    this._masterService.CreateAppUsage(appUsage).subscribe(
-      (data) => {
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
-  }
-  dataSource = new BehaviorSubject<AbstractControl[]>([]);
-  addparam(value: string) {
-    if (value == "2") {
-      this.isNewParam = false;
-      this.cdRef.detectChanges();
+  DeleteDeviceClicked(index: number) {
+    var new_edge = this.AllEdges.find(x => x.EdgeID == this.SelectedAsset.Assignments[index].EdgeID);
+    new_edge.Status = "10";
+    this.OpenEdges.push(new_edge);
+    this.SelectedAsset.Assignments.splice(index, 1);
+    if (this.SelectedAsset.Assignments.length > 0) {
+      this.LoadSelectedEdge(this.SelectedAsset.Assignments[0]);
     }
     else {
-      this.isNewParam = true;
-      this.cdRef.detectChanges();
+      this.SelectedEdge = new Assignment();
     }
-    this.paramForms.push(this.fb.group({
-      // deviceID: [this.mform.get('deviceID').value],
-      paramID: [null],
-      title: [null],
-      unit: [null],
-      longText: [null],
-      max: [100],
-      min: [0],
-      icon: [null],
-      color: [null],
-      percentage: [null],
-      action: [null],
-      isPercentage: [null],
-      isEnabled: [true],
-      createdOn: [new Date()],
-      createdBy: [this.currentUserName],
-      modifiedOn: [null],
-      modifiedBy: [null]
-    }));
-    this.dataSource.next(this.paramForms.controls);
   }
-  reset_pform() {
-    this.paramForms.clear();
-    this.dataSource.next(this.paramForms.controls);
-    this.pform.setValue({
-      parameters: this.paramForms
+  AddAssignParam() {
+    if (this.GroupParams.length == this.SelectedEdge.AssignParams.length) {
+      this.notification.success("All parameters assigned");
+      return;
+    }
+    var param = new MEdgeAssignParam();
+    this.SelectedEdge.AssignParams.push(param);
+    this.ParamDataSource = new MatTableDataSource(this.SelectedEdge.AssignParams);
+  }
+  DeleteAssignParam(index: number) {
+    this.SelectedEdge.AssignParams.splice(index, 1);
+    this.ParamDataSource = new MatTableDataSource(this.SelectedEdge.AssignParams);
+  }
+  OpenDeviceDialog() {
+    if (!this.AssetFormGroup.valid) {
+      this.ShowValidationErrors(this.AssetFormGroup);
+      return;
+    }
+    if (this.OpenEdges.length == 0) {
+      this.notification.success("no available devices found");
+      return;
+    }
+    const dialogConfig: MatDialogConfig = {
+      data: { OpenEdges: this.OpenEdges },
+      panelClass: "device-dialog"
+    };
+    const dialogRef = this.dialog.open(DeviceDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        var assign = new Assignment();
+        assign.EdgeID = res.EdgeID;
+        assign.Frequency = res.Frequency;
+        assign.StartDateTime = res.StartDateTime;
+        var space = this.MSpaces.find(x => x.SpaceID == this.AssetFormGroup.get('Space').value);
+        assign.SpaceID = space.SpaceID;
+        assign.SiteID = space.SiteID;
+        assign.AssignParams = [];
+        this.SelectedAsset.Assignments.push(assign);
+        this.OpenEdges.splice(this.OpenEdges.findIndex(x => x.EdgeID == res.EdgeID), 1);
+        this.LoadSelectedEdge(assign);
+      }
     });
   }
-  removeparam(index) {
-    let data = this.pform.value;
-    var deviceid = data.parameters[index].deviceID;
-    var paramid = data.parameters[index].paramID;
-    if (paramid == null) {
-      this.paramForms.removeAt(index);
-      this.dataSource.next(this.paramForms.controls);
+  GetEdgeName(EdgeID: number): string {
+    var edge = this.AllEdges.find(x => x.EdgeID == EdgeID);
+    if (edge != undefined) {
+      return edge.Title;
     }
-    else {
-      // this.handle_deleteparam(paramid, deviceid, index);
-    }
+    return "";
   }
-  paramselect(param: string, index: any) {
-    // console.log(this.mform.get("parameters").value);
+  ParamSelect(param: string, index: any) {
     this.paramExist = 0;
-    const arr = this.pform.get("parameters") as FormArray;
-    arr.value.forEach(element => {
-      if (element.paramID == param && element.paramID != null) {
+    this.SelectedEdge.AssignParams.forEach(element => {
+      if (element.PramID == param && element.PramID != null) {
         this.paramExist += 1;
       }
     });
     if (this.paramExist > 1) {
       this.notification.success("param already exists");
-      const paramarray = this.pform.get("parameters") as FormArray;
-      const control = paramarray.controls[index] as FormControl;
-      control.patchValue({ paramID: null });
+      this.SelectedEdge.AssignParams[index].PramID = "";
+      this.SelectedEdge.AssignParams[index].Title = "";
+      this.SelectedEdge.AssignParams[index].Unit = "";
+      this.SelectedEdge.AssignParams[index].LongText = "";
+      this.SelectedEdge.AssignParams[index].Max = null;
+      this.SelectedEdge.AssignParams[index].Min = null;
+      this.SelectedEdge.AssignParams[index].Icon = "";
+      this.SelectedEdge.AssignParams[index].Soft1ExceptionThreshold = null;
+      this.SelectedEdge.AssignParams[index].Soft2ExceptionThreshold = null;
+      this.SelectedEdge.AssignParams[index].Hard1ExceptionThreshold = null;
+      this.SelectedEdge.AssignParams[index].Hard2ExceptionThreshold = null;
+      this.SelectedEdge.AssignParams[index].ActivityGraphTitle = "";
     }
     else {
-      const paramarray = this.pform.get("parameters") as FormArray;
-      const control = paramarray.controls[index] as FormControl;
-      for (var i in this.deviceparams) {
-        if (this.deviceparams[i].paramID == param) {
-          control.patchValue({
-            title: this.deviceparams[i].title,
-            unit: this.deviceparams[i].unit,
-          });
-          // console.log(this.mform.value);
-          break;
-        }
-      }
+      var Param = this.GroupParams.find(x => x.ParamID == param);
+      this.SelectedEdge.AssignParams[index].Title = Param.Title;
+      this.SelectedEdge.AssignParams[index].Unit = Param.Unit;
+      this.SelectedEdge.AssignParams[index].LongText = Param.LongText;
+      this.SelectedEdge.AssignParams[index].Max = Param.Max;
+      this.SelectedEdge.AssignParams[index].Min = Param.Min;
+      this.SelectedEdge.AssignParams[index].Icon = Param.Icon;
     }
   }
-
-  OpenDeviceDialog() {
-    const dialogConfig: MatDialogConfig = {
-      panelClass: "device-dialog"
-    };
-    const dialogRef = this.dialog.open(DeviceDialogComponent,dialogConfig);
-    dialogRef.afterClosed().subscribe(res => {
-
+  ShowValidationErrors(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(key => {
+      formGroup.get(key).markAsTouched();
+      formGroup.get(key).markAsDirty();
     });
   }
-
-
-
-
-
-
-  skills = new FormArray([
-    new FormControl(),
-    new FormControl(),
-    new FormControl()
-  ]);
+  ResetControl(): void {
+    this.SelectedAsset = new AssetView();
+    this.SelectedEdge = new Assignment();
+    this.AssetFormGroup.reset();
+    Object.keys(this.AssetFormGroup.controls).forEach(key => {
+      this.AssetFormGroup.get(key).markAsUntouched();
+    });
+  }
+  SaveAssetClicked() {
+    if (this.AssetFormGroup.valid) {
+      this.spinner.show();
+      this.GetAssetValues();
+      this.service.SaveMAsset(this.SelectedAsset).subscribe(res => {
+        this.spinner.hide();
+        this.notification.success("Asset saved successfully");
+        this.GetAllAssets();
+      },
+        err => {
+          console.log(err);
+          this.spinner.hide();
+        });
+    }
+    else {
+      this.ShowValidationErrors(this.AssetFormGroup);
+    }
+  }
+  GetAssetValues() {
+    this.SelectedAsset.SpaceID = this.AssetFormGroup.get('Space').value;
+    this.SelectedAsset.Title = this.AssetFormGroup.get('Title').value;
+    this.SelectedAsset.Class = this.AssetFormGroup.get('Class').value;
+    this.SelectedAsset.Status = this.AssetFormGroup.get('Status').value;
+  }
+  DeleteAssetClicked() {
+    this.spinner.show();
+    this.service.DeleteMAsset(this.SelectedAsset.AssetID).subscribe(res => {
+      this.spinner.hide();
+      this.notification.success("Asset deleted successfully");
+      this.GetAllAssets();
+    },
+      err => {
+        console.log(err);
+        this.spinner.hide();
+      });
+  }
 }

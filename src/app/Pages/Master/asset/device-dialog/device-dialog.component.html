@@ -7,7 +7,7 @@
     <mat-dialog-content style="padding:24px; margin:0" fusePerfectScrollbar>
         <form autocomplete="off" [formGroup]="DialogueFormGroup">
             <div fxFlex fxLayout="column">
-                <mat-form-field fxFlex=100 style="font-size: 12px;">
+                <mat-form-field fxFlex=100>
                     <mat-label>Edge</mat-label>
                     <mat-select formControlName="EdgeID" fxFlex>
                         <mat-option *ngFor="let edge of OpenEdges" [value]="edge.EdgeID">{{edge.EdgeID}} - {{edge.Title}}</mat-option>
@@ -17,12 +17,22 @@
                         Edge is required
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field fxFlex=100 style="font-size: 12px;">
+                <mat-form-field fxFlex=100>
                     <mat-label>Frequency</mat-label>
                     <input matInput formControlName="Frequency" type="number" fxFlex>
                     <mat-error
                         *ngIf="DialogueFormGroup.get('Frequency').touched && DialogueFormGroup.get('Frequency').hasError('required')">
                         Frequency is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="100">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="StartDateTime" fxFlex (click)="picker1.open()">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error
+                        *ngIf="DialogueFormGroup.get('StartDateTime').touched && DialogueFormGroup.get('StartDateTime').hasError('required')">
+                        Validity start date is required
                     </mat-error>
                 </mat-form-field>
             </div>
