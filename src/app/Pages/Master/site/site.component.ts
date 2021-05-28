@@ -1,200 +1,107 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { from } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { MSite } from 'src/app/Models/site';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
+import { NotificationService } from 'src/app/Services/notification.service';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
-// import { SnackbarComponent } from '../snackbar/snackbar.component';
 @Component({
   selector: 'app-site',
   templateUrl: './site.component.html',
   styleUrls: ['./site.component.scss']
 })
 export class SiteComponent implements OnInit {
-  devices = [1, 2, 3, 4, 5, 56, 8, 7];
-  ParamdisplayedColumns: string[] = ["ParamID", "Title", "Unit", "LongText", "Min", "Max", "Action"];
-  ParamDataSource: MatTableDataSource<any> = new MatTableDataSource(this.devices);
-  variable:any = undefined;
-  registrationFormGroup: FormGroup;
-  //input field color
-  isFocused: boolean = true;
-  isFocused1: boolean = true;
-  isFocused2: boolean = true; selectedOptions: string[] 
-  isFocused3: boolean = true;
-  constructor(private fb: FormBuilder, private service: VsenseapiService, private _snackBar: MatSnackBar) { }
-  Title: string[];
-  devicess: any = []; row1: any = []; row2: any;
-  Title1: any; SiteID1: any;
-  Geo1: any;
-  Plant1: any;
-  CreatedOn1: any;
-  buttonnvalueecreate = 0;
-  buttonnvaluee = 0; isactive:boolean= true;
+  
+  SelectedSite:MSite=new MSite();
+  SiteFormGroup:FormGroup;
+  MSites:MSite[]=[];
+
+  constructor(
+    private fb:FormBuilder,
+    private service:VsenseapiService,
+    private notification:NotificationService,
+    private spinner:NgxSpinnerService
+    ) {}
+
   ngOnInit(): void {
-    this.GetTitle();
-    this.registrationFormGroup = this.fb.group({
-      Title: ['', Validators.required],
-      Plant: ['', Validators.required],
-      Geo: ['', Validators.required]
+    this.InitializeFormGroup();
+    this.GetAllSites();
+  }
+  InitializeFormGroup(){
+    this.SiteFormGroup=this.fb.group({
+      Title:['',Validators.required],
+      Geo:['',Validators.required],
+      Plant:['',Validators.required]
     });
-
   }
-  GetTitle(): void {
-    this.service.GetMSites().subscribe(
-      (data) => {
-        console.log(data);
-        this.devicess = data;
-        console.log(this.devicess)
-        this.sampleclick(this.devicess[0])
-      },
-      (err) => {
-        console.log(err);
+  GetAllSites(){
+    this.spinner.show();
+    this.service.GetMSites().subscribe(res=>{
+      this.MSites=<MSite[]>res;
+      if(this.MSites.length>0){
+        this.LoadSelectedSite(this.MSites[0]);
       }
-    )
+      this.spinner.hide();
+    },
+    err=>{
+      console.log(err);
+      this.spinner.hide();
+    })
   }
- 
-  sampleclick(row: any) {
-    console.log(row);
-    this.SiteID1 = row.SiteID
-    this.Title1 = row.Title
-    this.Geo1 = row.Geo;
-    this.Plant1 = row.Plant;
-    this.CreatedOn1 = row.CreatedOn
-    console.log(this.Title1);
+  LoadSelectedSite(mSite:MSite){
+    this.SelectedSite=mSite;
+    this.SiteFormGroup.get('Title').setValue(mSite.Title);
+    this.SiteFormGroup.get('Geo').setValue(mSite.Geo);
+    this.SiteFormGroup.get('Plant').setValue(mSite.Plant);
   }
-  RegisterClicked() {
-    if (this.registrationFormGroup.valid) {
-      console.log(this.registrationFormGroup.get('Title').value);
-
-      const Title = this.registrationFormGroup.get('Title').value;
-      const Plant = this.registrationFormGroup.get('Plant').value;
-      const Geo = this.registrationFormGroup.get('Geo').value;
-      // const IsActive = this.registrationFormGroup.get('IsActive').value;
-      // const ModifiedOn = this.registrationFormGroup.get('ModifiedOn').value;
-      // const ModifiedBy = this.registrationFormGroup.get('ModifiedBy').value;
-
-      console.log(Title, Plant, Geo)
-
-      const emp = new MSite();
-
-      emp.Title = this.registrationFormGroup.get('Title').value;
-      emp.Plant = this.registrationFormGroup.get('Plant').value;
-      emp.Geo = this.registrationFormGroup.get('Geo').value;
-      // emp.IsActive = this.registrationFormGroup.get('IsActive').value;
-      // emp.ModifiedOn = this.registrationFormGroup.get('ModifiedOn').value;
-      // emp.ModifiedBy = this.registrationFormGroup.get('ModifiedBy').value;
-
-      this.service.SaveMSite(emp).subscribe((data: MSite[]) => {
-        if (data != undefined) {
-
-          this._snackBar.open("Site created successfully", "close", {
-            duration: this.durationInSeconds * 1000,
-
-          });
-        }
-        console.log(data);
-        this.GetTitle();
-      })
-
-    }
-
-    else {
-      Object.keys(this.registrationFormGroup.controls).forEach(key => {
-        this.registrationFormGroup.get(key).markAsTouched();
-      });
-    }
+  ShowValidationErrors(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(key => {
+      formGroup.get(key).markAsTouched();
+      formGroup.get(key).markAsDirty();
+    });
   }
-
-
-  DeleteClicked() {
-
-    this.service.DeleteMSite(this.SiteID1).subscribe(
-      (data) => {
-        if (data == null) {
-
-          this._snackBar.open("Site deleted successfully", "close", {
-            duration: this.durationInSeconds * 1000,
-
-          })
-        }
-        console.log(data);
-        this.devicess = data;
-        this.GetTitle();
+  ResetControl(): void {
+    this.SelectedSite = new MSite();
+    this.SiteFormGroup.reset();
+    Object.keys(this.SiteFormGroup.controls).forEach(key => {
+      this.SiteFormGroup.get(key).markAsUntouched();
+    });
+  }
+  SaveSiteClicked() {
+    if (this.SiteFormGroup.valid) {
+      this.spinner.show();
+      this.GetSiteValues();
+      this.service.SaveMSite(this.SelectedSite).subscribe(res => {
+        this.spinner.hide();
+        this.notification.openSnackBar("Site saved successfully",SnackBarStatus.success);
+        this.ResetControl();
+        this.GetAllSites();
       },
-      (err) => {
-        console.log(err);
-      }
-    );
-
-  }
-
-  UpdateClicked() {
-    const val = new MSite()
-    val.SiteID = this.SiteID1
-    val.Title = this.Title1
-    val.Geo = this.Geo1
-    val.Plant = this.Plant1
-    this.variable = val
-    console.log(this.variable)
-    this.service.SaveMSite(this.variable).subscribe((data: MSite[]) => {
-      if (data != undefined) {
-
-        this._snackBar.open("Site updated successfully", "close", {
-          duration: this.durationInSeconds * 1000,
-
+        err => {
+          console.log(err);
+          this.spinner.hide();
         });
-      }
-      console.log(data);
-      
-      this.GetTitle();
-    })
-
+    }
+    else {
+      this.ShowValidationErrors(this.SiteFormGroup);
+    }
   }
-
-
-  reset_form() {
-    this.registrationFormGroup.setValue({
-      Title: null,
-      Plant: null,
-      Geo: null,
-      // ModifiedOn:null
-
-    })
+  GetSiteValues() {
+    this.SelectedSite.Title = this.SiteFormGroup.get('Title').value;
+    this.SelectedSite.Geo = this.SiteFormGroup.get('Geo').value;
+    this.SelectedSite.Plant = this.SiteFormGroup.get('Plant').value;
   }
-  handle_clear() {
-    this.registrationFormGroup.reset();
-    this.reset_form();
-
-  }
-  // this.ShowValidationErrors();
-  ShowValidationErrors(): void {
-    Object.keys(this.registrationFormGroup.controls).forEach(key => {
-      this.registrationFormGroup.get(key).markAsTouched();
-      this.registrationFormGroup.get(key).markAsDirty();
-    });
-  }
-
-  showandhider1() {
-    this.buttonnvaluee = 1;
-  }
-  showandhideer2() {
-    this.buttonnvaluee = 2;
-  }
-  durationInSeconds = 5;
-  // openSnackBar() {
-  //   this._snackBar.openFromComponent(SnackbarComponent, {
-  //     duration: this.durationInSeconds * 1000,
-  //   });
-  // }
-
-  toggle: boolean = false;
-  toggele() {
-    this.toggle = !this.toggle;
-  }
-
-
-  onNgModelChange(event){
-    
+  DeleteSiteClicked() {
+    this.spinner.show();
+    this.service.DeleteMSite(this.SelectedSite.SiteID).subscribe(res => {
+      this.spinner.hide();
+      this.notification.openSnackBar("Site deleted successfully",SnackBarStatus.success);
+      this.ResetControl();
+      this.GetAllSites();
+    },
+      err => {
+        console.log(err);
+        this.spinner.hide();
+      });
   }
 }

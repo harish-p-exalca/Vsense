@@ -91,9 +91,13 @@
         height: 100vh;
     }
     .right-container{
-        background-color: #ffffff;
-        padding: 28px 20px 8px 20px;
-        height: 100vh;
+      background-color: #ffffff;
+      padding: 28px 3% 0 3%;
+      height: 100vh;
+      width: 100%;
+    }
+    .form-field-wrapper{
+      width: 50%;
     }
     .countbox{
         height: 20px;
@@ -153,16 +157,10 @@
         filter: brightness(0.35);
     }
     .formfield{
-        // @extend .poppins;
-        font-size: 12px;
-        width: 30%;
-        margin-top: -1.5rem
-    }
-    .formfieldputtouse{
-      // @extend .poppins;
+      @extend .poppins;
       font-size: 12px;
-      width: 70%;
-      margin-top: -1.5rem
+      width: 60%;
+      margin-top: -1.5rem;
     }
     .delete{
         color: #f33d3d;
@@ -216,11 +214,13 @@
 
 .footerdiv{
   background-color: #f4f4fb;
-  width: 65%;
+  width: 72%;
   height: 60px;
   border-radius: 4px;
-  position: fixed;
+  position: absolute;
   bottom: 0;
+  z-index: 1 !important;
+  padding: 0 2rem;
 }
 .copybutton{
   border-radius: 4px;
@@ -232,38 +232,25 @@
   width: 130px;
 }
 .deleteoption{
-  margin-left: 28rem;
-  font-size: 14px;
-  color: #220c0c; @extend .poppins;
-  cursor: pointer; display: block;
+  @extend .poppins; 
+  font-size: 12px;
+  color: #220c0c;cursor: pointer;
 }
 .deleteoption:hover{
   color: #d6201d;
 }
 .updateoption{
-  margin-right: 3rem;
-  font-size: 14px;
-  color: #220c0c; @extend .poppins;
-  cursor: pointer; display: block;
+  font-size: 12px;
+  color: #220c0c;cursor: pointer; @extend .poppins; 
+  display: block;
 }
 .updateoption:hover{
   color: #26b329;
 }
-tbody {
-  display:block;
- 
-  overflow:auto;
-}
-.bigimage{
-  width: 60%;
-  height: 280px; object-fit: contain;
-  margin-left: 3rem;
-}
 .createoption{
-  margin-right: 3rem;
-  font-size: 14px;
-  color: #220c0c; @extend .poppins;
-  cursor: pointer; display: block;
+  font-size: 12px;
+  color: #220c0c;cursor: pointer; @extend .poppins; 
+  display: block;
 }
 .createoption:hover{
   color: #26b329;
@@ -278,7 +265,11 @@ tbody {
  margin-left: 53rem;
  top: 80%;
 }
-
+.matoption{
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 500;
+}
 
 .cards.mat-list-item.mat-list-single-selected-option{
   background-color: #3131ff !important;
@@ -289,4 +280,14 @@ tbody {
   .titletxt{
     color:White !important;
     }
+}
+::ng-deep .matselect.mat-select {
+  @extend .poppins;
+  .mat-select-value{
+    height: 14px;
+  }
+}
+.bigimage{
+  width: 100%;
+  margin-top: 1rem;
 }

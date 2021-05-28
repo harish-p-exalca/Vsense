@@ -13,8 +13,8 @@ import { DatePipe } from '@angular/common';
 import { ExcelService } from 'src/app/Services/excel.service';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 import { NotificationDialogComponent } from 'src/app/Notifications/notification-dialog/notification-dialog.component';
-import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
-import { SnackBarStatus } from 'src/app/Notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
+import { NotificationService } from 'src/app/Services/notification.service';
 
 @Component({
   selector: 'app-user',
@@ -27,7 +27,6 @@ export class UserComponent implements OnInit {
   selectedUser: UserWithRole;
   menuItems: string[];
   authenticationDetails: AuthenticationDetails;
-  notificationSnackBarComponent: NotificationSnackBarComponent;
   isProgressBarVisibile: boolean;
   selectID: Guid;
   userMainFormGroup: FormGroup;
@@ -48,14 +47,13 @@ export class UserComponent implements OnInit {
     public service:VsenseapiService,
     private _masterService: MasterService,
     private _router: Router,
-    public snackBar: MatSnackBar,
+    public notify: NotificationService,
     private dialog: MatDialog,
     private _formBuilder: FormBuilder,
     private _datePipe: DatePipe,
     private _excelService: ExcelService,) {
     this.selectedUser = new UserWithRole();
     this.authenticationDetails = new AuthenticationDetails();
-    this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.isProgressBarVisibile = true;
     this.searchText = '';
     this.SelectValue = 'All';
@@ -69,7 +67,7 @@ export class UserComponent implements OnInit {
       this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
       this.menuItems = this.authenticationDetails.MenuItemNames.split(',');
       if (this.menuItems.indexOf('User') < 0) {
-        this.notificationSnackBarComponent.openSnackBar('You do not have permission to visit this page', SnackBarStatus.danger);
+        this.notify.openSnackBar('You do not have permission to visit this page', SnackBarStatus.danger);
         this._router.navigate(['/auth/login']);
       }
 
@@ -125,7 +123,7 @@ export class UserComponent implements OnInit {
       (err) => {
         console.error(err);
         this.isProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       }
     );
   }
@@ -201,13 +199,13 @@ export class UserComponent implements OnInit {
       (data) => {
         // console.log(data);
         this.ResetControl();
-        this.notificationSnackBarComponent.openSnackBar('User created successfully', SnackBarStatus.success);
+        this.notify.openSnackBar('User created successfully', SnackBarStatus.success);
         this.isProgressBarVisibile = false;
         this.GetAllUsers();
       },
       (err) => {
         console.error(err);
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         this.isProgressBarVisibile = false;
       }
     );
@@ -222,13 +220,13 @@ export class UserComponent implements OnInit {
       (data) => {
         // console.log(data);
         this.ResetControl();
-        this.notificationSnackBarComponent.openSnackBar('User updated successfully', SnackBarStatus.success);
+        this.notify.openSnackBar('User updated successfully', SnackBarStatus.success);
         this.isProgressBarVisibile = false;
         this.GetAllUsers();
       },
       (err) => {
         console.error(err);
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         this.isProgressBarVisibile = false;
       }
     );
@@ -242,13 +240,13 @@ export class UserComponent implements OnInit {
       (data) => {
         // console.log(data);
         this.ResetControl();
-        this.notificationSnackBarComponent.openSnackBar('User deleted successfully', SnackBarStatus.success);
+        this.notify.openSnackBar('User deleted successfully', SnackBarStatus.success);
         this.isProgressBarVisibile = false;
         this.GetAllUsers();
       },
       (err) => {
         console.error(err);
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         this.isProgressBarVisibile = false;
       }
     );

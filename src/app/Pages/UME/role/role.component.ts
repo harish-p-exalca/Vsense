@@ -8,8 +8,8 @@ import { Guid } from 'guid-typescript';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 import { NotificationDialogComponent } from 'src/app/Notifications/notification-dialog/notification-dialog.component';
-import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
-import { SnackBarStatus } from 'src/app/Notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
+import { NotificationService } from 'src/app/Services/notification.service';
 
 @Component({
   selector: 'role',
@@ -20,7 +20,6 @@ export class RoleComponent implements OnInit {
   menuItems: string[];
   selectedRole: RoleWithApp;
   authenticationDetails: AuthenticationDetails;
-  notificationSnackBarComponent: NotificationSnackBarComponent;
   isProgressBarVisibile: boolean;
   selectID: Guid;
   searchText = '';
@@ -33,12 +32,11 @@ export class RoleComponent implements OnInit {
     public service:VsenseapiService,
     private _masterService: MasterService,
     private _router: Router,
-    public snackBar: MatSnackBar,
+    public notify: NotificationService,
     private dialog: MatDialog,
     private _formBuilder: FormBuilder) {
     this.selectedRole = new RoleWithApp();
     this.authenticationDetails = new AuthenticationDetails();
-    this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.isProgressBarVisibile = true;
     this.AppIDListAllID = 0;
   }
@@ -51,7 +49,7 @@ export class RoleComponent implements OnInit {
       this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
       this.menuItems = this.authenticationDetails.MenuItemNames.split(',');
       if (this.menuItems.indexOf('User') < 0) {
-        this.notificationSnackBarComponent.openSnackBar('You do not have permission to visit this page', SnackBarStatus.danger);
+        this.notify.openSnackBar('You do not have permission to visit this page', SnackBarStatus.danger);
         this._router.navigate(['/auth/login']);
       }
 
@@ -108,7 +106,7 @@ export class RoleComponent implements OnInit {
       (err) => {
         console.error(err);
         this.isProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       }
     );
   }
@@ -118,7 +116,7 @@ export class RoleComponent implements OnInit {
     const SelectedValues = this.roleMainFormGroup.get('appIDList').value as number[];
     if (SelectedValues.includes(this.AppIDListAllID)) {
       this.roleMainFormGroup.get('appIDList').patchValue([this.AppIDListAllID]);
-      this.notificationSnackBarComponent.openSnackBar('All have all the menu items, please uncheck All if you want to select specific menu', SnackBarStatus.info, 4000);
+      this.notify.openSnackBar('All have all the menu items, please uncheck All if you want to select specific menu', SnackBarStatus.info, 4000);
 
     }
     // console.log(this.roleMainFormGroup.get('appIDList').value);
@@ -171,13 +169,13 @@ export class RoleComponent implements OnInit {
       (data) => {
         // console.log(data);
         this.ResetControl();
-        this.notificationSnackBarComponent.openSnackBar('Role created successfully', SnackBarStatus.success);
+        this.notify.openSnackBar('Role created successfully', SnackBarStatus.success);
         this.isProgressBarVisibile = false;
         this.GetAllRoles();
       },
       (err) => {
         console.error(err);
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         this.isProgressBarVisibile = false;
       }
     );
@@ -192,13 +190,13 @@ export class RoleComponent implements OnInit {
       (data) => {
         // console.log(data);
         this.ResetControl();
-        this.notificationSnackBarComponent.openSnackBar('Role updated successfully', SnackBarStatus.success);
+        this.notify.openSnackBar('Role updated successfully', SnackBarStatus.success);
         this.isProgressBarVisibile = false;
         this.GetAllRoles();
       },
       (err) => {
         console.error(err);
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         this.isProgressBarVisibile = false;
       }
     );
@@ -212,13 +210,13 @@ export class RoleComponent implements OnInit {
       (data) => {
         // console.log(data);
         this.ResetControl();
-        this.notificationSnackBarComponent.openSnackBar('Role deleted successfully', SnackBarStatus.success);
+        this.notify.openSnackBar('Role deleted successfully', SnackBarStatus.success);
         this.isProgressBarVisibile = false;
         this.GetAllRoles();
       },
       (err) => {
         console.error(err);
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         this.isProgressBarVisibile = false;
       }
     );

@@ -36,17 +36,6 @@ import { MenuListItemComponent } from "./Layout/menu-list-item/menu-list-item.co
 import { NavService } from "./nav.service";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TopNavComponent } from "./Layout/top-nav/top-nav.component";
-import { Dashboard1Component } from './Pages/Dashboard/Dashboard/dashboard1.component';
-import { Dashboard2Component } from './Pages/Dashboard/Device Details/dashboard2.component';
-import { DeviceComponent } from './Pages/Master/device/device.component';
-import { DeviceparamComponent } from './Pages/Master/deviceparam/deviceparam.component';
-import { EquipmentComponent } from './Pages/Master/equipment/equipment.component';
-import { LocationComponent } from './Pages/Master/location/location.component';
-import {RuleComponent} from './Pages/Master/rule/rule.component';
-import { DeviceassignComponent } from './Pages/Master/deviceassign/deviceassign.component';
-import { DeviceassignparamComponent } from './Pages/Master/deviceassignparam/deviceassignparam.component';
-import { ExceptionComponent } from './Pages/Exception/exception/exception.component';
-import {NotificationSnackBarComponent} from './Notifications/notification-snack-bar/notification-snack-bar.component';
 import {InformationDialogComponent} from './Notifications/information-dialog/information-dialog.component';
 import { LoginComponent } from './Auth/login/login.component';
 import { BnNgIdleService } from 'bn-ng-idle';
@@ -72,10 +61,10 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { LoaderComponent } from './Notifications/loader/loader.component';
 import { WaterConsumptionComponent } from './pages/CarbonFootprint/water-consumption/water-consumption.component';
 import { EnergyConsumptionComponent } from './pages/CarbonFootprint/energy-consumption/energy-consumption.component';
-import { MonitorComponent } from './Pages/Dashboard/monitor/monitor.component';
+import { MonitorComponent } from './Pages/monitor/monitor.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { ControldetailsComponent } from './Pages/controldetails/controldetails.component';
+import { ControldetailsComponent } from './Pages/control-center/controldetails.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { SenseEdgeComponent } from './Pages/Master/sense-edge/sense-edge.component';
 import { SiteComponent } from './pages/master/site/site.component';
@@ -94,16 +83,6 @@ import { DeviceDialogComponent } from './pages/master/asset/device-dialog/device
     MenuListItemComponent,
     TopNavComponent,
     AppComponent,
-    NotificationSnackBarComponent,
-    Dashboard2Component,
-    Dashboard1Component,
-    DeviceComponent,
-    DeviceparamComponent,
-    EquipmentComponent,
-    LocationComponent,
-    DeviceassignComponent,
-    DeviceassignparamComponent,RuleComponent,
-    ExceptionComponent,
     LoginComponent,
     InformationDialogComponent,
     NotificationDialogComponent,

@@ -308,32 +308,34 @@ export class VsenseapiService {
         catchError(this.errorHandler)
       )
   }
+
+  //CF
   GetAllWaterDevices(): Observable<any> {
-    return this.httpClient.get(this.server_address + "/CarbonFootprint/GetAllWaterDevices")
+    return this.httpClient.get(this.server_address + "/api/CarbonFootprint/GetAllWaterDevices")
       .pipe(
         catchError(this.errorHandler)
       )
   }
   GetAllCurrentDevices(): Observable<any> {
-    return this.httpClient.get(this.server_address + "/CarbonFootprint/GetAllCurrentDevices")
+    return this.httpClient.get(this.server_address + "/api/CarbonFootprint/GetAllCurrentDevices")
       .pipe(
         catchError(this.errorHandler)
       )
   }
   GetWaterConsumption(deviceid: string): Observable<any> {
-    return this.httpClient.get(this.server_address + "/CarbonFootprint/GetWaterConsumption?deviceid=" + deviceid)
+    return this.httpClient.get(this.server_address + "/api/CarbonFootprint/GetWaterConsumption?deviceid=" + deviceid)
       .pipe(
         catchError(this.errorHandler)
       )
   }
   GetCurrentConsumption(deviceid: string): Observable<any> {
-    return this.httpClient.get(this.server_address + "/CarbonFootprint/GetCurrentConsumption?deviceid=" + deviceid)
+    return this.httpClient.get(this.server_address + "/api/CarbonFootprint/GetCurrentConsumption?deviceid=" + deviceid)
       .pipe(
         catchError(this.errorHandler)
       )
   }
   GetEnergyConsumption(deviceid: string): Observable<any> {
-    return this.httpClient.get(this.server_address + "/CarbonFootprint/GetEnergyConsumption?deviceid=" + deviceid)
+    return this.httpClient.get(this.server_address + "/api/CarbonFootprint/GetEnergyConsumption?deviceid=" + deviceid)
       .pipe(
         catchError(this.errorHandler)
       )

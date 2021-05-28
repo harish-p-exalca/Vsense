@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { fuseAnimations } from 'src/app/animations';
 import { EMailModel } from 'src/app/Models/master';
-import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
 import { WINDOW } from 'src/app/window.providers';
 
 @Component({
@@ -18,7 +17,6 @@ export class ForgetPasswordLinkDialogComponent implements OnInit {
   forgotPasswordForm: FormGroup;
   Origin: string;
   emailModel: EMailModel;
-  notificationSnackBarComponent: NotificationSnackBarComponent;
 
   constructor(
     public matDialogRef: MatDialogRef<ForgetPasswordLinkDialogComponent>,

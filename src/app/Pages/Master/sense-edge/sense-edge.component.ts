@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MEdge } from 'src/app/Models/site';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MEdge, MEdgeGroup, MEdgeGroupParam, MEdgeGroupView } from 'src/app/Models/site';
+import { NotificationService } from 'src/app/Services/notification.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
 @Component({
   selector: 'app-sense-edge',
   templateUrl: './sense-edge.component.html',
@@ -20,223 +22,142 @@ import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
   ]
 })
 export class SenseEdgeComponent implements OnInit {
-  devices = [1, 2, 3, 4, 5, 56, 8, 7];
-  ParamdisplayedColumns: string[] = ["ParamID", "Title", "Unit", "LongText", "Min", "Max", "Action"];
-  ParamDataSource: MatTableDataSource<any> = new MatTableDataSource(this.devices);
-  //animation
-  state: string = 'default';
-  variable:any = undefined;
-  //input field color
-  isFocused: boolean = true;
-  isFocused1: boolean = true;
-  isFocused2: boolean = true;  buttonnvaluee=0;
-  isFocused3: boolean = true;
-  devicess: any = [];
-  registrationFormGroup: FormGroup;    durationInSeconds = 5;
-  constructor(private fb: FormBuilder, private service: VsenseapiService, private _snackBar: MatSnackBar) { }
+   
+  SelectedEdge:MEdge=new MEdge();
+  EdgeFormGroup:FormGroup;
+  MEdges:MEdge[]=[];
+  MEdgeGroups:MEdgeGroupView[]=[];
+  ParamDataSource:MatTableDataSource<MEdgeGroupParam>=new MatTableDataSource([]);
+  ParamdisplayedColumns: string[] = ["ParamID", "Title", "Unit", "LongText", "Min", "Max"];
+  Statuses=[{display:"Assigned",value:"10"},{display:"Open",value:"20"},{display:"Non-Usable",value:"90"},{display:"Missed",value:"91"},{display:"Sold",value:"92"},{display:"Scraped",value:"93"}]
+
+  constructor(
+    private fb:FormBuilder,
+    private service:VsenseapiService,
+    private notification:NotificationService,
+    private spinner:NgxSpinnerService
+    ) {}
 
   ngOnInit(): void {
-    this.GetTitle();
-    this.registrationFormGroup = this.fb.group({
-      Title: ['', Validators.required],
-      Lifespan: ['', Validators.required],
-      Vcc: ['', Validators.required],
-      SoftwareVersion: ['', Validators.required],
-      PuttoUse: ['', Validators.required],
-      Status: ['', Validators.required],
-
-
+    this.InitializeFormGroup();
+    this.GetAllEdges();
+  }
+  InitializeFormGroup(){
+    this.EdgeFormGroup=this.fb.group({
+      Title:['',Validators.required],
+      PutToUse:['',Validators.required],
+      SoftwareVersion:['',Validators.required],
+      Vcc:[null,Validators.required],
+      EdgeGroup:[null],
+      Status:[''],
+      ParantEdgeID:[null],
+      LifeSpan:[null,Validators.required]
     });
   }
-
-
-
-  GetTitle(): void {
-    this.service.GetMEdges().subscribe(
-      (data) => {
-        console.log(data);
-        this.devicess = data;
-        console.log(this.devicess)
-        this.sampleclick(this.devicess[0])
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-  }
-
-  Title1: any;
-  Lifespan1: any;
-  Vcc1: any;
-  SoftwareVersion1: any;
-  CreatedOn1: any;
-  PuttoUse1: any;
-  Status1: any;
-  EdgeID1: any;
-
-  sampleclick(row: any) {
-    console.log(row);
-    this.Lifespan1 = row.Lifespan
-    this.Title1 = row.Title
-    this.Vcc1 = row.Vcc;
-    this.SoftwareVersion1 = row.SoftwareVersion;
-    this.CreatedOn1 = row.CreatedOn;
-    this.PuttoUse1 = row.PuttoUse;
-    this.Status1 = row.Status;
-    this.EdgeID1 = row.EdgeID;
-    console.log(this.Title1);
-
-
-  }
-
-
-
-
-  RegisterClicked() {
-    if (this.registrationFormGroup.valid) {
-      console.log(this.registrationFormGroup.get('Title').value);
-
-      const Title = this.registrationFormGroup.get('Title').value;
-      const Lifespan = this.registrationFormGroup.get('Lifespan').value;
-      const Vcc = this.registrationFormGroup.get('Vcc').value;
-      const SoftwareVersion = this.registrationFormGroup.get('SoftwareVersion').value;
-      const PuttoUse = this.registrationFormGroup.get('PuttoUse').value;
-      const Status = this.registrationFormGroup.get('Status').value;
-      console.log(Title, Lifespan, Vcc, SoftwareVersion, PuttoUse, Status)
-
-      const emp = new MEdge();
-
-      emp.Title = this.registrationFormGroup.get('Title').value;
-      emp.Lifespan = this.registrationFormGroup.get('Lifespan').value;
-      emp.Vcc = this.registrationFormGroup.get('Vcc').value;
-      emp.SoftwareVersion = this.registrationFormGroup.get('SoftwareVersion').value;
-      emp.PuttoUse = this.registrationFormGroup.get('PuttoUse').value;
-      emp.Status = this.registrationFormGroup.get('Status').value;
-
-
-      this.service.SaveMEdge(emp).subscribe((data: MEdge) => {
-        if(data!=undefined){
-         
-          this._snackBar.open("Device created successfully","close" ,{
-            duration: this.durationInSeconds * 1000,
-            
-          });
+  GetAllEdges(){
+    this.spinner.show();
+    this.service.GetMEdges().subscribe(res=>{
+      this.MEdges=<MEdge[]>res;
+      this.service.GetMEdgeGroups().subscribe(res=>{
+        this.MEdgeGroups=<MEdgeGroupView[]>res;
+        if(this.MEdges.length>0){
+          this.LoadSelectedEdge(this.MEdges[0]);
         }
-        console.log(data);
-        this.GetTitle();
-      })
-
-    }
-
-    else {
-      Object.keys(this.registrationFormGroup.controls).forEach(key => {
-        this.registrationFormGroup.get(key).markAsTouched();
+        this.spinner.hide();
+      },
+      err=>{
+        console.log(err);
+        this.spinner.hide();
       });
-    }
-  }
-
-  DeleteClicked() {
-   
-    this.service.DeleteMEdge(this.EdgeID1).subscribe(
-      (data)=>{
-        if(data ==null){
-         
-          this._snackBar.open("Device deleted successfully","close" ,{
-            duration: this.durationInSeconds * 1000,
-            
-          });
-        }
-        console.log(data);
-        this.devicess = data;
-        this.GetTitle();
-      },
-      (err)=>{
-        console.log(err);
-      }
-    ) 
-    
-  }
- 
-
-  UpdateClicked() {
-    const val = new MEdge()
-    val.EdgeID = this.EdgeID1
-    val.Title = this.Title1
-    val.Lifespan = this.Lifespan1
-    val.Status = this.Status1
-    val.PuttoUse = this.PuttoUse1
-    val.CreatedOn = this.CreatedOn1
-    val.SoftwareVersion = this.SoftwareVersion1
-    val.Vcc = this. Vcc1
-    this.variable = val
-    console.log(this.variable)
-    this.service.SaveMEdge(this.variable).subscribe((data: MEdge[]) => {
-      if (data != undefined) {
-
-        this._snackBar.open("Device updated successfully", "close", {
-          duration: this.durationInSeconds * 1000,
-
-        });
-      }
-      console.log(data);
-      
-      this.GetTitle();
-    })
-
-  }
-
-
-  reset_form() {
-    this.registrationFormGroup.setValue({
-      Title: null,
-      Lifespan: null,
-      Vcc: null,
-      SoftwareVersion: null,
-      PuttoUse: null,
-      Status: null,
-
-
-    })
-  }
-  handle_clear() {
-    this.registrationFormGroup.reset();
-    this.reset_form();
-
-  }
-  // this.ShowValidationErrors();
-  ShowValidationErrors(): void {
-    Object.keys(this.registrationFormGroup.controls).forEach(key => {
-      this.registrationFormGroup.get(key).markAsTouched();
-      this.registrationFormGroup.get(key).markAsDirty();
+      this.spinner.hide();
+    },
+    err=>{
+      console.log(err);
+      this.spinner.hide();
     });
   }
-
-
-
-
-
-
-
-
-
-
-  //image angular animation
-  rotate() {
-    this.state = (this.state === 'default' ? 'rotated' : 'default');
+  LoadSelectedEdge(mEdge:MEdge){
+    this.SelectedEdge=mEdge;
+    this.EdgeFormGroup.get('Title').setValue(mEdge.Title);
+    this.EdgeFormGroup.get('PutToUse').setValue(mEdge.PuttoUse);
+    this.EdgeFormGroup.get('SoftwareVersion').setValue(mEdge.SoftwareVersion);
+    this.EdgeFormGroup.get('Vcc').setValue(mEdge.Vcc);
+    this.EdgeFormGroup.get('EdgeGroup').setValue(mEdge.EdgeGroup);
+    this.EdgeFormGroup.get('Status').setValue(mEdge.Status);
+    this.EdgeFormGroup.get('ParantEdgeID').setValue(mEdge.ParantEdgeID);
+    this.EdgeFormGroup.get('LifeSpan').setValue(mEdge.Lifespan);
+    if(mEdge.EdgeGroup){
+      var group=this.MEdgeGroups.find(x=>x.EdgeGroup==mEdge.EdgeGroup);
+      if(group!=undefined){
+        this.SetParamTable(group.EdgeParams);
+      }
+      if(mEdge.Status=="10"){
+        this.EdgeFormGroup.get('EdgeGroup').disable();
+      }
+      else{
+        this.EdgeFormGroup.get('EdgeGroup').enable();
+      }
+    }
   }
-  menuClosed() {
-    this.rotate();
+  ShowValidationErrors(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(key => {
+      formGroup.get(key).markAsTouched();
+      formGroup.get(key).markAsDirty();
+    });
   }
-  //image angular animation
-
-
-
-
-
-  showandhider1(){
-    this.buttonnvaluee=1;
+  ResetControl(): void {
+    this.SelectedEdge = new MEdge();
+    this.EdgeFormGroup.reset();
+    Object.keys(this.EdgeFormGroup.controls).forEach(key => {
+      this.EdgeFormGroup.get(key).markAsUntouched();
+    });
   }
-  showandhideer2(){
-    this.buttonnvaluee=2;
+  SaveEdgeClicked() {
+    if (this.EdgeFormGroup.valid) {
+      this.spinner.show();
+      this.GetEdgeValues();
+      this.service.SaveMEdge(this.SelectedEdge).subscribe(res => {
+        this.spinner.hide();
+        this.notification.openSnackBar("Edge saved successfully",SnackBarStatus.success);
+        this.ResetControl();
+        this.GetAllEdges();
+      },
+        err => {
+          console.log(err);
+          this.spinner.hide();
+        });
+    }
+    else {
+      this.ShowValidationErrors(this.EdgeFormGroup);
+    }
+  }
+  GetEdgeValues() {
+    this.SelectedEdge.Title = this.EdgeFormGroup.get('Title').value;
+    this.SelectedEdge.PuttoUse = this.EdgeFormGroup.get('PutToUse').value;
+    this.SelectedEdge.SoftwareVersion = this.EdgeFormGroup.get('SoftwareVersion').value;
+    this.SelectedEdge.Vcc = this.EdgeFormGroup.get('Vcc').value;
+    this.SelectedEdge.EdgeGroup = this.EdgeFormGroup.get('EdgeGroup').value;
+    this.SelectedEdge.Status = this.EdgeFormGroup.get('Status').value;
+    this.SelectedEdge.ParantEdgeID = this.EdgeFormGroup.get('ParantEdgeID').value;
+    this.SelectedEdge.Lifespan = this.EdgeFormGroup.get('LifeSpan').value;
+  }
+  DeleteEdgeClicked() {
+    this.spinner.show();
+    this.service.DeleteMEdge(this.SelectedEdge.EdgeID).subscribe(res => {
+      this.spinner.hide();
+      this.notification.openSnackBar("Edge deleted successfully",SnackBarStatus.success);
+      this.ResetControl();
+      this.GetAllEdges();
+    },
+      err => {
+        console.log(err);
+        this.spinner.hide();
+      });
+  }
+  GetStatus(value:string):string{
+    return this.Statuses.find(x=>x.value==value).display;
+  }
+  SetParamTable(params:MEdgeGroupParam[]){
+    this.ParamDataSource=new MatTableDataSource(params);
   }
 }

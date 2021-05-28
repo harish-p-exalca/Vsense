@@ -18,23 +18,21 @@
         cursor: pointer;
     }
     table {
-        // width: 900px;
-        width: 850px;
+      width: 100%;
         border: solid 2px #f4f4f4;
-        height: 400px !important;
-        // overflow: auto;
         th {
           color: #ffffff;
           background-color: #3131ff;
-          @extend .poppins; text-align: center;
-          padding-left: 30px;
+          @extend .poppins; 
+          text-align: left;
+          width: 14.286%;
         }
     
         td {
           @extend .poppins;
-          font-size: 11px;
+          font-size: 12px;
           color: #3e485a;
-          min-width: max-content !important;
+          text-align: left;
         }
 
         td.mat-cell{
@@ -47,12 +45,10 @@
         
         th.mat-header-cell:first-child {
           border-top-left-radius: 4px !important;
-          // border-bottom-left-radius: 4px !important;
         }
 
         th.mat-header-cell:last-child {
             border-top-right-radius: 4px !important;
-            // border-bottom-right-radius: 4px !important;
         }
     }
     .titletxt{
@@ -95,10 +91,10 @@
         height: 100vh;
     }
     .right-container{
-        background-color: #ffffff;
-        padding: 28px 20px 8px 20px;
-        height: 100vh;
-        width: 100%;
+      background-color: #ffffff;
+      padding: 28px 3% 0 3%;
+      height: 100vh;
+      width: 100%;
     }
     .countbox{
         height: 20px;
@@ -159,16 +155,10 @@
         filter: brightness(0.35);
     }
     .formfield{
-        // @extend .poppins;
-        font-size: 12px;
-        width: 70%;
-        margin-top: -1.5rem
-    }
-    .formfieldputtouse{
-      // @extend .poppins;
+      @extend .poppins;
       font-size: 12px;
-      width: 70%;
-      margin-top: -1.5rem
+      width: 75%;
+      margin-top: -1.5rem;
     }
     .delete{
         color: #f33d3d;
@@ -198,28 +188,13 @@
       }
 }
 .tabledivision{
-  // height: 450px !important;
-  // margin-top: 1rem;  overflow: auto;
-  // // overflow: auto;
-  // // margin-top: 1.5rem;
-
-  height: 320px !important;
-  margin-top: 1rem;
-  
-  // max-width: 100%;
-  // overflow-x: scroll;
-  width: 750px;
-  // width: 890px;
-  max-width: 100%;
+  width: 100%;
+  padding: 1rem 0;
   overflow: auto;
   border-radius: 4px;
-  // overflow: auto;
-  // margin-top: 1.5rem;
 }
 .tabledivision::-webkit-scrollbar{
-  // display: none;
   width: 0; 
-  // height: 0;
   background: transparent;
 }
 .addimage{
@@ -242,14 +217,21 @@
 .scrollcards::-webkit-scrollbar{
   display: none;
 }
+.matoption{
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 500;
+}
 
 .footerdiv{
   background-color: #f4f4fb;
-  width: 60%;
-  height: 60px;
-  border-radius: 4px;
-  position: fixed;
-  bottom: 0;
+    width: 72%;
+    height: 60px;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+    z-index: 1 !important;
+    padding: 0 2rem;
 }
 .copybutton{
   border-radius: 4px;
@@ -261,20 +243,27 @@
   width: 130px;
 }
 .deleteoption{
-  margin-left: 20rem;
-  font-size: 14px; @extend .poppins; 
-  color: #220c0c;cursor: pointer; display: block;
+  @extend .poppins; 
+  font-size: 12px;
+  color: #220c0c;cursor: pointer;
 }
 .deleteoption:hover{
   color: #d6201d;
 }
 .updateoption{
-  margin-right: 3rem;
-  font-size: 14px; 
-  color: #220c0c; @extend .poppins;
-  cursor: pointer; display: block;
+  font-size: 12px;
+  color: #220c0c;cursor: pointer; @extend .poppins; 
+  display: block;
 }
 .updateoption:hover{
+  color: #26b329;
+}
+.createoption{
+  font-size: 12px;
+  color: #220c0c;cursor: pointer; @extend .poppins; 
+  display: block;
+}
+.createoption:hover{
   color: #26b329;
 }
 tbody {
@@ -296,15 +285,6 @@ tbody {
 .addparameters:hover{
   color: #3131ff;
 }
-.createoption{
-  margin-right: 3rem;
-  font-size: 14px; @extend .poppins; 
-  color: #220c0c;cursor: pointer;
-  display: block;
-}
-.createoption:hover{
-  color: #26b329;
-}
 
 .cards.mat-list-item.mat-list-single-selected-option{
   background-color: #3131ff !important;
@@ -315,4 +295,10 @@ tbody {
   .titletxt{
     color:White !important;
     }
+}
+::ng-deep .matselect.mat-select {
+  @extend .poppins;
+  .mat-select-value{
+    height: 14px;
+  }
 }

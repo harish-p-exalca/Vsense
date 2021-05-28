@@ -8,12 +8,12 @@
             <mat-selection-list [multiple]="false" [disableRipple]="true" #mdevices
                 style="width: 100%;margin-bottom: 1.5rem;margin-top: 1.5rem;" class="matlist">
                 <mat-list-option class="cards" *ngFor="let item of AllDevices | filter:searchText;index as i"
-                    [selected]="SelectedDevice==item.deviceId" (click)="LoadSelectedDevice(item.deviceId)">
+                    [selected]="SelectedDevice==item.DeviceId" (click)="LoadSelectedDevice(item.DeviceId)">
                     <div style="width: 100%;height: 100%;padding-left: 3%;" fxLayout="column"
                         fxLayoutAlign="center start">
                         <div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
                             <span style="font-weight: 500;
-                        letter-spacing: 0.5px;font-size: 15px;">{{item.deviceId}}</span>
+                        letter-spacing: 0.5px;font-size: 15px;">{{item.DeviceId}}</span>
                             <!-- <span style="font-size: 14px;">01/05/2021</span> -->
                         </div>
                         <!-- <span style="font-size: 13px;
@@ -40,7 +40,7 @@
                         <div fxLayout="row" fxLayoutAlign="center start">
                             <div>
                                 <div style="display:flex;justify-content:center;width:270px">
-                                    <mwl-gauge class="rpm" [max]="10" [value]="CurrentDeviceData.current" [animated]="true"
+                                    <mwl-gauge class="rpm" [max]="10" [value]="CurrentDeviceData.Current" [animated]="true"
                                         [showValue]="false" [animationDuration]="1">
                                     </mwl-gauge>
                                 </div>
@@ -48,7 +48,7 @@
                                     <div class="border_circle_2" fxLayout="column" fxLayoutAlign="center center">
                                         <span
                                             style="margin-top:16px;color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;">
-                                            {{CurrentDeviceData.current}}</span>
+                                            {{CurrentDeviceData.Current}}</span>
                                         <span style="    color: #ee4057;
                                     letter-spacing: 1.1px;
                                     font-weight: 500;
@@ -82,7 +82,7 @@
                         <div fxLayout="row" fxLayoutAlign="center start">
                             <div>
                                 <div style="display:flex;justify-content:center;width:270px">
-                                    <mwl-gauge class="rpm1" [max]="100" [value]="CurrentDeviceData.watt" [animated]="true"
+                                    <mwl-gauge class="rpm1" [max]="100" [value]="CurrentDeviceData.Watt" [animated]="true"
                                         [showValue]="false" [animationDuration]="1">
                                     </mwl-gauge>
                                 </div>
@@ -90,7 +90,7 @@
                                     <div class="border_circle_2" fxLayout="column" fxLayoutAlign="center center">
                                         <span
                                             style="margin-top:16px;color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;">
-                                            {{CurrentDeviceData.watt}}</span>
+                                            {{CurrentDeviceData.Watt}}</span>
                                         <span style="    color: #ee4057;
                                     letter-spacing: 1.1px;
                                     font-weight: 500;

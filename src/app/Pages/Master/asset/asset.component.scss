@@ -138,7 +138,6 @@
         font-size: 12px;
         width: 75%;
         margin-top: -1.5rem;
-        color: #3131ff;
     }
     .delete{
         color: #f33d3d;
@@ -232,10 +231,10 @@ tbody {
   padding: 0px 0px 5px 0px;
 }
 .addparameters{
-  @extend .poppins; 
+  font-family: Poppins;
+  font-weight: 500;
   font-size: 12px;
   color: #394256;
-  height: 40px;
 }
 .addparameters:hover{
   color: #3131ff;
@@ -256,13 +255,18 @@ tbody {
     color: #394256;  
 }
 .matautocomplete{
-    @extend .poppins; 
-    font-size: 12px;
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 500;
     color: #394256; 
-    height: 30px !important;  text-align: center;
 }
 .matautocomplete:hover{
   color: #3131ff;
+}
+.matoption{
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 500;
 }
 .edgebtn{
     @extend .poppins;
@@ -348,19 +352,23 @@ tbody {
   line-height: 1.4;
   float: right;
 }
-
+.test{
+  border:1px solid;
+  overflow: auto;
+}
 
 table {
-
+  border: solid 2px #f4f4f4;
   th {
     color: #ffffff;
+    @extend .poppins; 
     background-color: #3131ff;
-    position: -webkit-sticky;
     text-align: left;
   }
 
   td {
     @extend .poppins;
+    font-size: 12px;
     color: #3e485a;
     text-align: left;
   }
@@ -370,12 +378,8 @@ table {
   }
 
   tr {
-    height: 20px;
-    border-top-left-radius: 4px !important;
-    border-top-right-radius: 4px !important;
-    border-radius: 4px;
+    height: 42px;
   }
-  
   
   th.mat-header-cell:first-child {
     border-top-left-radius: 4px !important;
@@ -383,17 +387,7 @@ table {
 
   th.mat-header-cell:last-child {
       border-top-right-radius: 4px !important;
-      height: 35px;
   }
-  th.mat-header-cell{
-    width: 20%;
-  }
-}
-mat-header-row{
-background-color: #3131ff;
-height: 20px;
-border-top-left-radius: 4px;
-border-top-right-radius: 4px !important;
 }
 .tformfield{
   font-size: 12px;
@@ -407,8 +401,7 @@ border-top-right-radius: 4px !important;
 }
 
 .tabledivision{
-  height: 32vh !important;
-  margin-left: 0.5rem;
+  // height: 32vh !important;
   max-width: 810px;
   overflow: auto;
   border-radius: 4px;
@@ -456,6 +449,5 @@ padding: 8px 0 1rem 0;
   @extend .poppins;
   .mat-select-value{
     height: 14px;
-    color: #3131ff;
   }
 }

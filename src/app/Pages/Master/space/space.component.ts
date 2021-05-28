@@ -1,188 +1,121 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import {MSpace} from 'src/app/Models/site';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MSite, MSpace } from 'src/app/Models/site';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
+import { NotificationService } from 'src/app/Services/notification.service';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 @Component({
   selector: 'app-space',
   templateUrl: './space.component.html',
   styleUrls: ['./space.component.scss'],
-
 })
 export class SpaceComponent implements OnInit {
-  devices=[1,2,3,4,5,56,8,7];
-  ParamdisplayedColumns:string[]=["ParamID","Title","Unit","LongText","Min","Max","Action"];
-  ParamDataSource:MatTableDataSource<any>=new MatTableDataSource(this.devices);
-  variable:any = undefined;
-  registrationFormGroup: FormGroup;
-  //input field color
-  isFocused:boolean = true;
-  isFocused1:boolean = true;
-  isFocused2:boolean = true;
-  isFocused3:boolean = true;
-  isFocused4:boolean = true;
-  buttonnvaluee=0;
-  constructor(private fb: FormBuilder,private service: VsenseapiService, private _snackBar: MatSnackBar) { }
+   
+  SelectedSpace:MSpace=new MSpace();
+  SpaceFormGroup:FormGroup;
+  MSpaces:MSpace[]=[];
+  MSites:MSite[]=[];
+
+  constructor(
+    private fb:FormBuilder,
+    private service:VsenseapiService,
+    private notification:NotificationService,
+    private spinner:NgxSpinnerService
+    ) {}
 
   ngOnInit(): void {
-    this.GetTitle();
-    this.registrationFormGroup = this.fb.group({
-      Title:['',Validators.required ],
-      WorkCenter:['',Validators.required ],
-      ParantSpaceID:['',Validators.required ],
-      SiteID:['',Validators.required ],
-     
-  });
+    this.InitializeFormGroup();
+    this.GetAllSpaces();
+    this.GetAllMSites();
   }
-  Title1: any;
-  WorkCenter1:any;
-  ParantSpaceID1: any;SpaceID1:any;
-  SiteID1:any;
-  CreatedOn1:any;
-  devicess: any = [];
-
-  GetTitle():void{
-    this.service.GetMSpaces().subscribe(
-      (data)=>{
-        console.log(data);
-        this.devicess = data;
-        console.log(this.devicess)
-        this.sampleclick(this.devicess[0])
-      },
-      (err)=>{
-        console.log(err);
-      }
-    )
-      }
-      sampleclick(row:any){
-        console.log(row);
-        this.SpaceID1 = row.SpaceID
-      this.Title1 = row.Title
-      this.WorkCenter1 = row.WorkCenter;
-      this.ParantSpaceID1 = row.ParantSpaceID;
-       this.SiteID1 = row.SiteID
-      this.CreatedOn1 = row.CreatedOn
-      console.log(this.Title1);
-      
-      }
-
-
-  RegisterClicked() {
-    if (this.registrationFormGroup.valid) {
-     console.log(this.registrationFormGroup.get('Title').value);
-     
-      const Title = this.registrationFormGroup.get('Title').value;
-      const WorkCenter = this.registrationFormGroup.get('WorkCenter').value;
-      const ParantSpaceID = this.registrationFormGroup.get('ParantSpaceID').value;
-      const SiteID = this.registrationFormGroup.get('SiteID').value;
-     
-      console.log(Title,WorkCenter,ParantSpaceID,SiteID)
-
-      const emp = new MSpace();
-     
-      emp.Title = this.registrationFormGroup.get('Title').value;
-      emp.WorkCenter = this.registrationFormGroup.get('WorkCenter').value;
-      emp.ParantSpaceID = this.registrationFormGroup.get('ParantSpaceID').value;
-      emp.SiteID = this.registrationFormGroup.get('SiteID').value;
-     
-  
-      this.service.SaveMSpace(emp).subscribe((data: MSpace[]) => {
-        if(data!=undefined){
-         
-          this._snackBar.open("Space created successfully","close" ,{
-            duration: this.durationInSeconds * 1000,
-            
-          });
-        }
-        console.log(data);
-        this.GetTitle();
-      })
-
-    }
-
-    else {
-      Object.keys(this.registrationFormGroup.controls).forEach(key => {
-        this.registrationFormGroup.get(key).markAsTouched();
-      });
-    }
-  }
-
-  durationInSeconds = 5;
-  DeleteClicked() {
-   
-    this.service.DeleteMSpace(this.SpaceID1).subscribe(
-      (data)=>{
-        if(data ==null){
-         
-          this._snackBar.open("Space deleted successfully","close" ,{
-            duration: this.durationInSeconds * 1000,
-            
-          });
-        }
-        console.log(data);
-        this.GetTitle();
-        // this.devicess = data;
-      },
-      (err)=>{
-        console.log(err);
-      }
-    ) 
-    
-  }
-
-  UpdateClicked() {
-    const val = new MSpace()
-    val.SpaceID = this.SpaceID1
-    val.Title = this.Title1
-    val.WorkCenter = this.WorkCenter1
-    val.ParantSpaceID = this.ParantSpaceID1
-    val.SiteID = this.SiteID1
-    val.CreatedOn = this.CreatedOn1
-    this.variable = val
-    console.log(this.variable)
-    this.service.SaveMSpace(this.variable).subscribe((data: MSpace[]) => {
-      if (data != undefined) {
-
-        this._snackBar.open("Space updated successfully", "close", {
-          duration: this.durationInSeconds * 1000,
-
-        });
-      }
-      console.log(data);
-      
-      this.GetTitle();
-    })
-
-  }
- 
-  reset_form(){
-    this.registrationFormGroup.setValue({
-      Title:null,
-      WorkCenter:null,
-      SiteID:null,
-      ParantSpaceID:null
-
-    })
-  }
-  handle_clear(){
-    this.registrationFormGroup.reset();
-    this.reset_form();
-   
-  }
-  // this.ShowValidationErrors();
-  ShowValidationErrors(): void {
-    Object.keys(this.registrationFormGroup.controls).forEach(key => {
-      this.registrationFormGroup.get(key).markAsTouched();
-      this.registrationFormGroup.get(key).markAsDirty();
+  InitializeFormGroup(){
+    this.SpaceFormGroup=this.fb.group({
+      Title:['',Validators.required],
+      WorkCenter:['',Validators.required],
+      ParantSpace:[null],
+      Site:[null,Validators.required]
     });
   }
-
-  showandhider1(){
-    this.buttonnvaluee=1;
+  GetAllSpaces(){
+    this.spinner.show();
+    this.service.GetMSpaces().subscribe(res=>{
+      this.MSpaces=<MSpace[]>res;
+      if(this.MSpaces.length>0){
+        this.LoadSelectedSpace(this.MSpaces[0]);
+      }
+      this.spinner.hide();
+    },
+    err=>{
+      console.log(err);
+      this.spinner.hide();
+    });
   }
-  showandhideer2(){
-    this.buttonnvaluee=2;
+  GetAllMSites(){
+    this.service.GetMSites().subscribe(res=>{
+      this.MSites=<MSite[]>res;
+    },
+    err=>{
+      console.log(err);
+    });
+  }
+  LoadSelectedSpace(mSpace:MSpace){
+    this.SelectedSpace=mSpace;
+    this.SpaceFormGroup.get('Title').setValue(mSpace.Title);
+    this.SpaceFormGroup.get('WorkCenter').setValue(mSpace.WorkCenter);
+    this.SpaceFormGroup.get('ParantSpace').setValue(mSpace.ParantSpaceID);
+    this.SpaceFormGroup.get('Site').setValue(mSpace.SiteID);
+  }
+  ShowValidationErrors(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(key => {
+      formGroup.get(key).markAsTouched();
+      formGroup.get(key).markAsDirty();
+    });
+  }
+  ResetControl(): void {
+    this.SelectedSpace = new MSpace();
+    this.SpaceFormGroup.reset();
+    Object.keys(this.SpaceFormGroup.controls).forEach(key => {
+      this.SpaceFormGroup.get(key).markAsUntouched();
+    });
+  }
+  SaveSpaceClicked() {
+    if (this.SpaceFormGroup.valid) {
+      this.spinner.show();
+      this.GetSpaceValues();
+      this.service.SaveMSpace(this.SelectedSpace).subscribe(res => {
+        this.spinner.hide();
+        this.notification.openSnackBar("Space saved successfully",SnackBarStatus.success);
+        this.ResetControl();
+        this.GetAllSpaces();
+      },
+        err => {
+          console.log(err);
+          this.spinner.hide();
+        });
+    }
+    else {
+      this.ShowValidationErrors(this.SpaceFormGroup);
+    }
+  }
+  GetSpaceValues() {
+    this.SelectedSpace.Title = this.SpaceFormGroup.get('Title').value;
+    this.SelectedSpace.WorkCenter = this.SpaceFormGroup.get('WorkCenter').value;
+    this.SelectedSpace.ParantSpaceID = this.SpaceFormGroup.get('ParantSpace').value;
+    this.SelectedSpace.SiteID = this.SpaceFormGroup.get('Site').value;
+  }
+  DeleteSpaceClicked() {
+    this.spinner.show();
+    this.service.DeleteMSpace(this.SelectedSpace.SpaceID).subscribe(res => {
+      this.spinner.hide();
+      this.notification.openSnackBar("Space deleted successfully",SnackBarStatus.success);
+      this.ResetControl();
+      this.GetAllSpaces();
+    },
+      err => {
+        console.log(err);
+        this.spinner.hide();
+      });
   }
 }
 
