@@ -7,8 +7,8 @@ import { MenuApp, AuthenticationDetails } from 'src/app/Models/master';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 import { NotificationDialogComponent } from 'src/app/Notifications/notification-dialog/notification-dialog.component';
-import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
-import { SnackBarStatus } from 'src/app/Notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
+import { NotificationService } from 'src/app/Services/notification.service';
 
 @Component({
   selector: 'menu-app',
@@ -19,7 +19,6 @@ export class MenuAppComponent implements OnInit {
   menuItems: string[];
   selectedMenuApp: MenuApp;
   authenticationDetails: AuthenticationDetails;
-  notificationSnackBarComponent: NotificationSnackBarComponent;
   isProgressBarVisibile: boolean;
   selectID: number;
   menuAppMainFormGroup: FormGroup;
@@ -29,12 +28,11 @@ export class MenuAppComponent implements OnInit {
     private _masterService: MasterService,
     public service:VsenseapiService,
     private _router: Router,
-    public snackBar: MatSnackBar,
+    public notify: NotificationService,
     private dialog: MatDialog,
     private _formBuilder: FormBuilder) {
     this.selectedMenuApp = new MenuApp();
     this.authenticationDetails = new AuthenticationDetails();
-    this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.isProgressBarVisibile = true;
   }
 
@@ -46,7 +44,7 @@ export class MenuAppComponent implements OnInit {
       this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
       this.menuItems = this.authenticationDetails.MenuItemNames.split(',');
       if (this.menuItems.indexOf('User') < 0) {
-        this.notificationSnackBarComponent.openSnackBar('You do not have permission to visit this page', SnackBarStatus.danger);
+        this.notify.openSnackBar('You do not have permission to visit this page', SnackBarStatus.danger);
         this._router.navigate(['login']);
       }
       this.menuAppMainFormGroup = this._formBuilder.group({
@@ -80,7 +78,7 @@ export class MenuAppComponent implements OnInit {
       (err) => {
         console.error(err);
         this.isProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       }
     );
   }
@@ -130,13 +128,13 @@ export class MenuAppComponent implements OnInit {
       (data) => {
         // console.log(data);
         this.ResetControl();
-        this.notificationSnackBarComponent.openSnackBar('MenuApp created successfully', SnackBarStatus.success);
+        this.notify.openSnackBar('MenuApp created successfully', SnackBarStatus.success);
         this.isProgressBarVisibile = false;
         this.GetAllMenuApps();
       },
       (err) => {
         console.error(err);
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         this.isProgressBarVisibile = false;
       }
     );
@@ -151,13 +149,13 @@ export class MenuAppComponent implements OnInit {
       (data) => {
         // console.log(data);
         this.ResetControl();
-        this.notificationSnackBarComponent.openSnackBar('MenuApp updated successfully', SnackBarStatus.success);
+        this.notify.openSnackBar('MenuApp updated successfully', SnackBarStatus.success);
         this.isProgressBarVisibile = false;
         this.GetAllMenuApps();
       },
       (err) => {
         console.error(err);
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         this.isProgressBarVisibile = false;
       }
     );
@@ -171,13 +169,13 @@ export class MenuAppComponent implements OnInit {
       (data) => {
         // console.log(data);
         this.ResetControl();
-        this.notificationSnackBarComponent.openSnackBar('MenuApp deleted successfully', SnackBarStatus.success);
+        this.notify.openSnackBar('MenuApp deleted successfully', SnackBarStatus.success);
         this.isProgressBarVisibile = false;
         this.GetAllMenuApps();
       },
       (err) => {
         console.error(err);
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         this.isProgressBarVisibile = false;
       }
     );

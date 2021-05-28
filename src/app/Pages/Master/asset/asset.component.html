@@ -78,7 +78,7 @@
                         [@rotatedState]='state' [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()"
                         style="cursor: pointer;">
                     <mat-menu #menu="matMenu">
-                        <span mat-menu-item class="addparameters" (click)="AddAssignParam()">Add Parameters</span>
+                        <span mat-menu-item class="addparameters" (click)="AddAssignParam()">Add Parameter</span>
                     </mat-menu>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                         <span class="subtitle">Space</span>
                         <mat-form-field appearance="standard" class="formfield">
                             <mat-select placeholder="Choose Space" class="matselect" formControlName="Space">
-                                <mat-option *ngFor="let space of MSpaces" [value]="space.SpaceID">{{space.Title}}
+                                <mat-option class="matoption" *ngFor="let space of MSpaces" [value]="space.SpaceID">{{space.Title}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -114,7 +114,7 @@
                         <span class="subtitle">Asset Class</span>
                         <mat-form-field appearance="standard" class="formfield">
                             <mat-select formControlName="Class" placeholder="Choose Class" class="matselect">
-                                <mat-option *ngFor="let class of AssetClasses" [value]="class.value">{{class.display}}
+                                <mat-option class="matoption" *ngFor="let class of AssetClasses" [value]="class.value">{{class.display}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -128,8 +128,7 @@
                         <mat-form-field appearance="standard" class="formfield">
                             <input formControlName="Status" matInput autocomplete="off" placeholder="Select Status"
                                 [matAutocomplete]="auto">
-
-                            <mat-autocomplete #auto="matAutocomplete" style="justify-content: center;font-size: 12px;">
+                            <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let option of options" [value]="option" class="matautocomplete">
                                     {{option}}
                                 </mat-option>
@@ -180,9 +179,9 @@
                 <img *ngIf="ScrollLeft<=ScrollWidth && ScrollWidth>830px" fxFlex="5" src="assets\images\Group 7839.svg"
                     style="margin-top: 18px;cursor: pointer;" (click)="scrollRight()">
             </div>
-            <div class="tabledivision">
+            <div class="tabledivision" *ngIf="SelectedEdge?.AssignParams?.length">
 
-                <table mat-table [dataSource]="ParamDataSource" *ngIf="SelectedEdge?.AssignParams?.length">
+                <table mat-table [dataSource]="ParamDataSource">
 
                     <ng-container matColumnDef="PramID">
                         <th mat-header-cell *matHeaderCellDef class="headercolor alignhead"> PramID</th>
@@ -190,7 +189,7 @@
                             <mat-form-field class="tformfield">
                                 <mat-select [(ngModel)]="element.PramID" class="matselect"
                                     (selectionChange)="ParamSelect($event.value,i)">
-                                    <mat-option *ngFor="let pram of GroupParams" [value]="pram.ParamID">{{pram.ParamID}}
+                                    <mat-option class="matoption" *ngFor="let pram of GroupParams" [value]="pram.ParamID">{{pram.ParamID}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>

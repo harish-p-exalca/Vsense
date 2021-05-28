@@ -3,11 +3,11 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ChangePassword, AuthenticationDetails } from 'src/app/Models/master';
-import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
-import { SnackBarStatus } from 'src/app/Notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
 import { AuthService } from 'src/app/Services/auth.service';
 import {fuseAnimations} from 'src/app/animations';
 import {CustomValidator} from 'src/app/Validators/custom-validator';
+import { NotificationService } from 'src/app/Services/notification.service';
 
 @Component({
   selector: 'change-password',
@@ -20,17 +20,15 @@ export class ChangePasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;
   changePassword: ChangePassword;
   authenticationDetails: AuthenticationDetails;
-  notificationSnackBarComponent: NotificationSnackBarComponent;
   IsProgressBarVisibile: boolean;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router,
-    public snackBar: MatSnackBar
+    public notify: NotificationService
   ) {
     this.authenticationDetails = new AuthenticationDetails();
-    this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.IsProgressBarVisibile = false;
     // Set the private defaults
   }
@@ -84,13 +82,13 @@ export class ChangePasswordComponent implements OnInit {
         (data) => {
           this.ResetControl();
           this.IsProgressBarVisibile = false;
-          this.notificationSnackBarComponent.openSnackBar('Password changed successfully', SnackBarStatus.success);
+          this.notify.openSnackBar('Password changed successfully', SnackBarStatus.success);
           this._router.navigate(['/login']);
         },
         (err) => {
           this.IsProgressBarVisibile = false;
           console.error(err);
-          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+          this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
         }
       );
     }

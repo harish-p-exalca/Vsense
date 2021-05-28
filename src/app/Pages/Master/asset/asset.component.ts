@@ -13,6 +13,7 @@ import { DeviceDialogComponent } from './device-dialog/device-dialog.component';
 import { AssetView, Assignment, MEdge, MEdgeAssign, MEdgeAssignParam, MEdgeGroupParam, MEdgeGroupView, MSpace } from 'src/app/Models/site';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
 
 @Component({
   selector: 'app-asset',
@@ -195,7 +196,7 @@ export class AssetComponent implements OnInit, AfterViewInit {
   }
   AddAssignParam() {
     if (this.GroupParams.length == this.SelectedEdge.AssignParams.length) {
-      this.notification.success("All parameters assigned");
+      this.notification.openSnackBar("All parameters assigned",SnackBarStatus.danger);
       return;
     }
     var param = new MEdgeAssignParam();
@@ -212,7 +213,7 @@ export class AssetComponent implements OnInit, AfterViewInit {
       return;
     }
     if (this.OpenEdges.length == 0) {
-      this.notification.success("no available devices found");
+      this.notification.openSnackBar("no available devices found",SnackBarStatus.danger);
       return;
     }
     const dialogConfig: MatDialogConfig = {
@@ -251,7 +252,7 @@ export class AssetComponent implements OnInit, AfterViewInit {
       }
     });
     if (this.paramExist > 1) {
-      this.notification.success("param already exists");
+      this.notification.openSnackBar("param already exists",SnackBarStatus.danger);
       this.SelectedEdge.AssignParams[index].PramID = "";
       this.SelectedEdge.AssignParams[index].Title = "";
       this.SelectedEdge.AssignParams[index].Unit = "";
@@ -295,7 +296,8 @@ export class AssetComponent implements OnInit, AfterViewInit {
       this.GetAssetValues();
       this.service.SaveMAsset(this.SelectedAsset).subscribe(res => {
         this.spinner.hide();
-        this.notification.success("Asset saved successfully");
+        this.notification.openSnackBar("Asset saved successfully",SnackBarStatus.success);
+        this.ResetControl();
         this.GetAllAssets();
       },
         err => {
@@ -317,7 +319,8 @@ export class AssetComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.service.DeleteMAsset(this.SelectedAsset.AssetID).subscribe(res => {
       this.spinner.hide();
-      this.notification.success("Asset deleted successfully");
+      this.notification.openSnackBar("Asset deleted successfully",SnackBarStatus.success);
+      this.ResetControl();
       this.GetAllAssets();
     },
       err => {

@@ -132,15 +132,11 @@ a {
   }
   
   .warning {
-    background-color: #ee9a2c;
+    background-color: #ee9a2c !important;
   }
   
   .info {
-    background-color:#1992ce;
-  }
-  
-  .test {
-    background: #1abc9c !important;
+    background-color: #1992ce !important;
   }
 
   .mat-form-field.mat-focused .mat-form-field-ripple {

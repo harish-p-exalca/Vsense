@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import {  interval,Subscription  } from 'rxjs';
 import { AppUsage, AuthenticationDetails } from 'src/app/Models/master';
@@ -8,13 +8,58 @@ import { MasterService } from 'src/app/Services/master.service';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { NotificationService } from 'src/app/Services/notification.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
+
+
+export interface PeriodicElement {
+  Space: string;
+  Value:string
+  Title: string;
+  Asset:string;
+  Site:string;
+  Status:string;
+  Lastfeed:string
+}
+const ELEMENT_DATA: PeriodicElement[] = [
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+  { Site: '5678', Space: 'Space lorem',Asset: 'Asset lorem', Title: 'Title', Value: 'Value', Status : 'Status', Lastfeed: '23/07/2020, 16:23' },
+];
 
 @Component({
-  selector: 'app-dashboard2',
-  templateUrl: './dashboard2.component.html',
-  styleUrls: ['./dashboard2.component.css']
+  selector: 'app-controldetails',
+  templateUrl: './controldetails.component.html',
+  styleUrls: ['./controldetails.component.scss']
 })
-export class Dashboard2Component implements OnInit,OnDestroy {
+export class ControldetailsComponent implements OnInit,OnDestroy {
+// scroll button part
+  @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent: ElementRef<any>;
+
+  public scrollRight(): void {
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 260), behavior: 'smooth' });
+  }
+
+  public scrollLeft(): void {
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 260), behavior: 'smooth' });
+  }
+// scroll button part
+
   deviceparams = []; temperature=30;device;
   equipment; equipmentid;
   subscription:Subscription
@@ -25,6 +70,21 @@ export class Dashboard2Component implements OnInit,OnDestroy {
   healthCondition:string;
   currentdassign;
   alerts=[];
+  
+  isDisplay:boolean=true;
+  isDisplayhover:boolean = false;
+
+  //for screen width and height measurement
+  public innerWidth: any;
+  public innerHeight:any;
+
+
+  displayedColumns: string[] = ['Site', 'Space', 'Title','Status', 'Asset', 'Value', 'Lastfeed'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  // ele = document.getElementById('container');
+ 
+ 
 
   authenticationDetails: AuthenticationDetails;
   currentUserID: Guid;
@@ -65,6 +125,13 @@ export class Dashboard2Component implements OnInit,OnDestroy {
       this.currentUserName = this.authenticationDetails.UserName;
       this.currentUserRole = this.authenticationDetails.UserRole;
     this.CreateAppUsage();
+
+
+
+  //for screen width and height measurement
+    this.innerWidth = window.innerWidth;
+    this.innerHeight = window.innerHeight;
+    console.log(this.innerWidth, this.innerHeight)
   }
 
   CreateAppUsage(): void {
@@ -109,7 +176,7 @@ export class Dashboard2Component implements OnInit,OnDestroy {
         this.spinner.hide();
       },(err)=>{
         this.spinner.hide();
-        this.notification.success("something went wrong");
+        this.notification.openSnackBar("something went wrong",SnackBarStatus.danger);
       }); 
   }
 
@@ -166,4 +233,14 @@ export class Dashboard2Component implements OnInit,OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  // division hover part
+  mouseEnter(){
+    this.isDisplayhover= true;
+    this.isDisplay = false;
+ }
+ mouseLeave(){
+    this.isDisplay = true;
+    this.isDisplayhover = false;
+ }
+ // division hover part
 }

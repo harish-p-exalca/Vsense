@@ -4,7 +4,7 @@
             <div fxLayout="row" fxLayoutGap="12px" style="padding: 0 20px;">
                 <span class="title">Space</span>
                 <div class="countbox" fxLayoutAlign="center center">
-                    <span class="edgecount">20</span>
+                    <span class="edgecount">{{MSpaces.length}}</span>
                 </div>
             </div>
             <div fxLayout="row" fxLayoutGap="12px" style="padding: 1rem 20px;">
@@ -16,57 +16,33 @@
                 </div>
                 <img src="assets/images/v2/Filter.svg" width="18px">
             </div>
+
             <div class="hdevider"></div>
-            <button mat-button class="newbtn" (click) ="handle_clear()"
-            (click)="showandhideer2()">
+
+            <button mat-button class="newbtn" (click)="ResetControl()">
                 Create New Space
             </button>
 
-            <!-- <div class="cardsblue" style="padding:0 20px">
-
-
-                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="height: 60px;">
-                    <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
-                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                            <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                           
-                            <span class="titletxt">Title</span>
-                        </div>
-                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                            <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                            <span class="titletxt">CreatedOn</span>
-                        </div>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                        <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                        <span class="titletxt">Work Center</span>
-                    </div>
-                </div>
-            </div> -->
-            <div style="height: 5px;">
-
-            </div>
-
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false">
-                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index"
-                    [selected]="this.Title1==item.Title">
-                        <div  (click) = "sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
-                            style="height: 57px;padding-left: 1rem;" (click)="showandhider1()">
+                    <mat-list-option class="cards" *ngFor="let space of MSpaces;"
+                        [selected]="SelectedSpace.SpaceID==space.SpaceID" (click)="LoadSelectedSpace(space)">
+                        <div fxLayout="column" fxLayoutAlign="space-evenly start"
+                            style="height: 57px;padding-left: 1rem;">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
                                     <!-- filter: brightness(0.3); -->
-                                    <span class="titletxt">{{item.Title}}</span>
+                                    <span class="titletxt">{{space.Title}}</span>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                                    <span class="titletxt">{{item.CreatedOn | date:'dd/MM/yyyy'}}</span>
+                                    <span class="titletxt">{{space.CreatedOn | date:'dd/MM/yyyy'}}</span>
                                 </div>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                 <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                                <span class="titletxt">{{item.WorkCenter}}</span>
+                                <span class="titletxt">{{space.WorkCenter}}</span>
                             </div>
                         </div>
                     </mat-list-option>
@@ -76,105 +52,67 @@
         <div fxFlex=75 class="right-container" fxLayout.xs="column">
             <div fxLayout="row" fxLayoutAlign="space-between ">
                 <span class="createdevice">Create Space</span>
-                <!-- <img src="assets\images\Component 121 – 1.svg" class="addimage"> -->
             </div>
-            <div fxLayout="column" fxLayoutAlign="space-evenly " fxLayoutGap="0.8%"
-                style="margin-left: 2rem;padding: 1rem 0 0 0;">
-
-
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="11.8%" [formGroup]="registrationFormGroup">
-                    <span class="subtitle">Title</span>
-                    <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Name"  [(ngModel)]="Title1"
-                        (blur)="isFocused = false" (focus)="isFocused = true" [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused ? 'Poppins':'poopins'" [style.font-size]="isFocused ? '12px':'12px'"
-                        formControlName="Title" ngModel required
-                        clearInput>
-                    <mat-error *ngIf="registrationFormGroup.get('Title').hasError('required')">
-                        Title is required
-                    </mat-error>
-                    </mat-form-field>
+            <form [formGroup]="SpaceFormGroup" autocomplete="off">
+                <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px"
+                    style="margin-left: 2rem;padding: 1rem 0 0 0;">
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="form-field-wrapper">
+                        <span class="subtitle">Title</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput autocomplete="off" placeholder="Enter Title" formControlName="Title">
+                            <mat-error *ngIf="SpaceFormGroup.get('Title').hasError('required')">
+                                Title is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxFlex=42 fxLayoutAlign="space-between center" class="form-field-wrapper">
+                        <span class="subtitle">Work Center</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput autocomplete="off" placeholder="Enter WorkCenter"
+                                formControlName="WorkCenter">
+                            <mat-error *ngIf="SpaceFormGroup.get('WorkCenter').hasError('required')">
+                                WorkCenter is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div fxLayout="row" fxLayoutAlign="space-between center" class="form-field-wrapper">
+                        <span class="subtitle">Parent Space</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput autocomplete="off" placeholder="Enter Parent space ID"
+                                formControlName="ParantSpace">
+                            <mat-error *ngIf="SpaceFormGroup.get('ParantSpace').hasError('required')">
+                                ParantSpace is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div> -->
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="form-field-wrapper">
+                        <span class="subtitle">Site</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <mat-select placeholder="Choose Site" class="matselect" formControlName="Site">
+                                <mat-option class="matoption" *ngFor="let site of MSites" [value]="site.SiteID">{{site.Title}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="SpaceFormGroup.get('Site').hasError('required')">
+                                Site is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
+            </form>
 
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="6%" [formGroup]="registrationFormGroup">
-                    <span class="subtitle">Work Center</span>
-                    <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Purpose" [(ngModel)]="WorkCenter1"
-                        (blur)="isFocused1 = false" (focus)="isFocused1 = true" [style.color]="isFocused1 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused1 ? 'Poppins':'poopins'" [style.font-size]="isFocused1 ? '12px':'12px'"
-                        formControlName="WorkCenter" ngModel required
-                        clearInput>
-                    <mat-error *ngIf="registrationFormGroup.get('WorkCenter').hasError('required')">
-                        WorkCenter is required
-                    </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="3.7%" [formGroup]="registrationFormGroup">
-                    <span class="subtitle">Parent Space ID</span>
-                    <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Space ID" [(ngModel)]="ParantSpaceID1"
-                        (blur)="isFocused2 = false" (focus)="isFocused2 = true" [style.color]="isFocused2 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused2 ? 'Poppins':'poopins'" [style.font-size]="isFocused2 ? '12px':'12px'"
-                        formControlName="ParantSpaceID" ngModel required type="number"
-                        clearInput>
-                    <mat-error *ngIf="registrationFormGroup.get('ParantSpaceID').hasError('required')">
-                        ParantSpaceID is required
-                    </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div fxLayout="row" fxFlex=43 fxLayoutAlign="start center " fxLayoutGap="10.5%" [formGroup]="registrationFormGroup">
-                    <span class="subtitle">Site ID</span>
-                    <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Site ID"  [(ngModel)]="SiteID1"
-                        (blur)="isFocused3 = false" (focus)="isFocused3 = true" [style.color]="isFocused3 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused3 ? 'Poppins':'poopins'" [style.font-size]="isFocused3 ? '12px':'12px'"
-                        formControlName="SiteID" ngModel required type="number"
-                        clearInput>
-                    <mat-error *ngIf="registrationFormGroup.get('SiteID').hasError('required')">
-                        SiteID is required
-                    </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <!-- <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="11.5%">
-                    <span class="subtitle">Date</span>
-                    <mat-form-field appearance="standard" class="formfield" (click)="picker1.open()">
-                        <input matInput [matDatepicker]="picker1" autocomplete="off" placeholder="mm/dd/yyyy" 
-                        (blur)="isFocused4 = false" (focus)="isFocused4 = true" [style.color]="isFocused4 ? '#3131ff':'#a6aeaf'"
-                        [style.font-family]="isFocused4 ? 'Poppins':'poopins'" [style.font-size]="isFocused4 ? '12px':'12px'">
-                        <mat-datepicker-toggle matSuffix [for]="picker1">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker   #picker1></mat-datepicker>
-                    </mat-form-field>
-                </div> -->
-
-            </div>
-            <div fxLayout="row" fxLayoutAlign="center end"  >
-                <img  src="assets\images\Group 8331.svg" class="bigimage"
-              >
-                <!-- <div class="bottom-right"></div> -->
+            <div fxLayout="row" fxLayoutAlign="center end">
+                <img src="assets\images\Group 8331.svg" class="bigimage">
             </div>
 
-            <!-- <img src="assets\images\Component 121 – 1.svg" class="addimage"    (click) ="handle_clear()"
-            (click)="showandhideer2()"> -->
-
-            <div fxLayout="row" fxLayoutAlign="space-between center" class="footerdiv">
-                <button mat-button class="copybutton" fxFlex="15">
-                    Copy
-                </button>
-                <div class="deleteoption"  *ngIf="buttonnvaluee==1 " (click)="DeleteClicked()" (click) ="handle_clear()">
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2rem" class="footerdiv">
+                <div class="deleteoption" *ngIf="SelectedSpace.SpaceID" (click)="DeleteSpaceClicked()">
                     Delete
                 </div>
-                <div class="updateoption"  *ngIf="buttonnvaluee==1 " (click)="UpdateClicked()">
-                    Update
+                <div class="deleteoption" *ngIf="!SelectedSpace.SpaceID" (click)="ResetControl()">
+                    Clear
                 </div>
-                <div class="deleteoption"  *ngIf="buttonnvaluee!=1 " (click) ="handle_clear()" >
-                    Clear entiries
-                </div>
-                <div class="createoption"  *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()" >
-                    Create
+                <div class="createoption" (click)="SaveSpaceClicked()">
+                    {{SelectedSpace.SpaceID?'Update':'Create'}}
                 </div>
             </div>
         </div>

@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
-
-
-
-
-
 export interface PeriodicElement {
   ExcepID: string;
   Space:string;

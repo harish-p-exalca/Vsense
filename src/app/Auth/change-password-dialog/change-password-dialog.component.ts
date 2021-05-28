@@ -4,8 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { fuseAnimations } from 'src/app/animations';
 import { ChangePassword } from 'src/app/Models/master';
-import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
-import { SnackBarStatus } from 'src/app/Notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
+import { NotificationService } from 'src/app/Services/notification.service';
 import { CustomValidator } from 'src/app/Validators/custom-validator';
 
 @Component({
@@ -18,13 +18,12 @@ import { CustomValidator } from 'src/app/Validators/custom-validator';
 export class ChangePasswordDialogComponent implements OnInit {
   resetPasswordForm: FormGroup;
   changePassword: ChangePassword;
-  notificationSnackBarComponent: NotificationSnackBarComponent;
 
   constructor(
     public matDialogRef: MatDialogRef<ChangePasswordDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
-    public snackBar: MatSnackBar
+    public notify: NotificationService
 
   ) {
     this.resetPasswordForm = this._formBuilder.group({
@@ -33,7 +32,6 @@ export class ChangePasswordDialogComponent implements OnInit {
       Validators.pattern('(?=.*[a-z].*[a-z].*[a-z])(?=.*[A-Z])(?=.*[0-9].*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
       confirmPassword: ['', [Validators.required, CustomValidator.confirmPasswordValidator]]
     });
-    this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
   }
 
   ngOnInit(): void {
@@ -45,7 +43,7 @@ export class ChangePasswordDialogComponent implements OnInit {
       this.changePassword.CurrentPassword = this.resetPasswordForm.get('currentPassword').value;
       this.changePassword.NewPassword = this.resetPasswordForm.get('newPassword').value;
       if (this.changePassword.CurrentPassword === this.changePassword.NewPassword) {
-        this.notificationSnackBarComponent.openSnackBar('new password should be different from old password', SnackBarStatus.danger);
+        this.notify.openSnackBar('new password should be different from old password', SnackBarStatus.danger);
       } else {
         this.matDialogRef.close(this.changePassword);
       }

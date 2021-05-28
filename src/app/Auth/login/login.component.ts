@@ -8,14 +8,14 @@ import {
     EMailModel
 } from "src/app/Models/master";
 import { NavItem } from 'src/app/nav-item';
-import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
-import { SnackBarStatus } from 'src/app/Notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
 import { AuthService } from 'src/app/Services/auth.service';
 import { MenuUpdataionService } from 'src/app/services/menu-update.service';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { ForgetPasswordLinkDialogComponent } from '../forget-password-link-dialog/forget-password-link-dialog.component';
+import { NotificationService } from 'src/app/Services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
     children: NavItem[] = [];
     authenticationDetails: AuthenticationDetails;
     menuItems: string[] = [];
-    notificationSnackBarComponent: NotificationSnackBarComponent;
     loginForm: FormGroup;
     loading = false;
     submitted = false;
@@ -38,7 +37,7 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private snackBar:MatSnackBar,
+        private notify:NotificationService,
         private service:VsenseapiService,
         private _authService:AuthService,
         private _menuUpdationService:MenuUpdataionService,
@@ -49,9 +48,6 @@ export class LoginComponent implements OnInit {
         this._compiler.clearCache();
         // redirect to home if already logged in
         localStorage.clear();
-        this.notificationSnackBarComponent = new NotificationSnackBarComponent(
-            this.snackBar
-        );
     }
 
     ngOnInit() {
@@ -94,7 +90,7 @@ export class LoginComponent implements OnInit {
                         this.loading = false;
                         console.error(err);
                         //this.logger.log(this.ipAddress,"login",err);
-                        this.notificationSnackBarComponent.openSnackBar(
+                        this.notify.openSnackBar(
                             err instanceof Object
                                 ? "Something went wrong"
                                 : err,
@@ -127,14 +123,14 @@ export class LoginComponent implements OnInit {
                     (res) => {
                         // console.log(res);
                         // this.notificationSnackBarComponent.openSnackBar('Password updated successfully', SnackBarStatus.success);
-                        this.notificationSnackBarComponent.openSnackBar(
+                        this.notify.openSnackBar(
                             "Password updated successfully, please log with new password",
                             SnackBarStatus.success
                         );
                         this.router.navigate(["/login"]);
                     },
                     (err) => {
-                        this.notificationSnackBarComponent.openSnackBar(
+                        this.notify.openSnackBar(
                             err instanceof Object
                                 ? "Something went wrong"
                                 : err,
@@ -164,7 +160,7 @@ export class LoginComponent implements OnInit {
                 this._authService.SendResetLinkToMail(emailModel).subscribe(
                     (data) => {
                         console.log(data);
-                        this.notificationSnackBarComponent.openSnackBar(`Reset password link sent to ${emailModel.EmailAddress}`, SnackBarStatus.success);
+                        this.notify.openSnackBar(`Reset password link sent to ${emailModel.EmailAddress}`, SnackBarStatus.success);
                         // this.ResetControl();
                         this.isProgressBarVisibile = false;
                         // this._router.navigate(['auth/login']);
@@ -172,7 +168,7 @@ export class LoginComponent implements OnInit {
                     (err) => {
                         console.error(err);
                         this.isProgressBarVisibile = false;
-                        this.notificationSnackBarComponent.openSnackBar(
+                        this.notify.openSnackBar(
                             err instanceof Object
                                 ? "Something went wrong"
                                 : err,
@@ -187,7 +183,7 @@ export class LoginComponent implements OnInit {
     saveUserDetails(data: AuthenticationDetails): void {
         localStorage.setItem("authorizationData", JSON.stringify(data));
         this.updateMenu();
-        this.notificationSnackBarComponent.openSnackBar(
+        this.notify.openSnackBar(
             "Logged in successfully",
             SnackBarStatus.success
         );
@@ -269,42 +265,6 @@ export class LoginComponent implements OnInit {
     }
     GetMasterMenus(): void {
         var subChildren: NavItem[] = [];
-        if (this.menuItems.indexOf("Device") >= 0) {
-            subChildren.push({
-                displayName: "Sense Edge",
-                route: "masters/device"
-            });
-        }
-        if (this.menuItems.indexOf("DParam") >= 0) {
-            subChildren.push({
-                displayName: "DParam",
-                route: "masters/deviceparam"
-            });
-        }
-        if (this.menuItems.indexOf("Location") >= 0) {
-            subChildren.push({
-                displayName: "Site",
-                route: "masters/location"
-            });
-        }
-        if (this.menuItems.indexOf("Equipment") >= 0) {
-            subChildren.push({
-                displayName: "Asset",
-                route: "masters/equipment"
-            });
-        }
-        if (this.menuItems.indexOf("DAssign") >= 0) {
-            subChildren.push({
-                displayName: "DAssign",
-                route: "masters/deviceassign"
-            });
-        }
-        if (this.menuItems.indexOf("DPAssign") >= 0) {
-            subChildren.push({
-                displayName: "DPAssign",
-                route: "masters/deviceassignparam"
-            });
-        }
         if (this.menuItems.indexOf("Site") >= 0) {
             subChildren.push({
                 displayName: "Site",
@@ -348,12 +308,6 @@ export class LoginComponent implements OnInit {
             });
         }
         if (
-            this.menuItems.indexOf("Device") >= 0 ||
-            this.menuItems.indexOf("DParam") >= 0 ||
-            this.menuItems.indexOf("Equipment") >= 0 ||
-            this.menuItems.indexOf("Location") >= 0 ||
-            this.menuItems.indexOf("DAssign") >= 0 ||
-            this.menuItems.indexOf("DPAssign") >= 0 ||
             this.menuItems.indexOf("Site") >= 0 ||
             this.menuItems.indexOf("Space") >= 0 ||
             this.menuItems.indexOf("EdgeGroup") >= 0 ||

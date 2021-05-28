@@ -18,69 +18,38 @@
         cursor: pointer;
     }
     table {
-        // width:900px;
-        // width: 850px;
-        // border: solid 2px #f4f4f4;
-        // height: 465px;
-        th {
-          color: #ffffff;
-          background-color: #3131ff;
-          padding-left: 60px;
-          // display: flex;
-          justify-content: center;
-          align-items: center;
-          border: none;
-          // width: 20%;
-          position: -webkit-sticky;
-          min-width: 30px;
-        
-        }
+      border: solid 2px #f4f4f4;
+      th {
+        color: #ffffff;
+        @extend .poppins; 
+        background-color: #3131ff;
+        text-align: left;
+      }
     
-        td {
-          @extend .poppins;
-          font-size: 11px;
-          color: #3e485a; min-width: 30px;
-          // width: 20%;
-          // min-width: max-content !important; 
-          // padding-left: 17px;
-        }
-
-        td.mat-cell{
-            border-bottom-color: transparent;
-        }
+      td {
+        @extend .poppins;
+        font-size: 12px;
+        color: #3e485a;
+        text-align: left;
+      }
     
-        tr {
-          height: 30px;
-          border-top-left-radius: 4px !important;
+      td.mat-cell{
+          border-bottom-color: transparent;
+      }
+    
+      tr {
+        height: 42px;
+      }
+      
+      th.mat-header-cell:first-child {
+        border-top-left-radius: 4px !important;
+      }
+    
+      th.mat-header-cell:last-child {
           border-top-right-radius: 4px !important;
-          border-radius: 4px;
-        }
-        
-        
-        th.mat-header-cell:first-child {
-          border-top-left-radius: 4px !important;
-          // border-bottom-left-radius: 4px !important;
-        }
-
-        th.mat-header-cell:last-child {
-            border-top-right-radius: 4px !important;
-            // border-bottom-right-radius: 4px !important;
-        }
-        th.mat-header-cell{
-          width: 20%;
-        }
-  }
-  mat-header-row{
-    background-color: #3131ff;
-    height: 35px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px !important;
-  }
-  .tformfield{
-    width: 50%;
-    position: relative;
-    left: 55%
-  }
+      }
+    }
+  
     .titletxt{
         @extend .poppins;
         font-size: 12px;
@@ -121,10 +90,10 @@
         height: 100vh;
     }
     .right-container{
-        background-color: #ffffff;
-        padding: 28px 20px 8px 20px;
-        height: 100vh;
-        width: 100%;
+      background-color: #ffffff;
+      padding: 28px 3% 0 3%;
+      height: 100vh;
+      width: 100%;
     }
     .countbox{
         height: 20px;
@@ -185,16 +154,28 @@
         filter: brightness(0.35);
     }
     .formfield{
-        // @extend .poppins;
-        font-size: 12px;
-        width: 70%;
-        margin-top: -1.5rem
-    }
-    .formfieldputtouse{
-      // @extend .poppins;
+      @extend .poppins;
       font-size: 12px;
-      width: 70%;
-      margin-top: -1.5rem
+      width: 75%;
+      margin-top: -1.5rem;
+    }
+    .txtbtn-delete{
+      @extend .poppins; 
+      font-size: 12px;
+      color: #220c0c;
+      cursor: pointer;
+    }
+    .txtbtn-delete:hover{
+      color: #d6201d;
+    }
+    .txtbtn-save{
+      @extend .poppins; 
+      font-size: 12px;
+      color: #220c0c;
+      cursor: pointer;
+    }
+    .txtbtn-save:hover{
+      color: #26b329;
     }
     .delete{
         color: #f33d3d;
@@ -224,32 +205,19 @@
       }
 }
 .tabledivision{
-  height: 390px !important;
-  margin-top: 1rem;
-  
-  // max-width: 100%;
-  // overflow-x: scroll;
-  width: 750px;
-  // width: 890px;
-  max-width: 100%;
+  // height: 32vh !important;
+  max-width: 810px;
   overflow: auto;
   border-radius: 4px;
-  // overflow: auto;
-  // margin-top: 1.5rem;
 }
 .tabledivision::-webkit-scrollbar{
-  // display: none;
   width: 0; 
-  // height: 0;
   background: transparent;
 }
 .addimage{
-  object-fit: contain;
-  margin-top: 0rem;
-  // transform: scale(0.8);
+  cursor: pointer;
   width: 25px;
   height: 25px;
-  margin-left: 38rem
 }
 .createdevice{
   @extend .poppins;
@@ -265,11 +233,13 @@
 
 .footerdiv{
   background-color: #f4f4fb;
-   width: 60%;
-  height: 60px;
-  border-radius: 4px;
-  position: fixed; 
-  bottom: 0;
+    width: 72%;
+    height: 60px;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+    z-index: 1 !important;
+    padding: 0 2rem;
 }
 .copybutton{
   border-radius: 4px;
@@ -307,13 +277,10 @@ tbody {
   padding: 0px 0px 5px 0px;
 }
 .addparameters{
-    @extend .poppins; 
+  font-family: Poppins;
+  font-weight: 500;
     font-size: 12px;
     color: #394256;
-    margin-top: -0.3rem;
-    bottom: 1;
-    height: 40px;
-    text-align: end;
 }
 .addparameters:hover{
     color: #3131ff;
@@ -386,38 +353,11 @@ tbody {
 }
 
 .tformfield{
-  width:85%;
-  float: left;
-  margin-left: -3rem;
+  font-size: 12px;
+  @extend .poppins;
+  width: 80%;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.cellselect{
-  height: 32px;
-  width:5rem;
-  border-radius: 3px;
- 
-  background-color: #ffffff;
-  display: flex;
-align-items: center;
-justify-content: center;
-  }
   .cards.mat-list-item.mat-list-single-selected-option{
     background-color: #3131ff !important;
     border: none !important;
@@ -428,3 +368,13 @@ justify-content: center;
       color:White !important;
     }
   }
+  .matautocomplete{
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+      color: #394256; 
+  }
+  .matautocomplete:hover{
+    color: #3131ff;
+  }
+  

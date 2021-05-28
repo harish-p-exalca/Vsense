@@ -1,12 +1,12 @@
 export class CurrentConsumption{
-    deviceId:string;
-    current:string;
-    watt:string;
-    dateTime:Date | string | null;
+    DeviceId:string;
+    Current:string;
+    Watt:string;
+    DateTime:Date | string | null;
 }
 export class WaterConsumption{
-    deviceId:string;
-    flow:string;
-    qty:string;
-    dateTime:Date | string | null;
+    DeviceId:string;
+    Flow:string;
+    Qty:string;
+    DateTime:Date | string | null;
 }

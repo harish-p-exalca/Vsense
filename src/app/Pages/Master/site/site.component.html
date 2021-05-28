@@ -4,7 +4,7 @@
             <div fxLayout="row" fxLayoutGap="12px" style="padding: 0 20px;">
                 <span class="title">Site</span>
                 <div class="countbox" fxLayoutAlign="center center">
-                    <span class="edgecount">20</span>
+                    <span class="edgecount">{{MSites.length}}</span>
                 </div>
             </div>
             <div fxLayout="row" fxLayoutGap="12px" style="padding: 1rem 20px;">
@@ -17,60 +17,29 @@
                 <img src="assets/images/v2/Filter.svg" width="18px">
             </div>
             <div class="hdevider"></div>
-            <button mat-button class="newbtn" (click)="handle_clear()" (click)="showandhideer2()">
-
+            <button mat-button class="newbtn" (click)="ResetControl()">
                 Create New Site
-
-
             </button>
-
-            <!-- <div class="cardsblue" style="padding:0 20px">
-
-
-                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="height: 60px;">
-                    <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
-                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                            <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                           
-                            <span class="titletxt">Title</span>
-                        </div>
-                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                            <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                            <span class="titletxt">CreatedOn</span>
-                        </div>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                        <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                        <span class="titletxt">Geo Location</span>
-                    </div>
-                </div>
-            </div> -->
-            <div style="height: 5px;">
-
-            </div>
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false">
-                    <mat-list-option [selected]="item==1" class="cards" *ngFor="let item of devicess;let i as index"
-                    [value]="i" [selected]="this.Title1==item.Title">
-                        <!-- (click)="toggele()" [class.changestyle]="toggle"  
-                    [style.background-color]= "isFocused ? '#3131ff':'#ffffff'"  -->
-                        <div (click)="sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
-                            style="height: 60px;padding-left: 1rem;" (click)="showandhider1()">
+                    <mat-list-option class="cards" *ngFor="let site of MSites;" [selected]="SelectedSite.SiteID==site.SiteID" (click)="LoadSelectedSite(site)">
+                        <div fxLayout="column" fxLayoutAlign="space-evenly start"
+                            style="height: 60px;padding-left: 1rem;">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
                                     <!-- filter: brightness(0.3); -->
-                                    <span class="titletxt">{{item.Title}}</span>
+                                    <span class="titletxt">{{site.Title}}</span>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                                    <span class="titletxt">{{item.CreatedOn | date:'dd/MM/yyyy'}}</span>
+                                    <span class="titletxt">{{site.CreatedOn | date:'dd/MM/yyyy'}}</span>
                                 </div>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                 <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                                <span class="titletxt">{{item.Geo}}</span>
+                                <span class="titletxt">{{site.Plant}}</span>
                             </div>
                         </div>
                     </mat-list-option>
@@ -80,128 +49,54 @@
         <div fxFlex=75 class="right-container" fxLayout.xs="column">
             <div fxLayout="row" fxLayoutAlign="space-between ">
                 <span class="createdevice">Create Site</span>
-                <!-- <img src="assets\images\Component 121 – 1.svg" class="addimage"> -->
             </div>
-
-            <div fxLayout="column" fxLayoutAlign="space-evenly " fxLayoutGap="0.8%"
-                style="margin-left: 2rem;padding: 1rem 0 0 0;">
-
-
-
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="12%"
-                    [formGroup]="registrationFormGroup">
-                    <span class="subtitle">Title</span>
-
-                    <mat-form-field appearance="standard" class="formfield">
-                        <input matInput placeholder="Enter Name" [(ngModel)]="Title1" (blur)="isFocused = false"
-                            (focus)="isFocused = true" [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
-                            [style.font-family]="isFocused ? 'Poppins':'poopins'"
-                            [style.font-size]="isFocused ? '12px':'12px'" formControlName="Title" ngModel required
-                            clearInput>
-                        <mat-error *ngIf="registrationFormGroup.get('Title').hasError('required')">
-                            Title is required
-                        </mat-error>
-                    </mat-form-field>
-
+            <form [formGroup]="SiteFormGroup" autocomplete="off">
+                <div fxLayout="column" fxLayoutAlign="start start"
+                    style="margin-left: 2rem;padding: 1rem 0 0 0;" fxLayoutGap="8px">
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="form-field-wrapper">
+                        <span class="subtitle">Title</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput placeholder="Enter Title" formControlName="Title" fxFlex>
+                            <mat-error *ngIf="SiteFormGroup.get('Title').hasError('required')">
+                                Title is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="form-field-wrapper">
+                        <span class="subtitle">Geo Location</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput placeholder="Enter Geo location" formControlName="Geo" fxFlex>
+                            <mat-error *ngIf="SiteFormGroup.get('Geo').hasError('required')">
+                                Geo is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="form-field-wrapper">
+                        <span class="subtitle">Plant</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput placeholder="Enter Plant" formControlName="Plant" fxFlex>
+                            <mat-error *ngIf="SiteFormGroup.get('Plant').hasError('required')">
+                                Plant is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
-
-
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="5%"
-                    [formGroup]="registrationFormGroup">
-                    <span class="subtitle">Geo Location</span>
-
-                    <mat-form-field appearance="standard" class="formfield">
-                        <input matInput placeholder="Enter Purpose" [(ngModel)]="Geo1" (blur)="isFocused1 = false"
-                            (focus)="isFocused1 = true" [style.color]="isFocused1 ? '#3131ff':'#a6aeaf'"
-                            [style.font-family]="isFocused1 ? 'Poppins':'poopins'"
-                            [style.font-size]="isFocused1 ? '12px':'12px'" formControlName="Geo" ngModel required
-                            clearInput>
-                        <mat-error *ngIf="registrationFormGroup.get('Geo').hasError('required')">
-                            Geo is required
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-
-
-
-
-                <div fxLayout="row" fxFlex=43 fxLayoutAlign="start center " fxLayoutGap="11.5%"
-                    [formGroup]="registrationFormGroup">
-                    <span class="subtitle">Plant</span>
-
-                    <mat-form-field appearance="standard" class="formfield">
-                        <input matInput placeholder="Enter Plant Name" [(ngModel)]="Plant1" (blur)="isFocused2 = false"
-                            (focus)="isFocused2 = true" [style.color]="isFocused2 ? '#3131ff':'#a6aeaf'"
-                            [style.font-family]="isFocused2 ? 'Poppins':'poopins'"
-                            [style.font-size]="isFocused2 ? '12px':'12px'" formControlName="Plant" ngModel required
-                            clearInput>
-                        <mat-error *ngIf="registrationFormGroup.get('Plant').hasError('required')">
-                            Plant is required
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-
-                <!-- autocomplete="off" -->
-
-                <!-- <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="12%" [formGroup]="registrationFormGroup">
-                    <span class="subtitle">Date</span>
-
-                    <mat-form-field appearance="standard" class="formfield" (click)="picker1.open()">
-                        <input matInput [matDatepicker]="picker1" placeholder="dd/mm/yyyy" readonly
-                            (blur)="isFocused3 = false" (focus)="isFocused3 = true"
-                            [style.color]="isFocused3 ? '#3131ff':'#a6aeaf'"
-                            [style.font-family]="isFocused2 ? 'Poppins':'poopins'"
-                            [style.font-size]="isFocused2 ? '12px':'12px'" formControlName="ModifiedOn" ngModel required
-                            clearInput>
-                        <mat-error *ngIf="registrationFormGroup.get('ModifiedOn').hasError('required')">
-                            Date is required
-                        </mat-error>
-                        <mat-datepicker-toggle matSuffix [for]="picker1">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
-                    </mat-form-field>
-
-                </div> -->
-
-                <!-- <button type="button" mat-button (click)="RegisterClicked()" (click) ="handle_clear()">create site</button> -->
-
-            </div>
-
-            <!-- <div  fxLayoutAlign="center "> -->
-
-
-
-
+            </form>
 
             <div fxLayout="row" fxLayoutAlign="center end">
                 <img src="assets\images\Group 8332.svg" class="bigimage">
-                <!-- <div class="bottom-right"></div> -->
             </div>
-            <!-- </div> -->
 
-            <!-- <img src="assets\images\Component 121 – 1.svg" class="addimage"  (click) ="handle_clear()"
-            (click)="showandhideer2()"> -->
-
-            <div fxLayout="row" fxLayoutAlign="space-between center" class="footerdiv">
-                <button mat-button class="copybutton" fxFlex="15">
-                    Copy
-                </button>
-
-                <div class="deleteoption" *ngIf="buttonnvaluee==1 " (click)="DeleteClicked()" (click)="handle_clear()">
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2rem" class="footerdiv">
+                <div class="deleteoption" *ngIf="SelectedSite.SiteID" (click)="DeleteSiteClicked()">
                     Delete
                 </div>
-                <div class="updateoption" *ngIf="buttonnvaluee==1" (click)="UpdateClicked()">
-                    Update
+                <div class="deleteoption" *ngIf="!SelectedSite.SiteID" (click)="ResetControl()">
+                    Clear
                 </div>
-                <div class="deleteoption" *ngIf="buttonnvaluee!=1 " (click)="handle_clear()">
-                    Clear entiries
+                <div class="createoption" (click)="SaveSiteClicked()">
+                    {{SelectedSite.SiteID?'Update':'Create'}}
                 </div>
-                <div class="createoption" *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()">
-                    Create
-                </div>
-
             </div>
         </div>
     </div>

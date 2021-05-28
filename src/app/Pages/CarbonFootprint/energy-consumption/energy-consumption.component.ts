@@ -19,11 +19,11 @@ export class EnergyConsumptionComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.emitChange("Energy Consumption");
-    this.CurrentDeviceData.watt="0";
-    this.CurrentDeviceData.current="0";
+    this.CurrentDeviceData.Watt="0";
+    this.CurrentDeviceData.Current="0";
     this.service.GetAllCurrentDevices().subscribe(data=>{
       this.AllDevices=data;
-      this.SelectedDevice=this.AllDevices[0].deviceId;
+      this.SelectedDevice=this.AllDevices[0].DeviceId;
       this.GetDeviceData();
       this.GetEnergy();
       // this.DataPuller=setInterval(x=>{

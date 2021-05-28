@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { SnackBarStatus } from '../notification-snackbar-status-enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   constructor(public snackbar:MatSnackBar) { }
-  config:MatSnackBarConfig={
-    duration:3000
-  }
-  config1:MatSnackBarConfig={
-    duration:3000
-  }
-  success(msg){
-    this.snackbar.open(msg,'',this.config);
-  }
-  update(msg){
-    this.snackbar.open(msg,'',this.config1);
+  openSnackBar(Message: string, status: SnackBarStatus, duration = 2000): void {
+    this.snackbar.open(Message, '', {
+      duration: duration,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: status === SnackBarStatus.success ? 'success' : status === SnackBarStatus.danger ? 'danger' :
+        status === SnackBarStatus.warning ? 'warning' : 'info'
+    });
   }
 }

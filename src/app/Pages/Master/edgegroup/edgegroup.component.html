@@ -17,463 +17,176 @@
                 <img src="assets/images/v2/Filter.svg" width="18px">
             </div>
             <div class="hdevider"></div>
-            <button mat-button class="newbtn" (click)="showandhideer2()" (click)="handle_clear()">
-
+            <button mat-button class="newbtn" (click)="ResetControl()">
                 Create New Edge Group
-
-
             </button>
-
-            <!-- <div class="cardsblue" style="padding:0 20px">
-
-
-                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="height: 45px;">
-                    <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
-                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                            <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
-                           
-                            <span class="titletxt">Title</span>
-                        </div>
-                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                            <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                            <span class="titletxt">CreatedOn</span>
-                        </div>
-                    </div>
-
-                </div>
-            </div> -->
-            <div style="height: 5px;">
-
-            </div>
-
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false" class="matlist">
-                    <mat-list-option [selected]="item==1" class="cards metric-list-item"
-                        *ngFor="let item of devicess;let i as index" [selected]="this.Title1==item.Title">
-                        <!-- id='listview' (actionComplete)="actionComplete($event)" -->
-                        <div (click)="sampleclick(i)" fxLayout="column" fxLayoutAlign="space-evenly start"
-                            style="height: 25px;padding-left: 1rem;" (click)="showandhider1()">
+                    <mat-list-option class="cards" *ngFor="let group of MGroups;"
+                        [selected]="SelectedGroup.EdgeGroup==group.EdgeGroup" (click)="LoadSelectedGroup(group)">
+                        <div fxLayout="column" fxLayoutAlign="space-evenly start"
+                            style="height: 25px;padding-left: 1rem;">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;height: 30px;">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
                                     <!-- filter: brightness(0.3); -->
-                                    <span class="titletxt">{{item.Title}}</span>
+                                    <span class="titletxt">{{group.Title}}</span>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                     <img class="img" src="assets/images/v2/calendar.svg" width="14px">
-                                    <span class="titletxt">{{item.CreatedOn | date:'dd/MM/yyyy'}}</span>
+                                    <span class="titletxt">{{group.CreatedOn | date:'dd/MM/yyyy'}}</span>
                                 </div>
                             </div>
-
                         </div>
                     </mat-list-option>
                 </mat-selection-list>
             </div>
         </div>
         <div fxFlex=75 class="right-container" fxLayout.xs="column">
-            <div fxLayout="row" fxLayoutAlign="space-between ">
+            <div style="width: 100%;" fxLayout="row" fxLayoutAlign="space-between center">
                 <span class="createdevice">Create Edge Group</span>
-                <img src="assets\images\Component 121 – 1.svg" class="addimage" (click)="rotate()"
-                    [@rotatedState]='state' [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()">
-
-                <mat-menu #menu="matMenu">
-
-                    <span mat-menu-item class="addparameters" (click)="addparam('1')">Add Parameters</span>
-
-                    <span mat-menu-item class="addparameters" (click)="addparam('2')">Manual Entry</span>
-                </mat-menu>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center " fxLayoutGap="2%"
-                style="padding: 1rem 0 0 0;margin-left: 2.7rem;">
-                <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="10%"
-                    [formGroup]="registrationFormGrouptitle">
-                    <span class="subtitle">Title</span>
-                    <mat-form-field appearance="standard" class="formfield">
-                        <input matInput autocomplete="off" placeholder="Enter Name" (blur)="isFocused = false"
-                            [(ngModel)]="Title1" (focus)="isFocused = true"
-                            [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
-                            [style.font-family]="isFocused ? 'Poppins':'poopins'"
-                            [style.font-size]="isFocused ? '12px':'12px'" formControlName="Title" ngModel required
-                            type="text" clearInput>
-                        <mat-error *ngIf="registrationFormGrouptitle.get('Title').hasError('required')">
-                            Title number is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <!-- <div fxLayout="row" fxFlex=42 fxLayoutAlign="start center " fxLayoutGap="6%">
-                    <span class="subtitle">Date</span>
-                    <mat-form-field appearance="standard" class="formfieldputtouse" (click)="picker1.open()">
-                        <input matInput [matDatepicker]="picker1" autocomplete="off" placeholder="dd/mm/yyyy" readonly
-                            (blur)="isFocused1 = false" (focus)="isFocused1 = true"
-                            [style.color]="isFocused1 ? '#3131ff':'#a6aeaf'"
-                            [style.font-family]="isFocused1 ? 'Poppins':'poopins'"
-                            [style.font-size]="isFocused1 ? '12px':'12px'">
-                        <mat-datepicker-toggle matSuffix [for]="picker1">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
-                    </mat-form-field>
-                </div> -->
-            </div>
-
-            <!-- (click)="manualentry()" -->
-            <div *ngFor="let control of newtextlib.controls; index as i" fxLayout="row" fxLayoutAlign="start center"
-                style="padding: 1rem 0 0 0;margin-left: 2.7rem;">
-                <div fxLayout="row" fxLayoutAlign="start center " fxLayoutGap="10%" fxFlex=42>
-                    <span class="subtitle">Title</span>
-
-                    <mat-form-field appearance="standard" floatLabel="never" class="formfield">
-                        <input matInput [formControl]="newtextlib.controls[i]" (blur)="isFocused = false"
-                            (focus)="isFocused = true" [style.color]="isFocused ? '#3131ff':'#a6aeaf'"
-                            [style.font-family]="isFocused ? 'Poppins':'poopins'"
-                            [style.font-size]="isFocused ? '12px':'12px'" type="text">
-                        <mat-error *ngIf="newtextlib.controls[i].hasError('required')">
-                            Type Something..!
-                        </mat-error>
-                    </mat-form-field>
-
-                    <button mat-mini-fab class="add_button1" (click)="remove(i)">
-                        <mat-icon>remove</mat-icon>
-                    </button>
-
+                <div>
+                    <img src="assets\images\Component 121 – 1.svg" class="addimage" (click)="rotate()"
+                        [@rotatedState]='State' [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()">
+                    <mat-menu #menu="matMenu">
+                        <span mat-menu-item class="addparameters" (click)="AddParamClicked()">Add Parameter</span>
+                    </mat-menu>
                 </div>
             </div>
-            <!-- <div fxLayout="row" fxLayoutAlign="end center" style="width: 100%;"> -->
+            <form [formGroup]="GroupFormGroup" autocomplete="off">
+                <div fxLayout="row" fxLayoutAlign="start center" style="padding: 1rem 2rem">
+                    <div fxLayout="row" fxFlex=45 fxLayoutAlign="space-between center">
+                        <span class="subtitle">Title</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput autocomplete="off" placeholder="Enter Title" formControlName="Title">
+                            <mat-error *ngIf="GroupFormGroup.get('Title').hasError('required')">
+                                Title number is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
+                <div class="tabledivision" *ngIf="GroupParamFormArray.length>0">
+                    <table mat-table [dataSource]="GroupParamDataSource" formArrayName="GroupParams">
 
-
-
-
-            <!-- [dataSource]="ParamDataSource"  formArrayName="parameters" [formGroupName]="i" -->
-            <!-- <table mat-table [dataSource]="dataSource" matSort formArrayName="parameters" >
-                    <ng-container matColumnDef="paramID" *ngIf="isNewParam">
-                        <th mat-header-cell *matHeaderCellDef> ParamID </th>
-                        <td mat-cell *matCellDef="let element;index as i" 
-                        formControlName="{{i}}" class="pointer">
-                            <div fxLayout="row" fxLayoutAlign="start center">
-                                <div class="divbox" [ngStyle]="{'background-color':i%2==0 ? '#d87e39' : '#6f52ed'}">
-                                </div>
-
-                                <div class="cellselect">
-                                    <mat-select style="width:4rem;" placeholder="Select" formControlName="paramID"
-                                        (selectionChange)="paramselect($event.value,i)">
-                                        <mat-option *ngFor="let param of deviceparams" [value]="param.paramID">
-                                            {{param.paramID}}</mat-option>
-                                    </mat-select>
-                                </div>
-
-                            </div>
-                        </td>
-                    </ng-container>
-
-
-                    <ng-container matColumnDef="paramID" *ngIf="!isNewParam" >
-
-                        <th mat-header-cell *matHeaderCellDef> paramID </th>
-                        <td mat-cell *matCellDef="let element;index as i"  [formGroupName]="i"  >
-                            <div fxLayout="row" fxLayoutAlign="start center">
-                                <div class="divbox" [ngStyle]="{'background-color':i%2==0 ? '#d87e39' : '#6f52ed'}">
-                                </div>
+                        <ng-container matColumnDef="ParamID">
+                            <th mat-header-cell *matHeaderCellDef> ParamID</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
                                 <mat-form-field class="tformfield">
-                                    <input matInput autocomplete="off" formControlName="ParamID">
+                                    <input formControlName="ParamID" matInput [matAutocomplete]="auto" required>
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let param of DefaultParams" [value]="param.ParamID"
+                                            class="matautocomplete" (click)="PatchDefaultValues(param,i)">
+                                            {{param.ParamID}}
+                                        </mat-option>
+                                    </mat-autocomplete>
                                 </mat-form-field>
+                            </td>
+                        </ng-container>
 
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Title"  *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef> Title </th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i"  >
-                            <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="Title">
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Unit"  *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef> Unit</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i"  >
-                            <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="Unit">
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="LongText"  *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef> Text </th>
-                        <td mat-cell *matCellDef="let element;index as i"  [formGroupName]="i"  >
-                            <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="LongText">
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Min"  *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef> Min </th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i"  >
-                            <mat-form-field class="tformfield">
-                                <input type="number" matInput autocomplete="off" formControlName="Min">
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-
-                    <ng-container matColumnDef="Max"  *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef> Max </th>
-                        <td mat-cell *matCellDef="let element;index as i"  [formGroupName]="i"  >
-                            <mat-form-field class="tformfield">
-                                <input type="number" matInput autocomplete="off" formControlName="Max">
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Icon"  *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef> Icon </th>
-                        <td mat-cell *matCellDef="let element;index as i"  [formGroupName]="i"  >
-                            <mat-form-field class="tformfield">
-                                <input type="number" matInput autocomplete="off" formControlName="Icon">
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Percentage"  *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef> Percentage </th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i"  >
-                           
-                            <mat-form-field class="tformfield">
-                                <input type="number" matInput autocomplete="off" formControlName="Percentage">
-                            </mat-form-field>
-
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Color"  *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-                        <td mat-cell *matCellDef="let element;index as i"  [formGroupName]="i" 
-                            style="text-align: center;">
-                           
-                            <mat-form-field class="tformfield">
-                                <input type="number" matInput autocomplete="off" formControlName="Color">
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Action" stickyEnd  *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 13%;"> Action
-                        </th>
-                        <td mat-cell *matCellDef="let element;index as i"  [formGroupName]="i"  
-                            style="text-align: center;">
-                            <div mat-ripple fxLayoutAlign="center center" class="delete-container pointer"
-                                (click)="removeparam(i)">
-                                <img src="assets/images/v2/delete.svg" width="32px">
-                                <span class="delete deletetxt">Delete</span>
-                            </div>
-                        </td>
-                    </ng-container>
-
-
-                    <tr mat-header-row *matHeaderRowDef="ParamdisplayedColumns;sticky: true;"></tr>
-                    <tr mat-row *matRowDef="let row; columns: ParamdisplayedColumns;sticky:true;"></tr>
-                </table> -->
-
-            <!-- <mat-paginator [pageSizeOptions]="[10, 20, 50]"></mat-paginator> -->
-
-            <div [formGroup]="registrationFormGroup" style="margin-top: 1rem;" class="tabledivision">
-                <!-- <div fxLayout="row" fxLayoutAlign="end center" style="width: 56%;">
-                        <button mat-raised-button color="primary" (click)="addparam('1')" style="
-                  left: 72%;;background-color: #4660CE;">Add Param</button>
-                  <button mat-raised-button color="primary" (click)="addparam('2')" style="left: 73%;
-                  background-color: #4660CE;">Manual Entry</button>
-                    </div> -->
-
-                <table mat-table [dataSource]="dataSource" formArrayName="parameters">
-
-                    <ng-container matColumnDef="paramID" *ngIf="isNewParam">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor alignhead"> ParamID</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i" style="margin-right: 1%;">
-                            <div fxLayout="row" fxLayoutAlign="start center">
-                                <div class="divbox" [ngStyle]="{'background-color':i%2==0 ? '#d87e39' : '#6f52ed'}">
-                                </div>
-
-                                <!-- <div class="cellselect"> -->
+                        <ng-container matColumnDef="Title">
+                            <th mat-header-cell *matHeaderCellDef> Title</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
                                 <mat-form-field class="tformfield">
-                                    <mat-select style="width:4rem;" placeholder="Select" formControlName="ParamID"
-                                        (selectionChange)="paramselect($event.value,i)">
-                                        <mat-option *ngFor="let param of deviceparams" [value]="param.ParamID">
-                                            {{param.ParamID}}</mat-option>
-                                    </mat-select>
+                                    <input matInput formControlName="Title">
                                 </mat-form-field>
-                                <!-- </div> -->
+                            </td>
+                        </ng-container>
 
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="paramID" *ngIf="!isNewParam">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor alignhead"> ParamID</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i" style="margin-right: 1%;">
-                            <div fxLayout="row" fxLayoutAlign="start center">
-                                <div class="divbox" [ngStyle]="{'background-color':i%2==0 ? '#d87e39' : '#6f52ed'}">
-                                </div>
+                        <ng-container matColumnDef="Unit">
+                            <th mat-header-cell *matHeaderCellDef> Unit</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
                                 <mat-form-field class="tformfield">
-                                    <input matInput autocomplete="off" formControlName="ParamID" ngModel required
-                                        type="text" clearInput>
+                                    <input matInput formControlName="Unit">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="LongText">
+                            <th mat-header-cell *matHeaderCellDef> Text</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                                <mat-form-field class="tformfield">
+                                    <input matInput formControlName="LongText">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Min">
+                            <th mat-header-cell *matHeaderCellDef> Min</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                                <mat-form-field class="tformfield">
+                                    <input type="number" matInput formControlName="Min">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Max">
+                            <th mat-header-cell *matHeaderCellDef> Max</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                                <mat-form-field class="tformfield">
+                                    <input type="number" matInput formControlName="Max">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Icon">
+                            <th mat-header-cell *matHeaderCellDef> Icon</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                                <mat-form-field class="tformfield">
+                                    <input matInput formControlName="Icon">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="IsPercentage">
+                            <th mat-header-cell *matHeaderCellDef>IsPercentage</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                                <mat-form-field class="tformfield">
+                                    <input matInput formControlName="IsPercentage">
 
                                 </mat-form-field>
+                            </td>
+                        </ng-container>
 
-                            </div>
-                        </td>
-                    </ng-container>
+                        <ng-container matColumnDef="Color">
+                            <th mat-header-cell *matHeaderCellDef> Color</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
+                                <mat-form-field class="tformfield">
+                                    <input matInput formControlName="Color">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
 
-                    <ng-container matColumnDef="title">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor"> Title</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
-                            <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="Title" ngModel required type="text"
-                                    clearInput>
+                        <ng-container matColumnDef="Action" stickyEnd>
+                            <th mat-header-cell *matHeaderCellDef style="text-align: center;">Action</th>
+                            <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i"
+                                style="text-align: center;min-width:74px;">
+                                <div mat-ripple fxLayoutAlign="center center" class="delete-container pointer"
+                                    (click)="DeleteRow(i)">
+                                    <img src="assets/images/v2/delete.svg" width="32px">
+                                    <span class="delete deletetxt">Delete</span>
+                                </div>
+                            </td>
+                        </ng-container>
 
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="GroupParamDisplayedColumns; sticky:true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: GroupParamDisplayedColumns;"></tr>
+                    </table>
+                </div>
+            </form>
 
-
-                    <ng-container matColumnDef="unit">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor"> Unit</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
-                            <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="Unit" ngModel required type="text"
-                                    clearInput>
-
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="longText">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor"> Text</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i" class="boldtext">
-                            <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="LongText" ngModel required
-                                    type="text" clearInput>
-
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="min">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor"> Min</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
-                            <mat-form-field class="tformfield">
-                                <input type="number" matInput autocomplete="off" formControlName="Min" ngModel required
-                                    type="number" clearInput>
-
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="max">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Max</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
-                            <mat-form-field class="tformfield">
-                                <input type="number" matInput autocomplete="off" formControlName="Max" ngModel required
-                                    type="number" clearInput>
-
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="icon">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Icon</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
-                            <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="Icon" ngModel required type="text"
-                                    clearInput>
-
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="isPercentage">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Percentage</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
-                            <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="IsPercentage" ngModel required
-                                    type="text" clearInput>
-
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="color">
-                        <th mat-header-cell *matHeaderCellDef class="headercolor "> Color</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i">
-                            <mat-form-field class="tformfield">
-                                <input matInput autocomplete="off" formControlName="Color" ngModel required type="text"
-                                    clearInput>
-
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-
-                    <ng-container matColumnDef="action" stickyEnd>
-                        <th mat-header-cell *matHeaderCellDef class="headercolor aligncenter">
-                            Action</th>
-                        <td mat-cell *matCellDef="let element;index as i" [formGroupName]="i" class="aligncenter"
-                            style="text-align: center;">
-                            <!-- <mat-icon (click)="removeparam(i)" style="color: red;cursor:pointer">Action</mat-icon> -->
-
-                            <div mat-ripple fxLayoutAlign="center center" class="delete-container pointer"
-                                (click)="removeparam(i)">
-                                <img src="assets/images/v2/delete.svg" width="32px">
-                                <span class="delete deletetxt">Delete</span>
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true" class="colheader"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-
-            </div>
-
-
-
-
-
-            <div fxLayout="row" fxLayoutAlign="space-between center" class="footerdiv">
-
-
-
-                <div class="deleteoption" *ngIf="buttonnvaluee==1 " (click)="handle_clear()" (click)="DeleteClicked()">
+            <div fxLayout="row" fxLayoutAlign="end center" class="footerdiv" fxLayoutGap="5%">
+                <div *ngIf="!SelectedGroup.EdgeGroup" class="txtbtn-delete" (click)="ResetControl()">
+                    Clear
+                </div>
+                <div *ngIf="SelectedGroup.EdgeGroup" class="txtbtn-delete" (click)="DeleteGroupClicked()">
                     Delete
                 </div>
-                <div class="updateoption" *ngIf="buttonnvaluee==1 " (click)="UpdateClicked()">
-                    Update
+                <div class="txtbtn-save" (click)="SaveGroupClicked()">
+                    {{ SelectedGroup.EdgeGroup?'Update':'Create'}}
                 </div>
-                <div class="deleteoption" *ngIf="buttonnvaluee!=1 " (click)="handle_clear()">
-                    Clear entiries
-                </div>
-                <!-- (click)="RegisterClicked()" (click)="registerparam()"-->
-                <div class="updateoption" *ngIf="buttonnvaluee!=1" (click)="RegisterClicked()">
-                    Create
-                </div>
-
-
             </div>
         </div>
-        <!-- </div> -->
     </div>
     <app-loader></app-loader>
-
-
-    <!-- <div fxLayout="row" fxFlex=60 fxLayoutAlign="space-evenly">
-                                    <mat-progress-bar mode="determinate" value="70" class="progressbar">
-                                    </mat-progress-bar>
-                                    <div class="percentdiv">
-                                        <span class="percentspan">82%</span>
-                                    </div>
-                                </div> -->
-
-
-    <!-- <div mat-ripple fxLayoutAlign="center center" class="color-container pointer">
-                                    <span class="dot"></span>
-                                    <span class="color colortxt">Blue</span>
-                                </div> -->

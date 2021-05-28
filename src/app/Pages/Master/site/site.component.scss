@@ -92,8 +92,9 @@
     }
     .right-container{
         background-color: #ffffff;
-        padding: 28px 20px 8px 20px;
+        padding: 28px 3% 0 3%;
         height: 100vh;
+        width: 100%;
     }
     .countbox{
         height: 20px;
@@ -154,16 +155,10 @@
         filter: brightness(0.35);
     }
     .formfield{
-        // @extend .poppins;
+        @extend .poppins;
         font-size: 12px;
-        width: 30%;
-        margin-top: -1.5rem
-    }
-    .formfieldputtouse{
-      // @extend .poppins;
-      font-size: 12px;
-      width: 70%;
-      margin-top: -1.5rem
+        width: 60%;
+        margin-top: -1.5rem;
     }
     .delete{
         color: #f33d3d;
@@ -217,11 +212,13 @@
 
 .footerdiv{
   background-color: #f4f4fb;
-  width: 65%;
-  height: 60px;
-  border-radius: 4px;
-  position: fixed;
-  bottom: 0;
+    width: 72%;
+    height: 60px;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+    z-index: 1 !important;
+    padding: 0 2rem;
 }
 .copybutton{
   border-radius: 4px;
@@ -233,7 +230,7 @@
   width: 130px;
 }
 .deleteoption{
-  margin-left: 28rem; @extend .poppins; 
+  @extend .poppins; 
   font-size: 12px;
   color: #220c0c;cursor: pointer;
 }
@@ -241,7 +238,6 @@
   color: #d6201d;
 }
 .updateoption{
-  margin-right: 3rem;
   font-size: 12px;
   color: #220c0c;cursor: pointer; @extend .poppins; 
   display: block;
@@ -250,7 +246,6 @@
   color: #26b329;
 }
 .createoption{
-  margin-right: 3rem;
   font-size: 12px;
   color: #220c0c;cursor: pointer; @extend .poppins; 
   display: block;

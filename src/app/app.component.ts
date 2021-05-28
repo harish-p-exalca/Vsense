@@ -8,12 +8,12 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MenuUpdataionService } from './services/menu-update.service';
 import { AuthService } from './Services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationSnackBarComponent } from './Notifications/notification-snack-bar/notification-snack-bar.component';
-import { SnackBarStatus } from './Notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { SnackBarStatus } from './notification-snackbar-status-enum';
 import { AuthenticationDetails, ChangePassword } from './Models/master';
 import { ChangePasswordDialogComponent } from './Auth/change-password-dialog/change-password-dialog.component';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NotificationService } from './Services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,6 @@ export class AppComponent implements AfterViewInit,OnInit {
 
   currentUser:AuthenticationDetails;
   islogin:boolean=true;
-  notificationSnackBarComponent: NotificationSnackBarComponent;
   navItems: NavItem[] = []; 
 
   constructor(
@@ -37,7 +36,7 @@ export class AppComponent implements AfterViewInit,OnInit {
     private _menuUpdationService:MenuUpdataionService,
     private authservice:AuthService,
     private _compiler:Compiler,
-    private snackBar:MatSnackBar,
+    private notify:NotificationService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
   ) {
@@ -46,9 +45,6 @@ export class AppComponent implements AfterViewInit,OnInit {
       value => {
         this.islogin = value;
       });
-      this.notificationSnackBarComponent = new NotificationSnackBarComponent(
-        this.snackBar
-    );
     this.matIconRegistry.addSvgIcon(
       "monitor",
       this.domSanitizer.bypassSecurityTrustResourceUrl("/assets/images/v2/monitor.svg")
@@ -108,11 +104,11 @@ export class AppComponent implements AfterViewInit,OnInit {
           localStorage.clear();
           this._compiler.clearCache();
           this.router.navigate(['login']);
-          this.notificationSnackBarComponent.openSnackBar('Signed out successfully', SnackBarStatus.success);
+          this.notify.openSnackBar('Signed out successfully', SnackBarStatus.success);
       },
       (err) => {
           console.error(err);
-          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+          this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       }
   );
    this.router.navigate(['login']);
@@ -158,14 +154,14 @@ export class AppComponent implements AfterViewInit,OnInit {
                 (res) => {
                     // console.log(res);
                     // this.notificationSnackBarComponent.openSnackBar('Password updated successfully', SnackBarStatus.success);
-                    this.notificationSnackBarComponent.openSnackBar(
+                    this.notify.openSnackBar(
                         "Password updated successfully, please log with new password",
                         SnackBarStatus.success
                     );
                     this.router.navigate(["/login"]);
                 },
                 (err) => {
-                    this.notificationSnackBarComponent.openSnackBar(
+                    this.notify.openSnackBar(
                         err instanceof Object
                             ? "Something went wrong"
                             : err,

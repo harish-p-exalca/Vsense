@@ -6,7 +6,7 @@ import { AuthenticationDetails } from 'src/app/Models/master';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +14,14 @@ import { NotificationSnackBarComponent } from 'src/app/Notifications/notificatio
 export class AuthInterceptorService implements HttpInterceptor {
   authenticationDetails: AuthenticationDetails;
   baseAddress: string;
-  notificationSnackBarComponent: NotificationSnackBarComponent;
   constructor(
     private _authService: AuthService,
     private _router: Router,
     private _compiler: Compiler,
-    public snackBar: MatSnackBar,
+    public notify: NotificationService,
   ) {
     this.authenticationDetails = new AuthenticationDetails();
     this.baseAddress = this._authService.baseAddress;
-    this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
   }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> | any {
     const retrievedObject = localStorage.getItem('authorizationData');

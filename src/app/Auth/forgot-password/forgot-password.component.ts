@@ -4,9 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { fuseAnimations } from 'src/app/animations';
 import { ForgotPassword } from 'src/app/Models/master';
-import { NotificationSnackBarComponent } from 'src/app/Notifications/notification-snack-bar/notification-snack-bar.component';
-import { SnackBarStatus } from 'src/app/Notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { SnackBarStatus } from 'src/app/notification-snackbar-status-enum';
 import { AuthService } from 'src/app/Services/auth.service';
+import { NotificationService } from 'src/app/Services/notification.service';
 import { CustomValidator } from 'src/app/Validators/custom-validator';
 
 @Component({
@@ -19,16 +19,14 @@ import { CustomValidator } from 'src/app/Validators/custom-validator';
 export class ForgotPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;
   forgotPassword: ForgotPassword;
-  notificationSnackBarComponent: NotificationSnackBarComponent;
   IsProgressBarVisibile: boolean;
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-    public snackBar: MatSnackBar
+    public notify: NotificationService
   ) {
-    this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.IsProgressBarVisibile = false;
   }
 
@@ -67,13 +65,13 @@ export class ForgotPasswordComponent implements OnInit {
           //console.log(data);
           this.ResetControl();
           this.IsProgressBarVisibile = false;
-          this.notificationSnackBarComponent.openSnackBar('Password changed successfully', SnackBarStatus.success);
+          this.notify.openSnackBar('Password changed successfully', SnackBarStatus.success);
           this._router.navigate(['/login']);
         },
         (err) => {
           console.error(err);
           this.IsProgressBarVisibile = false;
-          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);        }
+          this.notify.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);        }
       );
     }
     else {
