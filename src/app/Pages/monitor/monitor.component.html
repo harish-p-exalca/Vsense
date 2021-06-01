@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div fxLayoutAlign="start center" fxFlex="60px">
-                <img src="assets/images/v2/Filter.svg">
+                <img src="assets/images/v2/Filter.svg" width="18px">
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" (click)="ChangeDevice('Active')" class="pointer">
                 <div *ngIf="selectedDevices=='Active'" class="dotnot" [ngClass]="{'active-dn':selectedDevices=='Active'}"></div>
@@ -80,27 +80,37 @@
             </div>
         </div>
         <table mat-table [dataSource]="DeviceDataSource" matSort class="py-10">
-            <ng-container matColumnDef="equipmentname">
-                <th mat-header-cell *matHeaderCellDef> Asset </th>
-                <td mat-cell *matCellDef="let element" class="pointer" (click)="ViewDetails(element)"> {{element.equipment.text}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="location">
+            <ng-container matColumnDef="Site">
                 <th mat-header-cell *matHeaderCellDef> Site </th>
-                <td mat-cell *matCellDef="let element"> {{element.location.lcoationText}} </td>
+                <td mat-cell *matCellDef="let element" class="pointer" (click)="ViewDetails(element)">{{element.Site}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="device">
-                <th mat-header-cell *matHeaderCellDef> Sense Edge</th>
-                <td mat-cell *matCellDef="let element"> {{element.device.name}} </td>
+            <ng-container matColumnDef="Space">
+                <th mat-header-cell *matHeaderCellDef> Space </th>
+                <td mat-cell *matCellDef="let element">{{element.Space}}</td>
             </ng-container>
 
-            <ng-container matColumnDef="status">
+            <ng-container matColumnDef="Asset">
+                <th mat-header-cell *matHeaderCellDef> Asset</th>
+                <td mat-cell *matCellDef="let element">{{element.Asset}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Edge">
+                <th mat-header-cell *matHeaderCellDef> Edge </th>
+                <td mat-cell *matCellDef="let element"> {{element.Edge}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Status">
                 <th mat-header-cell *matHeaderCellDef> Status </th>
-                <td mat-cell *matCellDef="let element"> {{deviceStatusvalue(element.device.isEnabled)}} </td>
+                <td mat-cell *matCellDef="let element">{{element.Status?'Active':'Inactive'}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="action">
+            <ng-container matColumnDef="LastFeed">
+                <th mat-header-cell *matHeaderCellDef> Last feed </th>
+                <td mat-cell *matCellDef="let element"> {{element.LastFeed | date:'short'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Action">
                 <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Action
                 </th>
                 <td mat-cell *matCellDef="let element" style="text-align: center;">
@@ -108,7 +118,9 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="ViewDetails(element)">View details</button>
+                    <span mat-menu-item class="menuitem" (click)="ViewDetails(element)">View details</span>
+                    <span *ngIf="!element.Status" class="menuitem" mat-menu-item (click)="ToggleDeviceStatus(element.EdgeID)">Enable</span>
+                    <span *ngIf="element.Status" class="menuitem" mat-menu-item (click)="ToggleDeviceStatus(element.EdgeID)">Disable</span>
                     </mat-menu>
                 </td>
             </ng-container>

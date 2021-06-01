@@ -75,7 +75,7 @@
                         <span class="subtitle">Gateway</span>
                         <mat-form-field appearance="standard" class="formfield">
                             <mat-select placeholder="SelectParent Edge" class="matselect" formControlName="ParantEdgeID" fxFlex>
-                                <mat-option class="matoption" *ngFor="let edge of MEdges" [value]="edge.EdgeID" [disabled]="SelectedEdge.EdgeID==edge.EdgeID">{{edge.Title}}
+                                <mat-option class="matoption" *ngFor="let edge of Gateways" [value]="edge.EdgeID">{{edge.Title}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -131,7 +131,7 @@
                         <span class="subtitle">Status</span>
                         <mat-form-field appearance="standard" class="formfield">
                             <mat-select placeholder="Status" class="matselect" formControlName="Status" fxFlex>
-                                <mat-option class="matoption" *ngFor="let status of Statuses" [value]="status.value" [disabled]="SelectedEdge.Status=='10' && status.value!='10' || SelectedEdge.Status=='20' && status.value=='10'">{{status.display}}
+                                <mat-option class="matoption" *ngFor="let status of Statuses" [value]="status.value" [disabled]="SelectedEdge.Status=='10' && status.value!='10' || SelectedEdge.Status!='10' && status.value=='10'">{{status.display}}
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="EdgeFormGroup.get('Status').hasError('required')">

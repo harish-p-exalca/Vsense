@@ -113,12 +113,12 @@ export class ControldetailsComponent implements OnInit,OnDestroy {
     this.service.emitChange("Device Details");
     this.currentdassign=JSON.parse(localStorage.getItem('assignment'));
     this.equipment=this.currentdassign.equipment;
-    this.getcurrentdevice();
-    this.getallparamdetails();
+    // this.getcurrentdevice();
+    // this.getallparamdetails();
     
-    this.subscription = interval(15000).subscribe((func => {
-      this.datapuller();
-    }))
+    // this.subscription = interval(15000).subscribe((func => {
+    //   this.datapuller();
+    // }))
     const retrievedObject = localStorage.getItem('authorizationData');
       this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
       this.currentUserID = this.authenticationDetails.UserID;
@@ -230,7 +230,7 @@ export class ControldetailsComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 
   // division hover part

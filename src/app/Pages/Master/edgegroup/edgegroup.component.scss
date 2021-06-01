@@ -131,7 +131,7 @@
     }
     .cards{
         background-color: #ffffff;
-        height: 50px;
+        height: 72px;
         margin-bottom: 1rem;
         border-radius: 4px;
     }
@@ -205,14 +205,10 @@
       }
 }
 .tabledivision{
-  // height: 32vh !important;
-  max-width: 810px;
+  max-width: 60vw;
   overflow: auto;
   border-radius: 4px;
-}
-.tabledivision::-webkit-scrollbar{
-  width: 0; 
-  background: transparent;
+  border-top-right-radius: 8px;
 }
 .addimage{
   cursor: pointer;
