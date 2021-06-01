@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexStroke, ApexTooltip, ApexDataLabels, ChartComponent, ApexFill, ApexGrid } from 'ng-apexcharts';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
+import { MonitorTableView } from 'src/app/Models/monitor';
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -29,11 +30,12 @@ export class MonitorComponent implements OnInit {
   AllDevices: any[] = [];
   ActiveDevices: any[] = [];
   InactiveDevices: any[] = [];
-  DeviceDataSource: MatTableDataSource<any>;
+  DeviceDataSource: MatTableDataSource<any>=new MatTableDataSource([]);
   @ViewChild(MatPaginator) DevicePaginator: MatPaginator;
   @ViewChild(MatSort) DeviceSort: MatSort;
-  DevicedisplayedColumns: string[] = ['equipmentname', 'location', 'device', 'status', 'action'];
+  DevicedisplayedColumns: string[] = ['Site', 'Space', 'Asset', 'Edge','LastFeed','Status','Action'];
   SearchKey:string;
+
   constructor(
     private service: VsenseapiService,
     private router: Router,
@@ -96,11 +98,8 @@ export class MonitorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.spinner.show();
-    this.getactivedevices();
-    this.getinactivedevices();
-    this.getalldevices();
-    this.getdevicestatus();
+    this.GetTableData();
+    this.GetEdgeStatusChartData();
   }
 
   ChangeDevice(status: string) {
@@ -116,10 +115,21 @@ export class MonitorComponent implements OnInit {
     }
   }
 
-  getactivedevices() {
-    this.service.getallactivedevices().subscribe((data: any[]) => {
-      this.ActiveDevices = data;
-      this.LoadTableSource(this.ActiveDevices);
+  GetTableData() {
+    this.spinner.show();
+    this.service.GetMonitorTable().subscribe((data: any[]) => {
+      this.AllDevices=<MonitorTableView[]>data;
+      this.ActiveDevices = this.AllDevices.filter(x=>x.Status==true);
+      this.InactiveDevices=this.AllDevices.filter(x=>x.Status==false);
+      if(this.selectedDevices=="Active"){
+        this.LoadTableSource(this.ActiveDevices);
+      }
+      else if (this.selectedDevices == "Inactive") {
+        this.LoadTableSource(this.InactiveDevices);
+      }
+      else {
+        this.LoadTableSource(this.AllDevices);
+      }
       this.spinner.hide();
     },
       err => {
@@ -127,45 +137,39 @@ export class MonitorComponent implements OnInit {
         this.spinner.hide();
       });
   }
-  getinactivedevices() {
-    this.service.getallinactivedevices().subscribe((data: any[]) => {
-      this.InactiveDevices = data;
-    });
-  }
-  getalldevices() {
-    this.service.getalldeviceassigns().subscribe((data: any[]) => {
-      this.AllDevices = data;
-    });
-  }
-  deviceStatusvalue(value) {
-    if (value) {
-      return "Enabled";
-    }
-    else {
-      return "Disabled";
-    }
-  }
   ViewDetails(Data) {
     localStorage.setItem('assignment', JSON.stringify(Data));
-    this.service.emitChange("Device Details");
-    this.router.navigate(['/devicedetails']);
+    this.router.navigate(['/controldetails']);
   }
   LoadTableSource(DataArray: any[]) {
     this.DeviceDataSource = new MatTableDataSource(DataArray);
     this.DeviceDataSource.paginator = this.DevicePaginator;
     this.DeviceDataSource.sort = this.DeviceSort;
   }
-  getdevicestatus() {
+  GetEdgeStatusChartData() {
     this.spinner.show();
-    this.service.getdevicestatus().subscribe(data => {
+    this.service.GetEdgeStatusChartData().subscribe(data => {
       const deviceStatus = data;
       this.chartOptions.series=[{
         name:"Active devices",
         data:deviceStatus
-      }]
+      }];
+      this.spinner.hide();
+    },
+    err=>{
+      this.spinner.hide();
+      console.log(err);
     });
   }
   applyFilter() {
     this.DeviceDataSource.filter = this.SearchKey.trim().toLowerCase();
+  }
+  ToggleDeviceStatus(EdgeID:number){
+    this.service.ToggleDeviceStatus(EdgeID).subscribe(res=>{
+      this.GetTableData();
+    },
+    err=>{
+      console.log(err);
+    });
   }
 }

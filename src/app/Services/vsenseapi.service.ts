@@ -420,6 +420,25 @@ export class VsenseapiService {
       catchError(this.errorHandler)
     );
   }
+  //Monitor
+  GetMonitorTable(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.server_address}/api/VSense/GetMonitorTable`)
+      .pipe(
+        catchError(this.errorHandler)
+      );
+  }
+  ToggleDeviceStatus(EdgeID:number): Observable<any> {
+    return this.httpClient.get<any>(`${this.server_address}/api/VSense/ToggleDeviceStatus?EdgeID=${EdgeID}`)
+      .pipe(
+        catchError(this.errorHandler)
+      );
+  }
+  GetEdgeStatusChartData(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.server_address}/api/VSense/GetEdgeStatusChartData`)
+      .pipe(
+        catchError(this.errorHandler)
+      );
+  }
 
   errorHandler(error: HttpErrorResponse): Observable<any[]> {
     return throwError(error.error instanceof Object ? error.error.Message ? error.error.Message : error.error : error.error || error.message || 'Server Error');

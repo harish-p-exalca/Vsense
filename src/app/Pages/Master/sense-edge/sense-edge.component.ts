@@ -26,6 +26,7 @@ export class SenseEdgeComponent implements OnInit {
   SelectedEdge:MEdge=new MEdge();
   EdgeFormGroup:FormGroup;
   MEdges:MEdge[]=[];
+  Gateways:MEdge[]=[];
   MEdgeGroups:MEdgeGroupView[]=[];
   ParamDataSource:MatTableDataSource<MEdgeGroupParam>=new MatTableDataSource([]);
   ParamdisplayedColumns: string[] = ["ParamID", "Title", "Unit", "LongText", "Min", "Max"];
@@ -58,6 +59,7 @@ export class SenseEdgeComponent implements OnInit {
     this.spinner.show();
     this.service.GetMEdges().subscribe(res=>{
       this.MEdges=<MEdge[]>res;
+      this.Gateways=this.MEdges.filter(x=>x.ParantEdgeID==null);
       this.service.GetMEdgeGroups().subscribe(res=>{
         this.MEdgeGroups=<MEdgeGroupView[]>res;
         if(this.MEdges.length>0){
@@ -111,6 +113,7 @@ export class SenseEdgeComponent implements OnInit {
     Object.keys(this.EdgeFormGroup.controls).forEach(key => {
       this.EdgeFormGroup.get(key).markAsUntouched();
     });
+    this.ParamDataSource=new MatTableDataSource([]);
   }
   SaveEdgeClicked() {
     if (this.EdgeFormGroup.valid) {

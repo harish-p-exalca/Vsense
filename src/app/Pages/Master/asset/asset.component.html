@@ -60,10 +60,10 @@
                                     <span class="titletxt">{{asset.CreatedOn | date:'dd/MM/yyyy'}}</span>
                                 </div>
                             </div>
-                            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                            <!-- <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                                 <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
                                 <span class="titletxt">{{asset.AssetID}}</span>
-                            </div>
+                            </div> -->
                         </div>
                     </mat-list-option>
                 </mat-selection-list>
@@ -95,21 +95,21 @@
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxFlex=45 fxLayoutAlign="space-between center">
-                        <span class="subtitle">Gateway</span>
-                        <mat-form-field appearance="standard" class="formfield">
-                            <input formControlName="Gateway" matInput autocomplete="off"
-                                placeholder="Enter Gateway  (Parent in Edge)">
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 4px 1rem 0 1rem;">
-                    <div fxLayout="row" fxFlex=45 fxLayoutAlign="space-between center">
                         <span class="subtitle">Asset Title</span>
                         <mat-form-field appearance="standard" class="formfield">
                             <input formControlName="Title" matInput autocomplete="off" placeholder="Enter Asset Title">
                         </mat-form-field>
                     </div>
+                    <!-- <div fxLayout="row" fxFlex=45 fxLayoutAlign="space-between center">
+                        <span class="subtitle">Gateway</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input formControlName="Gateway" matInput autocomplete="off"
+                                placeholder="Enter Gateway  (Parent in Edge)">
+                        </mat-form-field>
+                    </div> -->
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 4px 1rem 0 1rem;">
                     <div fxLayout="row" fxFlex=45 fxLayoutAlign="space-between center">
                         <span class="subtitle">Asset Class</span>
                         <mat-form-field appearance="standard" class="formfield">
@@ -119,10 +119,6 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                </div>
-
-                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 4px 1rem 0 1rem;">
-
                     <div fxLayout="row" fxFlex=45 fxLayoutAlign="space-between center">
                         <span class="subtitle">Status</span>
                         <mat-form-field appearance="standard" class="formfield">
