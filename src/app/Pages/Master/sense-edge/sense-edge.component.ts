@@ -60,6 +60,7 @@ export class SenseEdgeComponent implements OnInit {
     this.service.GetMEdges().subscribe(res=>{
       this.MEdges=<MEdge[]>res;
       this.Gateways=this.MEdges.filter(x=>x.ParantEdgeID==null);
+      this.MEdges=this.MEdges.filter(x=>x.ParantEdgeID!=null);
       this.service.GetMEdgeGroups().subscribe(res=>{
         this.MEdgeGroups=<MEdgeGroupView[]>res;
         if(this.MEdges.length>0){

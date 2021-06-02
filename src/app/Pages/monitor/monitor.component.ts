@@ -98,8 +98,7 @@ export class MonitorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.GetTableData();
-    this.GetEdgeStatusChartData();
+    this.GetMonitorData();
   }
 
   ChangeDevice(status: string) {
@@ -115,7 +114,7 @@ export class MonitorComponent implements OnInit {
     }
   }
 
-  GetTableData() {
+  GetMonitorData() {
     this.spinner.show();
     this.service.GetMonitorTable().subscribe((data: any[]) => {
       this.AllDevices=<MonitorTableView[]>data;
@@ -130,6 +129,18 @@ export class MonitorComponent implements OnInit {
       else {
         this.LoadTableSource(this.AllDevices);
       }
+      this.service.GetEdgeStatusChartData().subscribe(data => {
+        const deviceStatus = data;
+        this.chartOptions.series=[{
+          name:"Active devices",
+          data:deviceStatus
+        }];
+        this.spinner.hide();
+      },
+      err=>{
+        this.spinner.hide();
+        console.log(err);
+      });
       this.spinner.hide();
     },
       err => {
@@ -139,34 +150,19 @@ export class MonitorComponent implements OnInit {
   }
   ViewDetails(Data) {
     localStorage.setItem('assignment', JSON.stringify(Data));
-    this.router.navigate(['/controldetails']);
+    this.router.navigate(['/controlcenter']);
   }
   LoadTableSource(DataArray: any[]) {
     this.DeviceDataSource = new MatTableDataSource(DataArray);
     this.DeviceDataSource.paginator = this.DevicePaginator;
     this.DeviceDataSource.sort = this.DeviceSort;
   }
-  GetEdgeStatusChartData() {
-    this.spinner.show();
-    this.service.GetEdgeStatusChartData().subscribe(data => {
-      const deviceStatus = data;
-      this.chartOptions.series=[{
-        name:"Active devices",
-        data:deviceStatus
-      }];
-      this.spinner.hide();
-    },
-    err=>{
-      this.spinner.hide();
-      console.log(err);
-    });
-  }
   applyFilter() {
     this.DeviceDataSource.filter = this.SearchKey.trim().toLowerCase();
   }
   ToggleDeviceStatus(EdgeID:number){
     this.service.ToggleDeviceStatus(EdgeID).subscribe(res=>{
-      this.GetTableData();
+      this.GetMonitorData();
     },
     err=>{
       console.log(err);

@@ -1,4 +1,4 @@
-<div fxFlex=96 class="container" fxLayout="column">
+<div fxFlex class="container" fxLayout="column">
     <div  style="padding: 0 20px;" >
         <span class="title">Exceptions</span>
        
@@ -103,14 +103,14 @@
             </ng-container>
 
             <ng-container matColumnDef="Resolve" >
-                <th mat-header-cell *matHeaderCellDef > Resolve
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center;"> Resolve
                 </th>
                 <td mat-cell *matCellDef="let element" style="text-align: center;" class="rowfix">
                     <mat-icon style="text-align: center;">more_horiz</mat-icon>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="ParamdisplayedColumns;sticky: true;"></tr>
-            <tr mat-row *matRowDef="let row; columns: ParamdisplayedColumns;sticky:true;"></tr>
+            <tr mat-row *matRowDef="let row; columns: ParamdisplayedColumns;"></tr>
         </table>
         <!-- <mat-paginator [pageSizeOptions]="[10, 20, 50]"></mat-paginator> -->
     </div>

@@ -84,7 +84,6 @@ top: -25px;
 .graphdiv{
 width: 100%;
 height: 100%;
-//   margin-top:1.5rem;
 scroll-behavior: smooth;
 overflow: auto;
 cursor: pointer;
@@ -264,9 +263,6 @@ font-family: Poppins;
 margin-top: 1rem;
 margin-left: 1rem;
 box-shadow: 0 3px 6px rgba(69, 106, 248, 0.18) 0;
-// box-shadow: 0 3px 6px 0 rgba(69, 106, 248, 0.18);
-// animation: slide-in 0.5s backwards;
-// -webkit-animation: slide-in 1s backwards;
 }
 
 
@@ -365,6 +361,16 @@ overflow:auto;
 .dotimage{
 transform: scale(0.5);
 margin-left: 9rem;
+}
+.devstatus{
+  overflow: hidden;
+  width: 100%;
+   margin-left: 1rem;
+   margin-top: 2rem;
+   height: 63vh;
+    object-fit: contain;
+      box-shadow: 0 3px 6px 0 rgba(69, 106, 248, 0.18);
+      position: relative;
 }
 .devstatus::-webkit-scrollbar{
 display: none; 
@@ -601,14 +607,8 @@ margin-top: 0.5rem;
 .good{
 font-size: 12px;
 font-family: Poppins;
-float: left;
-// letter-spacing: 1.08px;
-// color: #4a4a4a;
-// background-color: #a7a7f7;
 color: #3131ff;
 font-weight: bold;
-margin-left: 1rem;
-// margin-top: 0.5rem;
 }
 .good365{
 font-size: 16px;
@@ -825,4 +825,54 @@ overflow: auto;
 }
 .devices::-webkit-scrollbar {
 display: none;
+}
+.unittxt{
+  color: #ee4057;
+  letter-spacing: 1.1px;
+  font-weight: 500;
+  font-size: 10px;                                   
+}
+.gaugetitle{
+  position: relative;top: 6px; display: flex; align-items: center; justify-content: center;
+}
+.gaugevalue{
+  color: #485865;letter-spacing: 0.81px;font-weight: 500;font-size:20px;margin-top: 16px;
+}
+table {
+  width: 100%;
+    border: solid 2px #f4f4f4;
+    th {
+      color: #ffffff;
+      background-color: #3131ff;
+      @extend .poppins; 
+      text-align: left;
+      width: 14.286%;
+    }
+
+    td {
+      @extend .poppins;
+      font-size: 12px;
+      color: #3e485a;
+      text-align: left;
+    }
+
+    td.mat-cell{
+        border-bottom-color: transparent;
+    }
+
+    tr {
+      height: 42px;
+    }
+    
+    th.mat-header-cell:first-child {
+      border-top-left-radius: 4px !important;
+    }
+
+    th.mat-header-cell:last-child {
+        border-top-right-radius: 4px !important;
+    }
+}
+.poppins{
+  font-family: Poppins;
+  font-weight: 600;
 }

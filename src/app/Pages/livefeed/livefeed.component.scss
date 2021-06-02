@@ -17,6 +17,9 @@
     width: 430px;
     background-color: #ffffff
 }
+.mat-table {
+    font-family: 'poppins' !important;
+}
 .search{
     font-family: Poppins;
     font-size: 12px;
@@ -68,7 +71,7 @@
     td {
         font-family: Poppins;
       font-size: 11px;
-      color: #3e485a;
+      color: #3e485a; 
     }
 
     td.mat-cell{

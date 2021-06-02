@@ -190,7 +190,7 @@ export class LoginComponent implements OnInit {
         if (data.UserRole === 'Administrator') {
           this.router.navigate(['ume/user']);
         } else {
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['monitor']);
         }   
     }
     updateMenu(): void {
@@ -202,15 +202,22 @@ export class LoginComponent implements OnInit {
             this.menuItems = this.authenticationDetails.MenuItemNames.split(",");
             // console.log(this.menuItems);
         }
-        if (this.menuItems.indexOf("Home") >= 0) {
+        if (this.menuItems.indexOf("Monitor") >= 0) {
             this.children.push({
                 displayName: "Monitor",
                 iconName: "monitor",
                 isSvgIcon:true,
-                route: "dashboard"
+                route: "monitor"
             });
         }
-        this.GetMasterMenus();
+        if (this.menuItems.indexOf("LiveFeeds") >= 0) {
+            this.children.push({
+                displayName: "Live Feeds",
+                iconName: "livefeeds",
+                isSvgIcon:true,
+                route: "livefeeds"
+            });
+        }
         if (this.menuItems.indexOf("Exceptions") >= 0) {
             this.children.push({
                 displayName: "Exceptions",
@@ -219,6 +226,7 @@ export class LoginComponent implements OnInit {
                 route: "exceptions"
             });
         }
+        this.GetMasterMenus();
         this.GetCarbonFootprintMenus();
         this.GetAdminMenus();
         // Saving local Storage

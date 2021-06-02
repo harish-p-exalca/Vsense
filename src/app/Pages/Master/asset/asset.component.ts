@@ -35,7 +35,7 @@ export class AssetComponent implements OnInit, AfterViewInit {
   ScrollWidth: number = 0;
   ScrollLeft: number = 0;
   ParamdisplayedColumns: string[] = ["PramID", "Title", "Unit", "LongText", "Min", "Max", "Icon", "Soft1ExceptionThreshold",
-    "Soft2ExceptionThreshold", "Hard1ExceptionThreshold", "Hard2ExceptionThreshold", "ActivityGraphTitle", "Action"];
+    "Soft2ExceptionThreshold", "Hard1ExceptionThreshold", "Hard2ExceptionThreshold", "ActivityGraphTitle","Status", "Action"];
   state: string = 'default';
   options: string[] = ['Working', 'Not Working', 'Others'];
   searchText = "";
@@ -327,5 +327,8 @@ export class AssetComponent implements OnInit, AfterViewInit {
         console.log(err);
         this.spinner.hide();
       });
+  }
+  ToggleParamStatus(index:number){
+    this.SelectedEdge.AssignParams[index].IsActive=!this.SelectedEdge.AssignParams[index].IsActive;
   }
 }

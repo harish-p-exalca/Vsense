@@ -19,21 +19,27 @@ import { AssetComponent } from './pages/master/asset/asset.component';
 import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
 import { RuleComponent } from './Pages/Master/rule/rule.component';
 import { GatewayComponent } from './Pages/Master/gateway/gateway.component';
+import { LivefeedComponent } from './Pages/livefeed/livefeed.component';
 
 const routes: Routes = [
   {
-    path:'dashboard',
+    path:'monitor',
     component:MonitorComponent,
     canActivate: [AuthGuard]
   },
   {
-    path:'controldetails',
+    path:'controlcenter',
     component:ControldetailsComponent,
     canActivate: [AuthGuard]
   },
   {
     path:'exceptions',
     component:ExceptionsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'livefeeds',
+    component:LivefeedComponent,
     canActivate: [AuthGuard]
   },
   {

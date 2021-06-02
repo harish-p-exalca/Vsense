@@ -293,16 +293,30 @@
                         </td>
                     </ng-container>
 
+                    <ng-container matColumnDef="Status">
+                        <th mat-header-cell *matHeaderCellDef class="headercolor ">Status</th>
+                        <td mat-cell *matCellDef="let element;">
+                            {{element.IsActive?'Active':'Inactive'}}
+                        </td>
+                    </ng-container>
 
                     <ng-container matColumnDef="Action" stickyEnd>
                         <th mat-header-cell *matHeaderCellDef style="text-align: center;">
                             Action</th>
                         <td mat-cell *matCellDef="let element;index as i;" style="text-align: center;min-width:74px;">
-                            <div mat-ripple fxLayoutAlign="center center" class="delete-container pointer"
+                            <!-- <div mat-ripple fxLayoutAlign="center center" class="delete-container pointer"
                                 (click)="DeleteAssignParam(i)">
                                 <img src="assets/images/v2/delete.svg" width="32px">
                                 <span class="delete deletetxt">Delete</span>
-                            </div>
+                            </div> -->
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                            <span mat-menu-item class="menuitem" (click)="DeleteAssignParam(i)">Delete</span>
+                            <span *ngIf="!element.IsActive" class="menuitem" mat-menu-item (click)="ToggleParamStatus(i)">Enable</span>
+                            <span *ngIf="element.IsActive" class="menuitem" mat-menu-item (click)="ToggleParamStatus(i)">Disable</span>
+                            </mat-menu>
                         </td>
                     </ng-container>
 
