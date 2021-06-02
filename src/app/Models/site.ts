@@ -27,7 +27,7 @@ export class MEdge extends Common{
     SoftwareVersion:string;
     PuttoUse:Date;
     Status:string;
-    Battery:number
+    Battery:number=0;
     EdgeGroup:number;
     ParantEdgeID:number;
 }
@@ -82,6 +82,7 @@ export class MEdgeAssignParam extends Common{
     Hard1ExceptionThreshold:number;
     Hard2ExceptionThreshold:number;
     ActivityGraphTitle:string;
+    IsActive=true;
 }
 
 export class AssetView extends MAsset{

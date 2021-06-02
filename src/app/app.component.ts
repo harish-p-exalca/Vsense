@@ -57,6 +57,10 @@ export class AppComponent implements AfterViewInit,OnInit {
       "exception",
       this.domSanitizer.bypassSecurityTrustResourceUrl("/assets/images/v2/exception.svg")
     );
+    this.matIconRegistry.addSvgIcon(
+      "livefeeds",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("/assets/images/v2/livefeeds.svg")
+    );
   }
 
   OpenInformationDialog(): void {

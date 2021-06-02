@@ -439,6 +439,25 @@ export class VsenseapiService {
         catchError(this.errorHandler)
       );
   }
+  //Control center
+  GetMEdge(EdgeID:number): Observable<any> {
+    return this.httpClient.get<any>(`${this.server_address}/api/VSense/GetMEdge?EdgeID=${EdgeID}`)
+      .pipe(
+        catchError(this.errorHandler)
+      );
+  }
+  GetLastLogOfParams(EdgeID:number): Observable<any> {
+    return this.httpClient.get<any>(`${this.server_address}/api/VSense/GetLastLogOfParams?EdgeID=${EdgeID}`)
+      .pipe(
+        catchError(this.errorHandler)
+      );
+  }
+  GetControlCenterFeed(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.server_address}/api/VSense/GetControlCenterFeed`)
+      .pipe(
+        catchError(this.errorHandler)
+      );
+  }
 
   errorHandler(error: HttpErrorResponse): Observable<any[]> {
     return throwError(error.error instanceof Object ? error.error.Message ? error.error.Message : error.error : error.error || error.message || 'Server Error');

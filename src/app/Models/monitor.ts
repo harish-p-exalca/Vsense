@@ -3,6 +3,7 @@ export class MonitorTableView{
     Space:string;
     Asset:string;
     Edge:string;
+    EdgeID:number;
     Status:boolean;
     LastFeed:string | Date | null;
 }

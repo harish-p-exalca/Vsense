@@ -1,0 +1,112 @@
+<div fxFlex class="container" fxLayout="column">
+    <div  style="padding: 0 20px;" >
+        <span class="title">Live Feeds</span>
+       
+    </div>
+    <div fxLayout="row" fxLayoutGap="12px" style="padding: 1rem 20px;">
+        <div class="search-container" fxLayout="row">
+            <input class="search" placeholder="Search to - do" fxFlex=100>
+            <div mat-ripple class="searchbtn pointer" fxLayoutAlign="center">
+                <img src="assets/images/v2/search.svg" width="14px">
+            </div>
+        </div>
+        <img src="assets/images/v2/Filter.svg" width="18px">
+    </div>
+
+    <div class="tabledivision" style="padding: 0 20px;">
+  
+        <table mat-table [dataSource]="dataSource" matSort>
+          
+            <ng-container matColumnDef="LogID">
+                <th mat-header-cell *matHeaderCellDef >LogID</th>
+                <td mat-cell *matCellDef="let element" class="rowfix" (click)="ViewDetails(element)">
+                    {{element.LogID}}
+                </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="Site">
+                <th mat-header-cell *matHeaderCellDef> Site </th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.Site}}
+                </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="Space">
+                <th mat-header-cell *matHeaderCellDef > Space</th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.Space}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Asset">
+                <th mat-header-cell *matHeaderCellDef > Asset </th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.Asset}}
+                </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="EdgeID">
+                <th mat-header-cell *matHeaderCellDef> EdgeID </th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.EdgeID}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="RefID">
+                <th mat-header-cell *matHeaderCellDef> RefID </th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.RefID}}
+                </td>
+            </ng-container> 
+            <ng-container matColumnDef="dateTime">
+                <th mat-header-cell *matHeaderCellDef> Date/Time </th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.DateTime}}
+                </td>
+            </ng-container>  
+            <ng-container matColumnDef="PramTitle">
+                <th mat-header-cell *matHeaderCellDef> PramTitle</th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.PramTitle}}
+                </td>
+            </ng-container> 
+            <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef> Value</th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.Value}}
+                </td> 
+            </ng-container> 
+               <ng-container matColumnDef="minValue">
+                <th mat-header-cell *matHeaderCellDef> MinValue</th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.MinValue}}
+                </td> 
+            </ng-container>  <ng-container matColumnDef="maxValue">
+                <th mat-header-cell *matHeaderCellDef> MaxValue</th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.MaxValue}}
+                </td> 
+            </ng-container>   <ng-container matColumnDef="avgValue">
+                <th mat-header-cell *matHeaderCellDef> AvgValue</th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.AvgValue}}
+                </td> 
+            </ng-container> 
+            <ng-container matColumnDef="Threshold">
+                <th mat-header-cell *matHeaderCellDef> Threshold</th>
+                <td mat-cell *matCellDef="let element" class="rowfix">
+                    {{element.Threshold}}
+                </td> 
+            </ng-container> 
+      
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
+          <tr 
+            mat-row *matRowDef="let row,index as i;columns: displayedColumns;">
+          </tr>
+          <!-- </form> -->
+        </table>
+      </div>
+
+    
+
+</div>

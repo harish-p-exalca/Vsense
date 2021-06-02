@@ -73,6 +73,7 @@ import { EdgegroupComponent } from './pages/master/edgegroup/edgegroup.component
 import { AssetComponent } from './pages/master/asset/asset.component';
 import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
 import { DeviceDialogComponent } from './pages/master/asset/device-dialog/device-dialog.component';
+import { LivefeedComponent } from './Pages/livefeed/livefeed.component';
 
 @NgModule({
   declarations: [
@@ -101,8 +102,8 @@ import { DeviceDialogComponent } from './pages/master/asset/device-dialog/device
     EdgegroupComponent,
     AssetComponent,
     ExceptionsComponent,
-    DeviceDialogComponent
-  
+    DeviceDialogComponent,
+    LivefeedComponent
   ],
   imports: [
     BrowserModule,
