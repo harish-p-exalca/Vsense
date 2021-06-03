@@ -1,13 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { AppUsage, AuthenticationDetails } from 'src/app/Models/master';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { NotificationService } from 'src/app/Services/notification.service';
-import { MasterService } from 'src/app/Services/master.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeviceDialogComponent } from './device-dialog/device-dialog.component';
 import { AssetView, Assignment, MEdge, MEdgeAssign, MEdgeAssignParam, MEdgeGroupParam, MEdgeGroupView, MSpace } from 'src/app/Models/site';
@@ -56,11 +53,11 @@ export class AssetComponent implements OnInit, AfterViewInit {
   AllEdges: MEdge[] = [];
   EdgeGroups: MEdgeGroupView[] = [];
   GroupParams: MEdgeGroupParam[] = [];
+  SearchKey:any;
 
-  constructor(private doms: DomSanitizer,
+  constructor(
     private fb: FormBuilder,
-    private _snackBar: MatSnackBar, private cdRef: ChangeDetectorRef, public notification: NotificationService,
-    private _masterService: MasterService,
+    public notification: NotificationService,
     private service: VsenseapiService,
     private dialog: MatDialog,
     private spinner: NgxSpinnerService) { }

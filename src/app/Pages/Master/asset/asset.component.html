@@ -10,7 +10,7 @@
             </div>
             <div fxLayout="row" fxLayoutGap="12px" style="padding: 1rem 20px;">
                 <div class="search-container" fxLayout="row">
-                    <input class="search" placeholder="Search to - do" fxFlex=100>
+                    <input class="search" placeholder="Search to - do" fxFlex=100 [(ngModel)]="SearchKey">
                     <div mat-ripple class="searchbtn pointer" fxLayoutAlign="center">
                         <img src="assets/images/v2/search.svg" width="14px">
                     </div>
@@ -44,7 +44,7 @@
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false">
-                    <mat-list-option class="cards" *ngFor="let asset of AssetViews"
+                    <mat-list-option class="cards" *ngFor="let asset of AssetViews | filter:SearchKey"
                         [ngClass]="{'left-border-color1':asset.Status=='Working','left-border-color2':asset.Status=='Not Working','left-border-color3':asset.Status!='Working' && asset.Status!='Not Working'}"
                         [selected]="SelectedAsset.AssetID==asset.AssetID" (click)="LoadSelectedAsset(asset)">
                         <div fxLayout="column" fxLayoutAlign="space-evenly start"
@@ -72,7 +72,7 @@
 
         <div fxFlex=75 fxLayout="column" class="right-container" fxLayout.xs="column">
             <div style="width: 100%;" fxLayout="row" fxLayoutAlign="space-between center">
-                <span class="createdevice">Create Asset Details</span>
+                <span class="createdevice"><span>{{SelectedAsset.AssetID?'Edit':'Create'}}</span> Asset</span>
                 <div *ngIf="SelectedAsset?.Assignments?.length">
                     <img src="assets\images\Component 121 – 1.svg" class="addimage" (click)="rotate()"
                         [@rotatedState]='state' [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()"

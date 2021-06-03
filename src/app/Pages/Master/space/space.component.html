@@ -9,7 +9,7 @@
             </div>
             <div fxLayout="row" fxLayoutGap="12px" style="padding: 1rem 20px;">
                 <div class="search-container" fxLayout="row">
-                    <input class="search" placeholder="Search to - do" fxFlex=100>
+                    <input class="search" placeholder="Search to - do" fxFlex=100 [(ngModel)]="SearchKey">
                     <div mat-ripple class="searchbtn pointer" fxLayoutAlign="center">
                         <img src="assets/images/v2/search.svg" width="14px">
                     </div>
@@ -25,7 +25,7 @@
 
             <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
                 <mat-selection-list [multiple]="false">
-                    <mat-list-option class="cards" *ngFor="let space of MSpaces;"
+                    <mat-list-option class="cards" *ngFor="let space of MSpaces | filter:SearchKey;"
                         [selected]="SelectedSpace.SpaceID==space.SpaceID" (click)="LoadSelectedSpace(space)">
                         <div fxLayout="column" fxLayoutAlign="space-evenly start"
                             style="height: 57px;padding-left: 1rem;">
@@ -51,7 +51,7 @@
         </div>
         <div fxFlex=75 class="right-container" fxLayout.xs="column">
             <div fxLayout="row" fxLayoutAlign="space-between ">
-                <span class="createdevice">Create Space</span>
+                <span class="createdevice"><span>{{SelectedSpace.SpaceID?'Edit':'Create'}}</span> Space</span>
             </div>
             <form [formGroup]="SpaceFormGroup" autocomplete="off">
                 <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px"
