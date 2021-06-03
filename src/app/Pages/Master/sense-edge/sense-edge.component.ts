@@ -31,6 +31,7 @@ export class SenseEdgeComponent implements OnInit {
   ParamDataSource:MatTableDataSource<MEdgeGroupParam>=new MatTableDataSource([]);
   ParamdisplayedColumns: string[] = ["ParamID", "Title", "Unit", "LongText", "Min", "Max"];
   Statuses=[{display:"Assigned",value:"10"},{display:"Open",value:"20"},{display:"Non-Usable",value:"90"},{display:"Missed",value:"91"},{display:"Sold",value:"92"},{display:"Scraped",value:"93"}]
+  SearchKey:any;
 
   constructor(
     private fb:FormBuilder,

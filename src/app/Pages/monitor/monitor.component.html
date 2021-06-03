@@ -107,7 +107,7 @@
 
             <ng-container matColumnDef="LastFeed">
                 <th mat-header-cell *matHeaderCellDef> Last feed </th>
-                <td mat-cell *matCellDef="let element"> {{element.LastFeed | date:'short'}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.LastFeed | date:'dd/MM/yyyy, HH:mm'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Action">

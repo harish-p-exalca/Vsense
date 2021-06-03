@@ -15,6 +15,7 @@ export class SiteComponent implements OnInit {
   SelectedSite:MSite=new MSite();
   SiteFormGroup:FormGroup;
   MSites:MSite[]=[];
+  SearchKey:any;
 
   constructor(
     private fb:FormBuilder,

@@ -16,6 +16,7 @@ export class SpaceComponent implements OnInit {
   SpaceFormGroup:FormGroup;
   MSpaces:MSpace[]=[];
   MSites:MSite[]=[];
+  SearchKey:any;
 
   constructor(
     private fb:FormBuilder,

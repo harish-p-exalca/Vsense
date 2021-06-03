@@ -1,42 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-
-export interface PeriodicElement {
-  ExcepID: string;
-  Space:string;
-  Site:string;
-  Class: string;
-  Asset:string;
-  Value:string;
-  Status:string;
-  PramID:string;
-  DateTime:string;
-  Assignedto:string;
-  Threshold:string;
-  SLAStart:string;
-  Resolve:string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-  { ExcepID:'EXC1244',Site: 'Site', Space: 'Space',Asset: 'Asset',Class: 'Class',PramID:'PramID', Value: 'Value', Status : 'Status',DateTime: '23/07/2020' ,Assignedto:'Assignedto',Threshold:'Threshold',SLAStart:'SLAStart',Resolve:''},
-
-];
+import { NgxSpinnerService } from 'ngx-spinner';
+import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 
 @Component({
   selector: 'app-exceptions',
@@ -44,13 +9,37 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./exceptions.component.scss']
 })
 export class ExceptionsComponent implements OnInit {
-  devices=[1,2,3,4,5,56,8,7];
-  ParamdisplayedColumns:string[]=["Excep I’D","Site","Space","Asset","Class","PramID","Value","Date/Time",
-  "Assigned To","Threshold","SLA Start","Status","Resolve"];
-  ParamDataSource:MatTableDataSource<any>=new MatTableDataSource(ELEMENT_DATA);
-  constructor() { }
+
+  ExceptionDisplayedColumns:string[]=["ExcepID","Site","Space","Asset","Class","PramID","Value","DateTime",
+  "AssignedTo","Threshold","SLAStart","Status","Resolve"];
+  ExceptionDataSource:MatTableDataSource<any>;
+  Exceptions:any[]=[];
+  SearchKey:any;
+
+  constructor(
+    private service:VsenseapiService,
+    private spinner:NgxSpinnerService
+  ) { }
 
   ngOnInit(): void {
+    this.GetExceptions();
+  }
+
+  GetExceptions(){
+    this.spinner.show();
+    this.service.GetExceptions().subscribe(res=>{
+      this.Exceptions=res;
+      this.ExceptionDataSource=new MatTableDataSource(this.Exceptions);
+      this.spinner.hide();
+    },
+    err=>{
+      this.spinner.hide();
+      console.log(err);
+    });
+  }
+
+  applyFilter() {
+    this.ExceptionDataSource.filter = this.SearchKey.trim().toLowerCase();
   }
 
 }

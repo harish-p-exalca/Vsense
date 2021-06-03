@@ -51,6 +51,7 @@ export class EdgegroupComponent implements OnInit {
     Title: "HUMIDITY",
     Unit: "kgm^-1",
   }];
+  SearchKey:any;
 
   constructor(
     private fb:FormBuilder,
