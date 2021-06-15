@@ -50,15 +50,6 @@
         <div fxFlex=75 class="right-container" fxLayout.xs="column">
             <div fxLayout="row" fxLayoutAlign="space-between ">
                 <span class="createdevice"><span>{{SelectedEdge.EdgeID?'Edit':'Create'}}</span> Edge Device</span>
-                <!-- <img src="assets\images\Component 121 – 1.svg" class="addimage"
-                (click)="rotate()" [@rotatedState]='state'  [matMenuTriggerFor]="menu" (menuClosed)="menuClosed()">
-                <mat-menu #menu="matMenu"  [@rotatedState]>
-                   
-                    <span mat-menu-item class="addparameters"  >Add Parameters</span>
-                   
-                    <span mat-menu-item class="addparameters"  >Manual Entry</span>
-                   
-                </mat-menu> -->
             </div>
             <form [formGroup]="EdgeFormGroup" autocomplete="off">
                 <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 1rem 1rem 0 1rem;">
@@ -78,6 +69,9 @@
                                 <mat-option class="matoption" *ngFor="let edge of Gateways" [value]="edge.EdgeID">{{edge.Title}}
                                 </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="EdgeFormGroup.get('ParantEdgeID').hasError('required')">
+                                Gateway is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -121,7 +115,7 @@
                             <input matInput autocomplete="off" placeholder="Enter Software Version"
                                 formControlName="SoftwareVersion" fxFlex>
                             <mat-error *ngIf="EdgeFormGroup.get('SoftwareVersion').hasError('required')">
-                                SoftwareVersion number is required
+                                Software Version is required
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -134,9 +128,6 @@
                                 <mat-option class="matoption" *ngFor="let status of Statuses" [value]="status.value" [disabled]="SelectedEdge.Status=='10' && status.value!='10' || SelectedEdge.Status!='10' && status.value=='10'">{{status.display}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="EdgeFormGroup.get('Status').hasError('required')">
-                                Status is required
-                            </mat-error>
                         </mat-form-field>
                     </div>
                     <div fxFlex=45 fxLayout="row" fxLayoutAlign="space-between center">
@@ -146,6 +137,9 @@
                                 <mat-option class="matoption" *ngFor="let group of MEdgeGroups" [value]="group.EdgeGroup" (click)="SetParamTable(group.EdgeParams)">{{group.Title}}
                                 </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="EdgeFormGroup.get('EdgeGroup').hasError('required')">
+                                Edge Group is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>

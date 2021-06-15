@@ -50,9 +50,9 @@ export class SenseEdgeComponent implements OnInit {
       PutToUse:['',Validators.required],
       SoftwareVersion:['',Validators.required],
       Vcc:[null,Validators.required],
-      EdgeGroup:[null],
+      EdgeGroup:[null,Validators.required],
       Status:[''],
-      ParantEdgeID:[null],
+      ParantEdgeID:[null,Validators.required],
       LifeSpan:[null,Validators.required]
     });
   }

@@ -74,6 +74,8 @@ import { AssetComponent } from './pages/master/asset/asset.component';
 import { ExceptionsComponent } from './pages/exceptions/exceptions.component';
 import { DeviceDialogComponent } from './pages/master/asset/device-dialog/device-dialog.component';
 import { LivefeedComponent } from './Pages/livefeed/livefeed.component';
+import { GatewayComponent } from './Pages/Master/gateway/gateway.component';
+import { RuleComponent } from './Pages/Master/rule/rule.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,9 @@ import { LivefeedComponent } from './Pages/livefeed/livefeed.component';
     AssetComponent,
     ExceptionsComponent,
     DeviceDialogComponent,
-    LivefeedComponent
+    LivefeedComponent,
+    GatewayComponent,
+    RuleComponent
   ],
   imports: [
     BrowserModule,
