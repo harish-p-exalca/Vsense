@@ -1,1 +1,185 @@
-<p>gateway works!</p>
+<div id="sense-edge" fxFlex>
+    <div fxLayout="row" fxFlex>
+        <div fxFlex=25 class="left-container" fxLayout="column">
+            <div fxLayout="row" fxLayoutGap="12px" style="padding: 0 20px;">
+                <span class="title">Gateway</span>
+                <div class="countbox" fxLayoutAlign="center center">
+                    <span class="edgecount">{{MEdges.length}}</span>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="12px" style="padding: 1rem 20px;">
+                <div class="search-container" fxLayout="row">
+                    <input class="search" placeholder="Search to - do" fxFlex=100 [(ngModel)]="SearchKey">
+                    <div mat-ripple class="searchbtn pointer" fxLayoutAlign="center">
+                        <img src="assets/images/v2/search.svg" width="14px">
+                    </div>
+                </div>
+                <img src="assets/images/v2/Filter.svg" width="18px">
+            </div>
+            <div class="hdevider"></div>
+            <button mat-button class="newbtn" (click)="ResetControl()">
+                Create New Gateway
+            </button>
+
+            <div fxFlex style="overflow-y: scroll;padding:0 20px" class="scrollcards">
+                <mat-selection-list [multiple]="false">
+                    <mat-list-option class="cards" *ngFor="let edge of MEdges | filter:SearchKey;"
+                        [selected]="SelectedEdge.EdgeID==edge.EdgeID" (click)="LoadSelectedEdge(edge)">
+                        <div fxLayout="column" fxLayoutAlign="space-evenly start"
+                            style="height: 60px;padding-left: 1rem;">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+                                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                                    <img class="img" src="assets/images/v2/dotnot.svg" width="6px">
+                                    <!-- filter: brightness(0.3); -->
+                                    <span class="titletxt">{{edge.Title}}</span>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                                    <img class="img" src="assets/images/v2/calendar.svg" width="14px">
+                                    <span class="titletxt">{{edge.CreatedOn | date:'dd/MM/yyyy'}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-list-option>
+                </mat-selection-list>
+            </div>
+        </div>
+        <div fxFlex=75 class="right-container" fxLayout.xs="column">
+            <div fxLayout="row" fxLayoutAlign="space-between ">
+                <span class="createdevice"><span>{{SelectedEdge.EdgeID?'Edit':'Create'}}</span> Gateway</span>
+            </div>
+            <form [formGroup]="EdgeFormGroup" autocomplete="off">
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 1rem 1rem 0 1rem;">
+                    <div fxFlex=45 fxLayout="row" fxLayoutAlign="space-between center">
+                        <span class="subtitle">Name</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput autocomplete="off" placeholder="Enter Name" formControlName="Title" fxFlex>
+                            <mat-error *ngIf="EdgeFormGroup.get('Title').hasError('required')">
+                                Title is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex=45 fxLayout="row" fxLayoutAlign="space-between center">
+                        <span class="subtitle">Edge Group</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <mat-select placeholder="Select EdgeGroup" class="matselect" formControlName="EdgeGroup" fxFlex>
+                                <mat-option class="matoption" *ngFor="let group of MEdgeGroups" [value]="group.EdgeGroup" (click)="SetParamTable(group.EdgeParams)">{{group.Title}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="EdgeFormGroup.get('EdgeGroup').hasError('required')">
+                                Edge Group is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 8px 1rem 0 1rem;">
+                    <div fxFlex=45 fxLayout="row" fxLayoutAlign="space-between center">
+                        <span class="subtitle">Put to Use</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput [matDatepicker]="picker1" placeholder="mm/dd/yyyy" formControlName="PutToUse" fxFlex (click)="picker1.open()">
+                            <mat-error *ngIf="EdgeFormGroup.get('PutToUse').hasError('required')">
+                                Date is required
+                            </mat-error>
+                            <mat-datepicker-toggle matSuffix [for]="picker1">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex=45 fxLayout="row" fxLayoutAlign="space-between center">
+                        <span class="subtitle">Lifespan</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput autocomplete="off" placeholder="Lifespan (In years)"
+                                formControlName="LifeSpan" type="number" fxFlex>
+                            <mat-error *ngIf="EdgeFormGroup.get('LifeSpan').hasError('required')">
+                                Lifespan number is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 8px 1rem 0 1rem;">
+                    <div fxFlex=45 fxLayout="row" fxLayoutAlign="space-between center">
+                        <span class="subtitle">Vcc</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput autocomplete="off" type="number" placeholder="Enter Vcc" formControlName="Vcc" fxFlex>
+                            <mat-error *ngIf="EdgeFormGroup.get('Vcc').hasError('required')">
+                                Vcc is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex=45 fxLayout="row" fxLayoutAlign="space-between center">
+                        <span class="subtitle">Software Version</span>
+                        <mat-form-field appearance="standard" class="formfield">
+                            <input matInput autocomplete="off" placeholder="Enter Software Version"
+                                formControlName="SoftwareVersion" fxFlex>
+                            <mat-error *ngIf="EdgeFormGroup.get('SoftwareVersion').hasError('required')">
+                                Software Version is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+            <div class="tabledivision" *ngIf="ParamDataSource.data.length>0">
+
+                <table mat-table [dataSource]="ParamDataSource" matSort>
+                    <ng-container matColumnDef="ParamID">
+                        <th mat-header-cell *matHeaderCellDef> ParamID </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.ParamID}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Title">
+                        <th mat-header-cell *matHeaderCellDef > Title </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.Title}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Unit">
+                        <th mat-header-cell *matHeaderCellDef > Unit</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.Unit}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="LongText">
+                        <th mat-header-cell *matHeaderCellDef > Long text </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.LongText}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Min">
+                        <th mat-header-cell *matHeaderCellDef > Min </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.Min}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Max">
+                        <th mat-header-cell *matHeaderCellDef> Max </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.Max}}
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="ParamdisplayedColumns;sticky: true;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ParamdisplayedColumns;"></tr>
+                </table>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2rem" class="footerdiv">
+                <div fxFlex></div>
+                <div class="deleteoption" *ngIf="SelectedEdge.EdgeID" (click)="DeleteEdgeClicked()">
+                    Delete
+                </div>
+                <div class="deleteoption" *ngIf="!SelectedEdge.EdgeID" (click)="ResetControl()">
+                    Clear
+                </div>
+                <div class="createoption" (click)="SaveEdgeClicked()">
+                    {{SelectedEdge.EdgeID?'Update':'Create'}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-loader></app-loader>

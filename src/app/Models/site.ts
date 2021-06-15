@@ -47,6 +47,23 @@ export class MEdgeGroupParam extends Common{
     IsPercentage:string;
     Color:string;
 }
+
+export class Rule extends Common{
+    RuleID:number;
+    Title:string;
+    SiteID:number;
+    SpaceID?:number;
+    AssetID?:number;
+    Threshold?:number;
+    SLA:string;
+    Level1:string;
+    Level2:string;
+    Level3:string;
+    Notif1:string;
+    Notif2:string;
+    EmailTemplate:string;
+}
+
 export class MEdgeGroupView extends  MEdgeGroupParam{
     EdgeParams:MEdgeGroupParam[]=[];
 }
