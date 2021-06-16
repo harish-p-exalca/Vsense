@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
   styleUrls: ['./top-nav.component.scss']
 })
 export class TopNavComponent implements OnInit {
-  page:string="Dashboard";
+  @Input() page:string="";
 
   constructor(private service:VsenseapiService) { 
   }

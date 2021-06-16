@@ -104,11 +104,7 @@
                     <div fxFlex=45 fxLayout="row" fxLayoutAlign="space-between center">
                         <span class="subtitle">SLA</span>
                         <mat-form-field appearance="standard" class="formfield">
-                            <mat-select placeholder="Choose SLA" class="matselect" formControlName="SLA">
-                                <mat-option class="matoption" value="001">SLA1</mat-option>
-                                <mat-option class="matoption" value="002">SLA2</mat-option>
-                                <mat-option class="matoption" value="003">SLA3</mat-option>
-                            </mat-select>
+                            <input matInput type="number" autocomplete="off" placeholder="Enter SLA in days" formControlName="SLA" fxFlex>
                             <mat-error *ngIf="RuleFormGroup.get('SLA').hasError('required')">
                                 SLA is required
                             </mat-error>

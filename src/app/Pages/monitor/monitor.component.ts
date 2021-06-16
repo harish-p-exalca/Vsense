@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexStroke, ApexTooltip, ApexDataLabels, ChartComponent, ApexFill, ApexGrid } from 'ng-apexcharts';
+import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexStroke, ApexTooltip, ApexDataLabels, ChartComponent, ApexFill, ApexGrid, ApexMarkers } from 'ng-apexcharts';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
 import { MonitorTableView } from 'src/app/Models/monitor';
@@ -16,6 +16,7 @@ export type ChartOptions = {
   dataLabels: ApexDataLabels;
   fill: ApexFill;
   grid:ApexGrid;
+  markers:ApexMarkers
 };
 @Component({
   selector: 'app-monitor',
@@ -58,6 +59,14 @@ export class MonitorComponent implements OnInit {
       },
       dataLabels: {
         enabled: false
+      },
+      markers:{
+        size:[5],
+        colors:["#7d95ff"],
+        hover: {
+          size: undefined,
+          sizeOffset: 3
+        }
       },
       stroke: {
         curve: "smooth",
@@ -130,6 +139,7 @@ export class MonitorComponent implements OnInit {
         this.LoadTableSource(this.AllDevices);
       }
       this.service.GetEdgeStatusChartData().subscribe(data => {
+        console.log(data);
         const deviceStatus = data;
         this.chartOptions.series=[{
           name:"Active devices",

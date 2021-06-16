@@ -12,78 +12,84 @@ import { VsenseapiService } from 'src/app/Services/vsenseapi.service';
   styleUrls: ['./rule.component.scss']
 })
 export class RuleComponent implements OnInit {
-  SelectedRule:Rule=new Rule();
-  RuleFormGroup:FormGroup;
-  Rules:Rule[]=[];
-  Sites:MSite[]=[];
-  Spaces:MSpace[]=[];
-  Assets:AssetView[]=[];
-  SearchKey:any;
+  SelectedRule: Rule = new Rule();
+  RuleFormGroup: FormGroup;
+  Rules: Rule[] = [];
+  Sites: MSite[] = [];
+  Spaces: MSpace[] = [];
+  SpacesCopy: MSpace[] = [];
+  Assets: AssetView[] = [];
+  AssetsCopy: AssetView[] = [];
+  SearchKey: any;
 
   constructor(
-    private fb:FormBuilder,
-    private service:VsenseapiService,
-    private notification:NotificationService,
-    private spinner:NgxSpinnerService
-    ) {}
+    private fb: FormBuilder,
+    private service: VsenseapiService,
+    private notification: NotificationService,
+    private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit(): void {
     this.InitializeFormGroup();
     this.GetAllRules();
     this.GetAllMasters();
   }
-  InitializeFormGroup(){
-    this.RuleFormGroup=this.fb.group({
-      Title:['',Validators.required],
-      SiteID:[null,Validators.required],
-      SpaceID:[null],
-      AssetID:[null],
-      Threshold:[null],
-      SLA:['',Validators.required],
-      Level1:[''],
-      Level2:[''],
-      Level3:[''],
-      Notify1:[''],
-      Notify2:[''],
-      MailTemplate:['']
+  InitializeFormGroup() {
+    this.RuleFormGroup = this.fb.group({
+      Title: ['', Validators.required],
+      SiteID: [null, Validators.required],
+      SpaceID: [null],
+      AssetID: [null],
+      Threshold: [null],
+      SLA: ['', Validators.required],
+      Level1: [''],
+      Level2: [''],
+      Level3: [''],
+      Notify1: [''],
+      Notify2: [''],
+      MailTemplate: ['']
     });
+    this.UpdateForm();
+
   }
-  GetAllRules(){
+  GetAllRules() {
     this.spinner.show();
-    this.service.GetRules().subscribe(res=>{
-      this.Rules=<Rule[]>res;
-      if(this.Rules.length>0){
+    this.service.GetRules().subscribe(res => {
+      this.Rules = <Rule[]>res;
+      if (this.Rules.length > 0) {
         this.LoadSelectedRule(this.Rules[0]);
       }
       this.spinner.hide();
     },
-    err=>{
-      console.log(err);
-      this.spinner.hide();
-    })
+      err => {
+        console.log(err);
+        this.spinner.hide();
+      })
   }
-  GetAllMasters(){
-    this.service.GetMSites().subscribe(res=>{
-      this.Sites=<MSite[]>res;
+  GetAllMasters() {
+    this.service.GetMSites().subscribe(res => {
+      this.Sites = <MSite[]>res;
     },
-    err=>{
-      console.log(err);
-    });
-    this.service.GetMSpaces().subscribe(res=>{
-      this.Spaces=<MSpace[]>res;
+      err => {
+        console.log(err);
+      });
+    this.service.GetMSpaces().subscribe(res => {
+      this.Spaces = <MSpace[]>res;
+      this.SpacesCopy=this.Spaces;
     },
-    err=>{
-      console.log(err);
-    });
-    this.service.GetMAssets().subscribe(res=>{
-      this.Assets=<AssetView[]>res;
+      err => {
+        console.log(err);
+      });
+    this.service.GetMAssets().subscribe(res => {
+      this.Assets = <AssetView[]>res;
+      this.AssetsCopy=this.Assets;
     },
-    err=>{
-      console.log(err);
-    });
+      err => {
+        console.log(err);
+      });
   }
-  LoadSelectedRule(rule:Rule){
-    this.SelectedRule=rule;
+  LoadSelectedRule(rule: Rule) {
+    this.SelectedRule = rule;
     this.RuleFormGroup.get('Title').setValue(rule.Title);
     this.RuleFormGroup.get('SiteID').setValue(rule.SiteID);
     this.RuleFormGroup.get('SpaceID').setValue(rule.SpaceID);
@@ -116,7 +122,7 @@ export class RuleComponent implements OnInit {
       this.GetRuleValues();
       this.service.SaveRule(this.SelectedRule).subscribe(res => {
         this.spinner.hide();
-        this.notification.openSnackBar("Rule saved successfully",SnackBarStatus.success);
+        this.notification.openSnackBar("Rule saved successfully", SnackBarStatus.success);
         this.ResetControl();
         this.GetAllRules();
       },
@@ -147,7 +153,7 @@ export class RuleComponent implements OnInit {
     this.spinner.show();
     this.service.DeleteRule(this.SelectedRule.SiteID).subscribe(res => {
       this.spinner.hide();
-      this.notification.openSnackBar("Rule deleted successfully",SnackBarStatus.success);
+      this.notification.openSnackBar("Rule deleted successfully", SnackBarStatus.success);
       this.ResetControl();
       this.GetAllRules();
     },
@@ -156,7 +162,34 @@ export class RuleComponent implements OnInit {
         this.spinner.hide();
       });
   }
-  GetSite(value:number):string{
-    return this.Sites.find(x=>x.SiteID==value).Title;
+  GetSite(value: number): string {
+    return this.Sites.find(x => x.SiteID == value)?.Title;
+  }
+  UpdateForm() {
+    this.RuleFormGroup.get('AssetID').valueChanges.subscribe(value => {
+      if (value != null) {
+        var asset = this.Assets.find(x => x.AssetID == value);
+        var spaceID = asset?.SpaceID;
+        this.Spaces=this.SpacesCopy;
+        var space = this.Spaces.find(x => x.SpaceID == spaceID);
+        var siteID = space?.SiteID;
+        if (spaceID && siteID) {
+          this.RuleFormGroup.get('SpaceID').setValue(spaceID);
+          this.RuleFormGroup.get('SiteID').setValue(siteID);
+        }
+      }
+    });
+    this.RuleFormGroup.get('SiteID').valueChanges.subscribe(value => {
+      if(value != null){
+        this.Spaces=this.SpacesCopy;
+        this.Spaces=this.Spaces.filter(x=>x.SiteID==value);
+      }
+    });
+    this.RuleFormGroup.get('SpaceID').valueChanges.subscribe(value => {
+      if(value != null){
+        this.Assets=this.AssetsCopy;
+        this.Assets=this.Assets.filter(x=>x.SpaceID==value);
+      }
+    });
   }
 }
