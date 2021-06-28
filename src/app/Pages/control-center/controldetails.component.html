@@ -290,17 +290,17 @@
             </div>
         </div>
         <div fxLayout="column" fxFlex="30">
-            <div *ngIf="isDisplay" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" fxLayout="row"
-                fxLayoutAlign="space-evenly" class="hoveringdiv11">
+            <div fxLayout="row"
+                fxLayoutAlign="space-evenly" class="hoveringdiv11" *ngIf="isDisplay" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()"> 
                 <img src="assets\images\Image 194.jpg" class="wifiimage">
-                <div fxLayout="row" fxLayoutAlign="space-evenly">
+                <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px">
                     <span class="hoversignaldiv">Signals</span>
                     <span class="span07">{{Signals.length}}</span>
                 </div>
             </div>
-            <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" class="hoveringdiv" *ngIf="isDisplayhover"
-                (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
-                <div fxLayout="column" fxFlex="30" fxLayoutGap="25px" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" class="hoveringdiv"*ngIf="isDisplayhover" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+                <!-- *ngIf="isDisplayhover" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" -->
+                <div fxLayout="column" fxFlex="30" fxLayoutAlign="space-between center">
                     <span class="classsignal">Signals</span>
                     <span class="class07">{{Signals.length}}</span>
                     <img src="assets\images\Image 194.jpg" class="signalimage">
@@ -311,7 +311,7 @@
                             <span class="deviceid">PramID</span>
                             <span class="deviceid">Signal Time</span>
                         </div>
-                        <div fxLayout="column" style="height: 20vh; overflow: auto;" class="flowwss">
+                        <div fxLayout="column" fxLayoutGap="4px" style="height: 148px; overflow: auto;margin-top: 4px;" class="flowwss">
                             <div fxLayout="row" fxLayoutAlign="space-between center" class="idrow"
                                 *ngFor="let signal of Signals">
                                 <span>{{signal.PramID}}</span>
@@ -323,7 +323,7 @@
             </div>
             <div class="devstatus">
                 <div class="animationfordevicestatus">
-                    <div fxLayout="row" fxLayoutAlign="center center " style="margin-top: 1rem;margin-left: 1rem;">
+                    <div fxLayout="row" fxLayoutAlign="space-between center " style="margin-top: 1rem;margin-left: 1rem;">
                         <div fxLayout="column" fxLayoutAlign="space-evenly " class="tit1">
                             <span>Device Status</span>
                         </div>

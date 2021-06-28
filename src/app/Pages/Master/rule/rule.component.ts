@@ -149,9 +149,9 @@ export class RuleComponent implements OnInit {
     this.SelectedRule.Notif2 = this.RuleFormGroup.get('Notify2').value;
     this.SelectedRule.EmailTemplate = this.RuleFormGroup.get('MailTemplate').value;
   }
-  DeleteSiteClicked() {
+  DeleteRuleClicked() {
     this.spinner.show();
-    this.service.DeleteRule(this.SelectedRule.SiteID).subscribe(res => {
+    this.service.DeleteRule(this.SelectedRule.RuleID).subscribe(res => {
       this.spinner.hide();
       this.notification.openSnackBar("Rule deleted successfully", SnackBarStatus.success);
       this.ResetControl();
