@@ -242,13 +242,12 @@ font-size: 12px;
 padding: 8px 8px 8px 0;width: 40px;
 }
 .signalimage{
-width: 50px;
-height: 50px;
+width: 70px;
 }
 
 .class07{
 color: #394256;
-font-size: 22px;
+font-size: 42px;
 font-family: Poppins;
 object-fit: contain;
 text-align: right;
@@ -259,20 +258,22 @@ font-family: Poppins;
 font-size: 13px;
 }
 .hoveringdiv{
-  padding: 12px;
+  padding: 16px 16px 16px 0;
+  height: 200px;
 font-family: Poppins;
 margin-top: 1rem;
 margin-left: 1rem;
-box-shadow: 0 3px 6px rgba(69, 106, 248, 0.18) 0;
+box-shadow: 0 3px 6px rgba(69, 106, 248, 0.18);
 }
 
 
 .hoveringdiv11{
+  height: 200px;
   padding: 12px;
 font-family: Poppins;
 margin-top: 1rem;
 margin-left: 1rem;
-box-shadow: 0 3px 6px rgba(69, 106, 248, 0.18) 0;
+box-shadow: 0 3px 6px rgba(69, 106, 248, 0.18);
 // box-shadow: 0 3px 6px 0 rgba(69, 106, 248, 0.18);
 animation: slide-in 0.5s backwards;
 -webkit-animation: slide-in 1s backwards;
@@ -308,13 +309,12 @@ color: #394256;
 font-size: 100px;
 font-family: Poppins;
 object-fit: contain;
-margin-left: -4rem;
-margin-top: 5rem;
+line-height: 1.2;
 }
 .wifiimage{
-width: 150px;
-height: 150px;
-float: left;
+  width: 150px;
+  height: 150px;
+  margin-top: 16px;
 
 }
 .signalcontent{
@@ -346,7 +346,7 @@ overflow: scroll;
 display: none;
 }
 .divisiontable{
-height: 220px !important;
+height: 270px !important;
 overflow: auto;
 margin-top: 1.5rem;
 }
@@ -362,17 +362,15 @@ overflow:auto;
 }
 .dotimage{
 transform: scale(0.5);
-margin-left: 9rem;
 }
 .devstatus{
   overflow: hidden;
-  width: 100%;
    margin-left: 1rem;
-   margin-top: 2rem;
-   height: 63vh;
+   margin-top: 1rem;
     object-fit: contain;
       box-shadow: 0 3px 6px 0 rgba(69, 106, 248, 0.18);
       position: relative;
+      padding: 12px 0 0 0;
 }
 .devstatus::-webkit-scrollbar{
 display: none; 
